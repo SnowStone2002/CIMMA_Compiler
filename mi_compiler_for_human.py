@@ -27,7 +27,7 @@ input_map_length  = gli[1][1]
 input_map_channel  = gli[1][2]
 
 # 计算input map到IS的mapping
-# 对于Input_map 到 IS 的 mapping, 我们首先需要将一个channel的数据放入IS，如果一个channel放完，IS当前行未满，则后续补0，新的channel另起一行
+# region 对于Input_map 到 IS 的 mapping, 我们首先需要将一个channel的数据放入IS，如果一个channel放完，IS当前行未满，则后续补0，新的channel另起一行
 input_data_per_row = m.floor(acc0.InputSRAMWidth / config.DATA_WIDTH)
 rows_per_input_channel = m.ceil(input_map_length / input_data_per_row)
 input_channels_per_ISload = m.floor(acc0.InputSRAMDepth / rows_per_input_channel)
@@ -36,6 +36,7 @@ IS_load_times_per_inst = m.ceil(input_map_channel / input_channels_per_ISload)
 IS_load_rows = [input_channels_per_ISload * rows_per_input_channel] * (IS_load_times_per_inst)
 if input_map_channel % input_channels_per_ISload != 0:
     IS_load_rows[IS_load_times_per_inst-1] = input_map_channel % input_channels_per_ISload * rows_per_input_channel
+# endregion
 
 # 将weight map切成CIM size的block，放入CIM中
 weight_block_row = m.ceil(weight_map_channel / config.PC)
@@ -50,7 +51,7 @@ if weight_block_num % config.SCR != 0:
 para_times = weight_block_row
 acc_times = weight_block_col
 
-# 下面两个矩阵非常重要，ls代表了每一次cim计算local switch的状态（用第几个存储的数据做计算）
+# region 下面两个矩阵非常重要，ls代表了每一次cim计算local switch的状态（用第几个存储的数据做计算）
 ls_matrix = torch.zeros(para_times,acc_times) # local switch
 ls_fg = 0
 for i_pt in range(para_times):
@@ -58,6 +59,7 @@ for i_pt in range(para_times):
         ls_matrix[i_pt,i_at] = ls_fg
         ls_fg = ls_fg+1
         if ls_fg == config.SCR: ls_fg = 0
+# endregion
 
 # atos matrix 代表了这一次计算的外部数据流方向
     # 0:aor reg = reg + psum
@@ -173,29 +175,29 @@ for i_IS_load in range(IS_load_times_per_inst):
 
 # !!! 以下为测试用输出，勿删
 
-print("System config:")
-for attr, value in config.__dict__.items():
-    print(f"{attr} = {value}")
+# print("System config:")
+# for attr, value in config.__dict__.items():
+#     print(f"{attr} = {value}")
 
-print("\nHardware config:")
-for attr, value in acc0.__dict__.items():
-    print(f"{attr} = {value}")
+# print("\nHardware config:")
+# for attr, value in acc0.__dict__.items():
+#     print(f"{attr} = {value}")
 
-print("\nInput map mapping:")
-print(f"input_data_per_row = {input_data_per_row}")
-print(f"rows_per_input_channel = {rows_per_input_channel}")
-print(f"input_channels_per_ISload = {input_channels_per_ISload}")
-print(f"IS_load_times_per_inst = {IS_load_times_per_inst}")
+# print("\nInput map mapping:")
+# print(f"input_data_per_row = {input_data_per_row}")
+# print(f"rows_per_input_channel = {rows_per_input_channel}")
+# print(f"input_channels_per_ISload = {input_channels_per_ISload}")
+# print(f"IS_load_times_per_inst = {IS_load_times_per_inst}")
     
-print(f"IS_load_rows = {IS_load_rows}")
+# print(f"IS_load_rows = {IS_load_rows}")
 
-print("\nWeight map mapping:")
-print(f"weight_block_row = {weight_block_row}")
-print(f"weight_block_col = {weight_block_col}")
-print(f"weight_block_num = {weight_block_num}")
-print(f"weight_update_times_per_inst = {weight_update_times_per_inst}")
+# print("\nWeight map mapping:")
+# print(f"weight_block_row = {weight_block_row}")
+# print(f"weight_block_col = {weight_block_col}")
+# print(f"weight_block_num = {weight_block_num}")
+# print(f"weight_update_times_per_inst = {weight_update_times_per_inst}")
         
-print(f"weight_update_ls = {weight_update_ls}")
+# print(f"weight_update_ls = {weight_update_ls}")
         
-print("ls_matrix:\n", ls_matrix, "\n")
-print("atos_matrix:\n", atos_matrix, "\n")
+# print("ls_matrix:\n", ls_matrix, "\n")
+# print("atos_matrix:\n", atos_matrix, "\n")
