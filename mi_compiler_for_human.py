@@ -13,7 +13,7 @@ import math as m
 import torch
 
 # 可变参数
-config = Config(al=128, pc=16, scr=16, is_depth=512, os_depth=1024)
+config = Config(al=256, pc=16, scr=16, is_depth=512, os_depth=1024)
 
 acc0 = hwc(config)
 
@@ -91,10 +91,15 @@ def IDLE():
 def LOADIS_BLOCK(num_rows, input_map_position): #输入现在正要存的数据在input map中的位置，以及需要输入多少行
     with open('mi.log','a') as f:
         for i_rows in range(num_rows):
-            for j_reg in range(acc0.InputSRAMWidth//acc0.BusWidth):
-                f.write("lis "+str(j_reg)+" "+str(i_rows)+" "+str(input_map_position)+"\n")
-                input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH)
+            input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
+            for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
+                if j_reg != 0:
+                    f.write("lisp "+str(j_reg)+" "+str(i_rows)+" "+str(input_map_position)+"\n")
+                else:
+                    f.write("lis "+str(j_reg)+" "+str(i_rows)+" "+str(input_map_position)+"\n")
+                input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
                 # !!! 每一个channel的最后一行，可能要填0
+            input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth)
     return input_map_position
 
 def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个local switch，从第几个block开始，注：在isap下block按行输入，
@@ -106,9 +111,15 @@ def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个
                 i_weight_channel = i_pt * config.PC + j_channel
                 j_data_in_channel = i_at * config.AL
                 weight_map_position = i_weight_channel * weight_map_length + j_data_in_channel
-                for k_reg in range(config.WEIGHT_ROW):
-                    f.write("wu "+str(k_reg)+" "+str(j_channel*config.SCR*config.WEIGHT_ROW+k_reg*config.SCR+i_ls)+
-                            " " + str(weight_map_position)+"\n")
+                for k_reg in reversed(range(acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW)):
+                    row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW - 1 - k_reg) // (acc0.CIMsWriteWidth//acc0.BusWidth)
+                    pause_reg = k_reg % (acc0.CIMsWriteWidth//acc0.BusWidth)
+                    if pause_reg == 0:
+                        f.write("wu "+str(k_reg)+" "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                                " " + str(weight_map_position)+"\n")
+                    else:
+                        f.write("wup "+str(k_reg)+" "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                                " " + str(weight_map_position)+"\n")
             i_block += 1
 
 def CMPFIS_INT8(i_input_channel, computing_block):# 输入channel, computing block, 对当前channel内所有内容遍历CIM进行计算
@@ -155,10 +166,9 @@ for i_IS_load in range(IS_load_times_per_inst):
         WU_LSBANK(num_ls = weight_update_ls[j_weight_load], 
                   num_channel = config.PC,  # !!!可能有很多channel浪费
                   i_block = i_block)
-        IDLE()
-        IDLE()
-        IDLE()
-        IDLE()
+        
+        for i in range (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW):
+            IDLE()
 
         for i_input_channel in range(i_IS_load * input_channels_per_ISload, 
                                      i_IS_load * input_channels_per_ISload + 

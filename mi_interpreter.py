@@ -87,8 +87,9 @@ OS_output = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=to
 def WU(reg = 0, CIMaddress = 0, weight_map_position = 0, ren = 0, read_addr = 0):
     global OS_output
     global CIMaddress4
-    CIMaddress4[reg] = CIMaddress
-    if reg == config.WEIGHT_ROW-1:
+    row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth - 1 - reg) // (acc0.CIMsWriteWidth//acc0.BusWidth // config.WEIGHT_ROW)
+    CIMaddress4[row_reg] = CIMaddress
+    if row_reg == config.WEIGHT_ROW-1:
         byte_count = config.BUS_WIDTH // config.DATA_WIDTH
         i_weight_map_channel = weight_map_position // weight_map_length
         i_weight_data_channel = weight_map_position % weight_map_length
@@ -148,10 +149,10 @@ with open(file_path, 'r') as file:
             # get the instruction
             parameters = line.split()
             #print(parameters[0])
-            if parameters[0] == "lis":
+            if parameters[0] == "lis" | parameters[0] == "lisp":
                 LIS(int(parameters[1]), int(parameters[2]), int(parameters[3]))
 
-            elif parameters[0] == "wu":
+            elif parameters[0] == "wu" | parameters[0] == "wup":
                 if len(parameters) > 4:
                     WU(int(parameters[1]), int(parameters[2]), int(parameters[3]), 1, int(parameters[5]))
                 else:
