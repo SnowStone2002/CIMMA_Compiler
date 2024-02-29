@@ -94,9 +94,9 @@ def LOADIS_BLOCK(num_rows, input_map_position): #输入现在正要存的数据�
             input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
             for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                 if j_reg != 0:
-                    f.write("lisp "+str(j_reg)+" "+str(i_rows)+" "+str(input_map_position)+"\n")
+                    f.write("lisp\t"+str(j_reg)+"\t"+str(i_rows)+"\t"+str(input_map_position)+"\n")
                 else:
-                    f.write("lis "+str(j_reg)+" "+str(i_rows)+" "+str(input_map_position)+"\n")
+                    f.write("lis\t\t"+str(j_reg)+"\t"+str(i_rows)+"\t"+str(input_map_position)+"\n")
                 input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
                 # !!! 每一个channel的最后一行，可能要填0
             input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth)
@@ -115,11 +115,11 @@ def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个
                     row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW - 1 - k_reg) // (acc0.CIMsWriteWidth//acc0.BusWidth)
                     pause_reg = k_reg % (acc0.CIMsWriteWidth//acc0.BusWidth)
                     if pause_reg == 0:
-                        f.write("wu "+str(k_reg)+" "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
-                                " " + str(weight_map_position)+"\n")
+                        f.write("wu\t"+str(k_reg)+"\t"+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                                "\t" + str(weight_map_position)+"\n")
                     else:
-                        f.write("wup "+str(k_reg)+" "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
-                                " " + str(weight_map_position)+"\n")
+                        f.write("wup\t"+str(k_reg)+"\t"+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                                "\t" + str(weight_map_position)+"\n")
             i_block += 1
 
 def CMPFIS_INT8(i_input_channel, computing_block):# 输入channel, computing block, 对当前channel内所有内容遍历CIM进行计算
@@ -148,7 +148,7 @@ def CMPFIS_INT8(i_input_channel, computing_block):# 输入channel, computing blo
         add_read_n_lines_before('mi.log', n, read_command)
 
     with open('mi.log','a') as f:
-        f.write("cmpfis_int8 " + str(is_addr) + ' ' + str(i_ls) + ' ' + str(atos_flag) + ' ' +str(os_addr) + '\n')
+        f.write("cmpfis_int8\t" + str(is_addr) + '\t' + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr) + '\n')
                 # + '\t' + "ws = " + str(write_status) + '\t' + "n = " + str(n) + '\n')
     ws_history.update("write_status") 
         
