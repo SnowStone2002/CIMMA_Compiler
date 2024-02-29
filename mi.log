@@ -1,0 +1,81 @@
+starting compiler:
+lisp	3	0	96
+lisp	2	0	64
+lisp	1	0	32
+lis		0	0	0
+lisp	3	1	224
+lisp	2	1	192
+lisp	1	1	160
+lis		0	1	128
+lisp	3	2	352
+lisp	2	2	320
+lisp	1	2	288
+lis		0	2	256
+lisp	3	3	480
+lisp	2	3	448
+lisp	1	3	416
+lis		0	3	384
+lisp	3	4	608
+lisp	2	4	576
+lisp	1	4	544
+lis		0	4	512
+lisp	3	5	736
+lisp	2	5	704
+lisp	1	5	672
+lis		0	5	640
+lisp	3	6	864
+lisp	2	6	832
+lisp	1	6	800
+lis		0	6	768
+lisp	3	7	992
+lisp	2	7	960
+lisp	1	7	928
+lis		0	7	896
+wu	3	0	0
+wu	2	2	0
+wu	1	4	0
+wu	0	6	0
+wu	3	8	512
+wu	2	10	512
+wu	1	12	512
+wu	0	14	512
+wu	3	1	128
+wu	2	3	128
+wu	1	5	128
+wu	0	7	128
+wu	3	9	640
+wu	2	11	640
+wu	1	13	640
+wu	0	15	640
+nop
+nop
+nop
+nop
+cmpfis_int8	0	0	aor	0
+cmpfis_int8	1	1	tos	0
+cmpfis_int8	4	0	aor	1
+cmpfis_int8	5	1	tos	1
+wu	3	0	256
+wu	2	2	256
+wu	1	4	256
+wu	0	6	256
+wu	3	8	768
+wu	2	10	768
+wu	1	12	768
+wu	0	14	768
+wu	3	1	384
+wu	2	3	384
+wu	1	5	384
+wu	0	7	384
+wu	3	9	896
+wu	2	11	896
+wu	1	13	896
+wu	0	15	896
+nop
+nop
+nop
+nop
+cmpfis_int8	2	0	aor	0 read_OS_line 0
+cmpfis_int8	3	1	aos	0
+cmpfis_int8	6	0	aor	1 read_OS_line 1
+cmpfis_int8	7	1	aos	1

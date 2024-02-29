@@ -15,11 +15,11 @@ import math as m
 import torch
 
 # 可变参数
-config = Config(al=128, pc=16, scr=16, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=2, scr=2, is_depth=512, os_depth=1024)
 
 acc0 = hwc(config)
 
-gli = ['mvm', (32, 2304, 64)]
+gli = ['mvm', (2, 512, 2)]
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]
@@ -185,8 +185,9 @@ for i_weight_update in range(weight_update_times_per_inst):
         IDLE()
     input_map_position = 0
     for j_IS_load in range(IS_load_times_per_inst):
-        input_map_position = LOADIS_BLOCK(num_rows = IS_load_rows[j_IS_load], 
-                                            input_map_position = input_map_position)
+        if ((IS_load_times_per_inst != 1) | (i_weight_update == 0)):
+            input_map_position = LOADIS_BLOCK(num_rows = IS_load_rows[j_IS_load], 
+                                                input_map_position = input_map_position)
         for i_input_channel in range(j_IS_load * input_channels_per_ISload, 
                                         j_IS_load * input_channels_per_ISload + 
                                         IS_load_rows[j_IS_load] // rows_per_input_channel):
