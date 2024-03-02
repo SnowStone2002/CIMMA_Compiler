@@ -5,7 +5,7 @@
 # datatype: INT8
 # CIM is bit parallel
 
-# Mode - WSAP
+# Mode - WSPP
 
 from hw_config import hwc
 from hw_config import Config
@@ -15,11 +15,11 @@ import math as m
 import torch
 
 # 可变参数
-config = Config(al=128, pc=2, scr=2, is_depth=4, os_depth=1024)
+config = Config(al=128, pc=16, scr=16, is_depth=512, os_depth=1024)
 
 acc0 = hwc(config)
 
-gli = ['mvm', (2, 512, 2)]
+gli = ['mvm', (55, 768, 64)]
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]
@@ -52,8 +52,9 @@ acc_times = weight_block_col
 # region 下面两个矩阵非常重要，ls代表了每一次cim计算local switch的状态（用第几个存储的数据做计算）
 ls_matrix = torch.zeros(para_times,acc_times) # local switch
 ls_fg = 0
-for i_pt in range(para_times):
-    for i_at in range(acc_times):
+
+for i_at in range(acc_times):
+    for i_pt in range(para_times):
         ls_matrix[i_pt,i_at] = ls_fg
         ls_fg = ls_fg+1
         if ls_fg == config.SCR: ls_fg = 0
@@ -67,15 +68,12 @@ atos_dict = ['aor','tos','aos']
 
 atos_matrix = torch.zeros(para_times,acc_times)
 for i_pt in range(para_times):
-    row_st_fg = 0 # row start flag
     for i_at in range(acc_times):    
         # 0:aor, 1:tos, 2:aos
-        if i_at == acc_times-1 or ls_matrix[i_pt,i_at] == acc0.LocalSwitchrows - 1:
-            if row_st_fg == 0: 
-                atos_matrix[i_pt,i_at] = tos
-                row_st_fg = 1
-            else:
-                atos_matrix[i_pt,i_at] = aos
+        if i_at == 0: 
+            atos_matrix[i_pt,i_at] = tos
+        else:
+            atos_matrix[i_pt,i_at] = aos
 # endregion
                 
 def LOG_INIT():
@@ -89,9 +87,6 @@ def IDLE():
 def LOADIS_BLOCK(num_rows, input_map_position): #输入现在正要存的数据在input map中的位置，以及需要输入多少行
     with open('wsap.log','a') as f:
         for i_rows in range(num_rows):
-            # input_map_position = (i_rows // rows_per_input_channel) * input_map_length # channel 对应的
-            # + (i_rows % rows_per_input_channel) * acc0.InputSRAMWidth // config.DATA_WIDTH # row 对应的
-            # + int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1) #一行内用于递减的position reg
             input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
             for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                 if j_reg != 0:
@@ -127,8 +122,8 @@ def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个
 def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 对当前channel内所有内容遍历CIM进行计算
     # bit-parallel
     i_ls = computing_block % config.SCR
-    i_pt = computing_block // weight_block_col
-    i_at = computing_block % weight_block_col
+    i_pt = computing_block % weight_block_row
+    i_at = computing_block // weight_block_row
     # atos_flag = int(atos_matrix[i_pt,i_at])
     atos_flag = atos_dict[int(atos_matrix[i_pt,i_at].item())]
     os_addr = i_input_channel * para_times + i_pt
@@ -176,10 +171,9 @@ for i_weight_update in range(weight_update_times_per_inst):
                 i_block = i_block)
     for i in range (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW):
         IDLE()
-    
-    for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
-        j_compute_block = i_block + j_ls
-        for i_input_channel in range(input_map_channel):
+    for i_input_channel in range(input_map_channel):
+        for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
+            j_compute_block = i_block + j_ls
             COMPUTE(i_input_channel = i_input_channel, 
                     computing_block = j_compute_block)
     i_block += weight_update_ls[i_weight_update]
