@@ -1,4 +1,20 @@
 starting compiler:
+lisp	3	0	96
+lisp	2	0	64
+lisp	1	0	32
+lis		0	0	0
+lisp	3	1	224
+lisp	2	1	192
+lisp	1	1	160
+lis		0	1	128
+lisp	3	2	352
+lisp	2	2	320
+lisp	1	2	288
+lis		0	2	256
+lisp	3	3	480
+lisp	2	3	448
+lisp	1	3	416
+lis		0	3	384
 wu	3	0	0
 wu	2	2	0
 wu	1	4	0
@@ -19,26 +35,16 @@ nop
 nop
 nop
 nop
-lisp	3	0	96
-lisp	2	0	64
-lisp	1	0	32
-lis		0	0	0
-lisp	3	1	224
-lisp	2	1	192
-lisp	1	1	160
-lis		0	1	128
-lisp	3	2	608
-lisp	2	2	576
-lisp	1	2	544
-lis		0	2	512
-lisp	3	3	736
-lisp	2	3	704
-lisp	1	3	672
-lis		0	3	640
 cmpfis	0	0	aor	0
 cmpfis	1	1	tos	0
-cmpfis	2	0	aor	1
-cmpfis	3	1	tos	1
+cmpgtp	0	aor	1	3	608
+cmpgtp	0	aor	1	2	576
+cmpgtp	0	aor	1	1	544
+cmpgt	0	aor	1	0	512
+cmpgtp	1	tos	1	3	736
+cmpgtp	1	tos	1	2	704
+cmpgtp	1	tos	1	1	672
+cmpgt	1	tos	1	0	640
 wu	3	0	256
 wu	2	2	256
 wu	1	4	256
@@ -59,19 +65,13 @@ nop
 nop
 nop
 nop
-cmpgtp	0	aor	03352
-cmpgtp	0	aor	02320
-cmpgtp	0	aor	01288
-cmpgt	0	aor	00256 read_OS_line 0
-cmpgtp	1	aos	03480
-cmpgtp	1	aos	02448
-cmpgtp	1	aos	01416
-cmpgt	1	aos	00384
-cmpgtp	0	aor	13864
-cmpgtp	0	aor	12832
-cmpgtp	0	aor	11800
-cmpgt	0	aor	10768 read_OS_line 1
-cmpgtp	1	aos	13992
-cmpgtp	1	aos	12960
-cmpgtp	1	aos	11928
-cmpgt	1	aos	10896
+cmpfis	2	0	aor	0 read_OS_line 0
+cmpfis	3	1	aos	0
+cmpgtp	0	aor	1	3	864
+cmpgtp	0	aor	1	2	832
+cmpgtp	0	aor	1	1	800
+cmpgt	0	aor	1	0	768 read_OS_line 1
+cmpgtp	1	aos	1	3	992
+cmpgtp	1	aos	1	2	960
+cmpgtp	1	aos	1	1	928
+cmpgt	1	aos	1	0	896
