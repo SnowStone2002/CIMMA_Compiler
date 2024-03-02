@@ -15,11 +15,11 @@ import math as m
 import torch
 
 # 可变参数
-config = Config(al=128, pc=16, scr=16, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=2, scr=2, is_depth=4, os_depth=1024)
 
 acc0 = hwc(config)
 
-gli = ['mvm', (32, 2304, 64)]
+gli = ['mvm', (2, 512, 2)]
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]
@@ -30,17 +30,9 @@ input_map_channel  = gli[1][2]
 
 # 计算input map到IS的mapping
 # region 载入尽量多的input vector, min{lac*scr, lat},只存一次
-data_length_stored_IS = min(config.AL * config.SCR, input_map_length)
-input_data_per_row = acc0.InputSRAMWidth // config.DATA_WIDTH
-rows_per_input_channel = m.ceil(data_length_stored_IS / input_data_per_row) # 与isap不同
+input_data_per_row = m.floor(acc0.InputSRAMWidth / config.DATA_WIDTH)
+rows_per_input_channel = m.ceil(input_map_length / input_data_per_row)
 input_channels_per_ISload = min(acc0.InputSRAMDepth // rows_per_input_channel, input_map_channel)
-
-IS_load_times_per_inst = input_map_channel // input_channels_per_ISload
-
-IS_load_rows = [input_channels_per_ISload * rows_per_input_channel] * (IS_load_times_per_inst)
-if input_map_channel % input_channels_per_ISload != 0:
-    IS_load_rows[IS_load_times_per_inst-1] = input_map_channel % input_channels_per_ISload * rows_per_input_channel
-
 # endregion
 
 # region 将weight map切成CIM size的block，放入CIM中
@@ -140,7 +132,7 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
     # atos_flag = int(atos_matrix[i_pt,i_at])
     atos_flag = atos_dict[int(atos_matrix[i_pt,i_at].item())]
     os_addr = i_input_channel * para_times + i_pt
-    is_addr = i_input_channel % input_channels_per_ISload * rows_per_input_channel + i_at
+    is_addr = i_input_channel * rows_per_input_channel + i_at
     if atos_matrix[i_pt,i_at] == 0:
         write_status = 0
     elif os_addr % 2 == 1:
@@ -158,18 +150,18 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
         add_read_n_lines_before('wsap.log', n, read_command)
 
     with open('wsap.log','a') as f:
-        if i_at <= rows_per_input_channel-1:
+        if i_input_channel < input_channels_per_ISload:
             f.write("cmpfis\t" + str(is_addr) + '\t' + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr) + '\n')
                     # + '\t' + "ws = " + str(write_status) + '\t' + "n = " + str(n) + '\n')
         else:
             input_map_position = i_input_channel * input_map_length + i_at * config.AL + int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
             for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                 if j_reg != 0:
-                    f.write("cmpgtp\t" + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr)
-                            +str(j_reg)+str(input_map_position)+"\n")
+                    f.write("cmpgtp\t" + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr)+ '\t' 
+                            +str(j_reg)+ '\t' +str(input_map_position)+"\n")
                 else:
-                    f.write("cmpgt\t" + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr)
-                            +str(j_reg)+str(input_map_position)+"\n")
+                    f.write("cmpgt\t" + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr)+ '\t' 
+                            +str(j_reg)+ '\t' +str(input_map_position)+"\n")
                 input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
     ws_history.update("write_status") 
 
@@ -177,23 +169,19 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
 LOG_INIT()
 i_block = 0
 ws_history = write_history.WriteStatusHistory()
+LOADIS_BLOCK(num_rows = rows_per_input_channel * input_channels_per_ISload, input_map_position = 0)
 for i_weight_update in range(weight_update_times_per_inst):
     WU_LSBANK(num_ls = weight_update_ls[i_weight_update], 
                 num_channel = config.PC,  # !!!可能有很多channel浪费
                 i_block = i_block)
     for i in range (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW):
         IDLE()
-    input_map_position = 0
-    for j_IS_load in range(IS_load_times_per_inst):
-        input_map_position = LOADIS_BLOCK(num_rows = IS_load_rows[j_IS_load], 
-                                            input_map_position = input_map_position)
-        for i_input_channel in range(j_IS_load * input_channels_per_ISload, 
-                                        j_IS_load * input_channels_per_ISload + 
-                                        IS_load_rows[j_IS_load] // rows_per_input_channel):
-            for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
-                j_compute_block = i_block + j_ls
-                COMPUTE(i_input_channel = i_input_channel, 
-                            computing_block = j_compute_block)
+    
+    for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
+        j_compute_block = i_block + j_ls
+        for i_input_channel in range(input_map_channel):
+            COMPUTE(i_input_channel = i_input_channel, 
+                    computing_block = j_compute_block)
     i_block += weight_update_ls[i_weight_update]
 
 # !!! 以下为测试用输出，勿删
@@ -207,13 +195,9 @@ for attr, value in acc0.__dict__.items():
     print(f"{attr} = {value}")
 
 print("\nInput map mapping:")
-print(f"data_length_stored_IS = {data_length_stored_IS}")
 print(f"input_data_per_row = {input_data_per_row}")
 print(f"rows_per_input_channel = {rows_per_input_channel}")
 print(f"input_channels_per_ISload = {input_channels_per_ISload}")
-print(f"IS_load_times_per_inst = {IS_load_times_per_inst}")
-    
-print(f"IS_load_rows = {IS_load_rows}")
 
 print("\nWeight map mapping:")
 print(f"weight_block_row = {weight_block_row}")
