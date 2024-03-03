@@ -18,4 +18,5 @@ def add_read_n_lines_before(filename, n, append_content):
         file.write(lines[0] + " ")
         file.write(append_content)
         for line in lines[1:]:
-            file.write(line + '\n')
+            # file.write(line + '\n')
+            file.write('\n' + line)
