@@ -15,10 +15,10 @@ from inst_stack import inst_stack
 import os
 
 # 可变参数
-config = Config(al=64, pc=16, scr=4, bus_width = 128, is_depth=32, os_depth=1)
+config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (55, 1024, 64)]
-data_stream = 'isap'
+gli = ['mvm', (80, 512, 64)]
+data_stream = 'wspp'
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]
@@ -31,7 +31,7 @@ input_map_channel  = gli[1][2]
 # region 对于Input_map 到 IS 的 mapping, 我们首先需要将一个channel的数据放入IS，如果一个channel放完，IS当前行未满，则后续补0，新的channel另起一行
 input_data_per_row = m.floor(acc0.InputSRAMWidth / config.DATA_WIDTH)
 rows_per_input_channel = m.ceil(input_map_length / input_data_per_row)
-input_channels_per_ISload = m.floor(acc0.InputSRAMDepth / rows_per_input_channel)
+input_channels_per_ISload = min(acc0.InputSRAMDepth // rows_per_input_channel, input_map_channel)
 IS_load_times_per_inst = m.ceil(input_map_channel / input_channels_per_ISload)
 
 IS_load_rows = [input_channels_per_ISload * rows_per_input_channel] * (IS_load_times_per_inst)
@@ -80,7 +80,7 @@ if data_stream == 'isap' or data_stream == 'wsap': # ap 优先acc
                 else:
                     atos_matrix[i_pt,i_at] = aos
 
-else:                                               # pp 有限para
+elif data_stream == 'ispp' or data_stream == 'wspp':   # pp 有限para
     for i_at in range(acc_times):
         for i_pt in range(para_times):
             ls_matrix[i_pt,i_at] = ls_fg
@@ -232,7 +232,7 @@ def WS_Process():
 
 # region main
 # stack for os read optimization
-fifo_len = 1
+fifo_len = 10
 stk = inst_stack(fifo_len)
 
 # for os_overflow penalty

@@ -8,7 +8,7 @@ def verify(inst, new_addr):
         return False
 
     else: # tos or aos 
-        os_addr = int(inst[inst.find("<os_addr>")+10 : len(inst)])
+        os_addr = int(inst[inst.find("<os_addr_wt>")+13 : len(inst)])
         if (os_addr + new_addr) % 2 == 1: #even and odd
             return True
         else:
@@ -30,13 +30,19 @@ class inst_stack:
                     rd_req = 0 #Read Request Solved
                     break
                 else:
-                    if i == 0: print("@@@@@@@@@@@@@@@@@@@@@!Warning! Unsolved Read Request!!@@@@@@@@@@@@@@@@@@@@@")
+                    if i == 0: 
+                        self.req_quene[i] = 2
+                        self.addr_quene[i] = rd_addr
+                        # print("@@@@@@@@@@@@@@@@@@@@@!Warning! Unsolved Read Request!!@@@@@@@@@@@@@@@@@@@@@")
 
         with open("mi.log","a") as f:
             if self.req_quene[0] == 0:
                 f.write(str(self.inst_fifo[0]))
-            else:
+            elif self.req_quene[0] == 1:
                 f.write(str(self.inst_fifo[0][0:len(self.inst_fifo[0])-1]) + "\t <os_addr_rd> "+str(self.addr_quene[0])+'\n')
+            elif self.req_quene[0] == 2:
+                f.write(str(self.inst_fifo[0]))
+                f.write("nop\t <os_addr_rd> "+str(self.addr_quene[0])+'\n')
         
         # print(self.inst_fifo[0])
 

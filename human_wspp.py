@@ -15,7 +15,7 @@ import math as m
 import torch
 
 # 可变参数
-config = Config(al=128, pc=16, scr=4, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
 
 acc0 = hwc(config)
 
