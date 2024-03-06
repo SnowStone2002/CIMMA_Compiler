@@ -13,19 +13,13 @@ import write_history
 from append_read import add_read_n_lines_before
 import math as m
 import torch
+from inst_stack import inst_stack
+import os
 
 # 可变参数
-config = Config(al=128, pc=16, scr=16, is_depth=512, os_depth=1024)
-
+config = Config(al=64, pc=16, scr=4, is_depth=32, os_depth=1)
 acc0 = hwc(config)
-
-gli = ['mvm', (55, 768, 64)]
-
-# config = Config(al=128, pc=2, scr=2, is_depth=512, os_depth=1024)
-
-# acc0 = hwc(config)
-
-# gli = ['mvm', (2, 512, 2)]
+gli = ['mvm', (55, 1024, 64)]
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]
@@ -44,7 +38,7 @@ IS_load_times_per_inst = m.ceil(input_map_channel / input_channels_per_ISload)
 IS_load_rows = [input_channels_per_ISload * rows_per_input_channel] * (IS_load_times_per_inst)
 if input_map_channel % input_channels_per_ISload != 0:
     IS_load_rows[IS_load_times_per_inst-1] = input_map_channel % input_channels_per_ISload * rows_per_input_channel
-# endregion
+# endregin
 
 # 将weight map切成CIM size的block，放入CIM中
 weight_block_row = m.ceil(weight_map_channel / config.PC)
@@ -87,14 +81,23 @@ for i_pt in range(para_times):
             else:
                 atos_matrix[i_pt,i_at] = aos
 # endregion
-                
+
+
+
 def LOG_INIT():
-    with open('mi.log','w') as f:
-        f.write("starting compiler:\n")
+    os.remove(r'mi.log')
+    if VERIFY == 1:
+        with open('mi.log','w') as f:
+            f.write("starting compiler:\n")
+    else:
+        stk.push("starting compiler:\n")
 
 def IDLE():
-    with open('mi.log','a') as f:
-        f.write("nop\n")
+    if VERIFY == 1:
+        with open('mi.log','a') as f:
+            f.write("nop\n")
+    else:
+        stk.push("nop\n")
 
 def LOADIS_BLOCK(num_rows, input_map_position): #输入现在正要存的数据在input map中的位置，以及需要输入多少行
     with open('mi.log','a') as f:
@@ -102,9 +105,18 @@ def LOADIS_BLOCK(num_rows, input_map_position): #输入现在正要存的数据�
             input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
             for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                 if j_reg != 0:
-                    f.write("lisp\t"+str(j_reg)+"\t"+str(i_rows)+"\t"+str(input_map_position)+"\n")
+                    if VERIFY == 1:
+                        f.write("lisp\t"+str(j_reg)+"\t"+str(i_rows)+"\t"+str(input_map_position)+"\n")
+                    else:
+                        #f.write("lis_p\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
+                        stk.push(inst="lis_p\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
                 else:
-                    f.write("lis\t\t"+str(j_reg)+"\t"+str(i_rows)+"\t"+str(input_map_position)+"\n")
+                    if VERIFY == 1:
+                        f.write("lis\t\t"+str(j_reg)+"\t"+str(i_rows)+"\t"+str(input_map_position)+"\n")
+                    else:
+                        # f.write("lis\t\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
+                        stk.push(inst="lis\t\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
+
                 input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
                 # !!! 每一个channel的最后一行，可能要填0
             input_map_position += int(acc0.InputSRAMWidth / config.DATA_WIDTH) + int(config.BUS_WIDTH / config.DATA_WIDTH)
@@ -123,11 +135,19 @@ def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个
                     row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW - 1 - k_reg) // (acc0.CIMsWriteWidth//acc0.BusWidth)
                     pause_reg = k_reg % (acc0.CIMsWriteWidth//acc0.BusWidth)
                     if pause_reg == 0:
-                        f.write("wu\t"+str(k_reg)+"\t"+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                        if VERIFY == 1:
+                            f.write("wu\t"+str(k_reg)+"\t"+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
                                 "\t" + str(weight_map_position)+"\n")
+                        else:
+                            # f.write("wu\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
+                            stk.push(inst="wu\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
                     else:
-                        f.write("wup\t"+str(k_reg)+"\t"+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                        if VERIFY == 1:
+                            f.write("wup\t"+str(k_reg)+"\t"+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
                                 "\t" + str(weight_map_position)+"\n")
+                        else:
+                            #f.write("wu_p\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
+                            stk.push(inst="wu_p\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
             i_block += 1
 
 def CMP(i_input_channel, computing_block):# 输入channel, computing block, 对当前channel内所有内容遍历CIM进行计算
@@ -139,27 +159,61 @@ def CMP(i_input_channel, computing_block):# 输入channel, computing block, 对�
     atos_flag = atos_dict[int(atos_matrix[i_pt,i_at].item())]
     os_addr = i_input_channel * para_times + i_pt
     is_addr = i_input_channel % input_channels_per_ISload * rows_per_input_channel + i_at
-    if atos_matrix[i_pt,i_at] == 0:
-        write_status = 0
-    elif os_addr % 2 == 1:
-        write_status = 1
-    else:
-        write_status = 2
+    #if atos_matrix[i_pt,i_at] == 0:
+    #    write_status = 0
+    #elif os_addr % 2 == 1:
+    #    write_status = 1
+    #else:
+    #    write_status = 2
 
-    if atos_matrix[i_pt,i_at] != 2 :
-        n = 0
-    else:
-        n = ws_history.find_last_different_status(write_status)
+    #if atos_matrix[i_pt,i_at] != 2 :
+    #    n = 0
+    #else:
+    #    n = ws_history.find_last_different_status(write_status)
     
-    if n != 0:
-        read_command = "read_OS_line "+str(os_addr)
-        add_read_n_lines_before('mi.log', n, read_command)
+    #if n != 0:
+    #    read_command = "<os_addr_rd> "+str(os_addr)
+    #    add_read_n_lines_before('mi.log', n, read_command)
 
     with open('mi.log','a') as f:
-        f.write("cmpfis_int8\t" + str(is_addr) + '\t' + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr) + '\n')
-                # + '\t' + "ws = " + str(write_status) + '\t' + "n = " + str(n) + '\n')
-    ws_history.update("write_status") 
+        global os_virtual_depth
 
+        if VERIFY == 1:
+            f.write("cmpfis_int8\t" + str(is_addr) + '\t' + str(i_ls) + '\t' + str(atos_flag) + '\t' +str(os_addr) + '\n')
+                # + '\t' + "ws = " + str(write_status) + '\t' + "n = " + str(n) + '\n')
+        else:
+
+            #f.write("cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr> ' +str(os_addr) + '\n')
+            if atos_flag == 'aos': # aos 
+                if os_addr > os_virtual_depth: # aos, os overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
+                    stk.push(inst="pload\t\n")
+                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>'+ '\n')
+                else: # aos, os not overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                    else: # gen aos rd request
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) 
+
+            elif atos_flag == 'tos': # tos
+                if os_addr > os_virtual_depth: # tos, os overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
+                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
+                else: # tos, os not overflow
+                    if i_at == acc_times-1: #gen rd request
+                        os_virtual_depth += 1
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
+                    else: # tos
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n')
+            
+            else: # aor
+                stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\n')
+
+
+# ws_history.update("write_status") 
 
 
 # region isap
@@ -191,9 +245,22 @@ def ISAP():
 # endregion
 
 
+# stack for os read optimization
+fifo_len = 1
+stk = inst_stack(fifo_len)
+
+# for os_overflow penalty
+os_virtual_depth = acc0.OutputSRAMDepth
+
+VERIFY = 0 
 LOG_INIT()
-ws_history = write_history.WriteStatusHistory()
+#ws_history = write_history.WriteStatusHistory()
 ISAP()
+for i in range(fifo_len):
+    stk.push()
+
+
+
 
 # !!! 以下为测试用输出，勿删
 
