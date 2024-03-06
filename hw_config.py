@@ -1,14 +1,14 @@
 class Config:
-    def __init__(self, al, pc, scr, is_depth, os_depth):
+    def __init__(self, al, pc, scr, bus_width, is_depth, os_depth):
         self.AL = al  # acc_len for all CIMs
         self.PC = pc  # parallel_channel for all CIMs
         self.SCR = scr
+        self.BUS_WIDTH = bus_width
         self.IS_DEPTH = is_depth
         self.OS_DEPTH = os_depth
 
         # 固定值
         self.DATA_WIDTH = 8
-        self.BUS_WIDTH = 256
 
         self.WEIGHT_ROW = 4
         self.WEIGHT_COL = 2

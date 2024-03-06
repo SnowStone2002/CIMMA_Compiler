@@ -15,11 +15,11 @@ import math as m
 import torch
 
 # 可变参数
-config = Config(al=128, pc=16, scr=16, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=16, scr=4, is_depth=512, os_depth=1024)
 
 acc0 = hwc(config)
 
-gli = ['mvm', (80, 256, 64)]
+gli = ['mvm', (80, 512, 64)]
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]

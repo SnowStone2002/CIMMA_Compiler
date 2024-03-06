@@ -1,0 +1,3605 @@
+starting compiler:
+lisp	3	0	96
+lisp	2	0	64
+lisp	1	0	32
+lis		0	0	0
+lisp	3	1	224
+lisp	2	1	192
+lisp	1	1	160
+lis		0	1	128
+lisp	3	2	352
+lisp	2	2	320
+lisp	1	2	288
+lis		0	2	256
+lisp	3	3	480
+lisp	2	3	448
+lisp	1	3	416
+lis		0	3	384
+lisp	3	4	608
+lisp	2	4	576
+lisp	1	4	544
+lis		0	4	512
+lisp	3	5	736
+lisp	2	5	704
+lisp	1	5	672
+lis		0	5	640
+lisp	3	6	864
+lisp	2	6	832
+lisp	1	6	800
+lis		0	6	768
+lisp	3	7	992
+lisp	2	7	960
+lisp	1	7	928
+lis		0	7	896
+lisp	3	8	1120
+lisp	2	8	1088
+lisp	1	8	1056
+lis		0	8	1024
+lisp	3	9	1248
+lisp	2	9	1216
+lisp	1	9	1184
+lis		0	9	1152
+lisp	3	10	1376
+lisp	2	10	1344
+lisp	1	10	1312
+lis		0	10	1280
+lisp	3	11	1504
+lisp	2	11	1472
+lisp	1	11	1440
+lis		0	11	1408
+lisp	3	12	1632
+lisp	2	12	1600
+lisp	1	12	1568
+lis		0	12	1536
+lisp	3	13	1760
+lisp	2	13	1728
+lisp	1	13	1696
+lis		0	13	1664
+lisp	3	14	1888
+lisp	2	14	1856
+lisp	1	14	1824
+lis		0	14	1792
+lisp	3	15	2016
+lisp	2	15	1984
+lisp	1	15	1952
+lis		0	15	1920
+lisp	3	16	2144
+lisp	2	16	2112
+lisp	1	16	2080
+lis		0	16	2048
+lisp	3	17	2272
+lisp	2	17	2240
+lisp	1	17	2208
+lis		0	17	2176
+lisp	3	18	2400
+lisp	2	18	2368
+lisp	1	18	2336
+lis		0	18	2304
+lisp	3	19	2528
+lisp	2	19	2496
+lisp	1	19	2464
+lis		0	19	2432
+lisp	3	20	2656
+lisp	2	20	2624
+lisp	1	20	2592
+lis		0	20	2560
+lisp	3	21	2784
+lisp	2	21	2752
+lisp	1	21	2720
+lis		0	21	2688
+lisp	3	22	2912
+lisp	2	22	2880
+lisp	1	22	2848
+lis		0	22	2816
+lisp	3	23	3040
+lisp	2	23	3008
+lisp	1	23	2976
+lis		0	23	2944
+lisp	3	24	3168
+lisp	2	24	3136
+lisp	1	24	3104
+lis		0	24	3072
+lisp	3	25	3296
+lisp	2	25	3264
+lisp	1	25	3232
+lis		0	25	3200
+lisp	3	26	3424
+lisp	2	26	3392
+lisp	1	26	3360
+lis		0	26	3328
+lisp	3	27	3552
+lisp	2	27	3520
+lisp	1	27	3488
+lis		0	27	3456
+lisp	3	28	3680
+lisp	2	28	3648
+lisp	1	28	3616
+lis		0	28	3584
+lisp	3	29	3808
+lisp	2	29	3776
+lisp	1	29	3744
+lis		0	29	3712
+lisp	3	30	3936
+lisp	2	30	3904
+lisp	1	30	3872
+lis		0	30	3840
+lisp	3	31	4064
+lisp	2	31	4032
+lisp	1	31	4000
+lis		0	31	3968
+lisp	3	32	4192
+lisp	2	32	4160
+lisp	1	32	4128
+lis		0	32	4096
+lisp	3	33	4320
+lisp	2	33	4288
+lisp	1	33	4256
+lis		0	33	4224
+lisp	3	34	4448
+lisp	2	34	4416
+lisp	1	34	4384
+lis		0	34	4352
+lisp	3	35	4576
+lisp	2	35	4544
+lisp	1	35	4512
+lis		0	35	4480
+lisp	3	36	4704
+lisp	2	36	4672
+lisp	1	36	4640
+lis		0	36	4608
+lisp	3	37	4832
+lisp	2	37	4800
+lisp	1	37	4768
+lis		0	37	4736
+lisp	3	38	4960
+lisp	2	38	4928
+lisp	1	38	4896
+lis		0	38	4864
+lisp	3	39	5088
+lisp	2	39	5056
+lisp	1	39	5024
+lis		0	39	4992
+lisp	3	40	5216
+lisp	2	40	5184
+lisp	1	40	5152
+lis		0	40	5120
+lisp	3	41	5344
+lisp	2	41	5312
+lisp	1	41	5280
+lis		0	41	5248
+lisp	3	42	5472
+lisp	2	42	5440
+lisp	1	42	5408
+lis		0	42	5376
+lisp	3	43	5600
+lisp	2	43	5568
+lisp	1	43	5536
+lis		0	43	5504
+lisp	3	44	5728
+lisp	2	44	5696
+lisp	1	44	5664
+lis		0	44	5632
+lisp	3	45	5856
+lisp	2	45	5824
+lisp	1	45	5792
+lis		0	45	5760
+lisp	3	46	5984
+lisp	2	46	5952
+lisp	1	46	5920
+lis		0	46	5888
+lisp	3	47	6112
+lisp	2	47	6080
+lisp	1	47	6048
+lis		0	47	6016
+lisp	3	48	6240
+lisp	2	48	6208
+lisp	1	48	6176
+lis		0	48	6144
+lisp	3	49	6368
+lisp	2	49	6336
+lisp	1	49	6304
+lis		0	49	6272
+lisp	3	50	6496
+lisp	2	50	6464
+lisp	1	50	6432
+lis		0	50	6400
+lisp	3	51	6624
+lisp	2	51	6592
+lisp	1	51	6560
+lis		0	51	6528
+lisp	3	52	6752
+lisp	2	52	6720
+lisp	1	52	6688
+lis		0	52	6656
+lisp	3	53	6880
+lisp	2	53	6848
+lisp	1	53	6816
+lis		0	53	6784
+lisp	3	54	7008
+lisp	2	54	6976
+lisp	1	54	6944
+lis		0	54	6912
+lisp	3	55	7136
+lisp	2	55	7104
+lisp	1	55	7072
+lis		0	55	7040
+lisp	3	56	7264
+lisp	2	56	7232
+lisp	1	56	7200
+lis		0	56	7168
+lisp	3	57	7392
+lisp	2	57	7360
+lisp	1	57	7328
+lis		0	57	7296
+lisp	3	58	7520
+lisp	2	58	7488
+lisp	1	58	7456
+lis		0	58	7424
+lisp	3	59	7648
+lisp	2	59	7616
+lisp	1	59	7584
+lis		0	59	7552
+lisp	3	60	7776
+lisp	2	60	7744
+lisp	1	60	7712
+lis		0	60	7680
+lisp	3	61	7904
+lisp	2	61	7872
+lisp	1	61	7840
+lis		0	61	7808
+lisp	3	62	8032
+lisp	2	62	8000
+lisp	1	62	7968
+lis		0	62	7936
+lisp	3	63	8160
+lisp	2	63	8128
+lisp	1	63	8096
+lis		0	63	8064
+lisp	3	64	8288
+lisp	2	64	8256
+lisp	1	64	8224
+lis		0	64	8192
+lisp	3	65	8416
+lisp	2	65	8384
+lisp	1	65	8352
+lis		0	65	8320
+lisp	3	66	8544
+lisp	2	66	8512
+lisp	1	66	8480
+lis		0	66	8448
+lisp	3	67	8672
+lisp	2	67	8640
+lisp	1	67	8608
+lis		0	67	8576
+lisp	3	68	8800
+lisp	2	68	8768
+lisp	1	68	8736
+lis		0	68	8704
+lisp	3	69	8928
+lisp	2	69	8896
+lisp	1	69	8864
+lis		0	69	8832
+lisp	3	70	9056
+lisp	2	70	9024
+lisp	1	70	8992
+lis		0	70	8960
+lisp	3	71	9184
+lisp	2	71	9152
+lisp	1	71	9120
+lis		0	71	9088
+lisp	3	72	9312
+lisp	2	72	9280
+lisp	1	72	9248
+lis		0	72	9216
+lisp	3	73	9440
+lisp	2	73	9408
+lisp	1	73	9376
+lis		0	73	9344
+lisp	3	74	9568
+lisp	2	74	9536
+lisp	1	74	9504
+lis		0	74	9472
+lisp	3	75	9696
+lisp	2	75	9664
+lisp	1	75	9632
+lis		0	75	9600
+lisp	3	76	9824
+lisp	2	76	9792
+lisp	1	76	9760
+lis		0	76	9728
+lisp	3	77	9952
+lisp	2	77	9920
+lisp	1	77	9888
+lis		0	77	9856
+lisp	3	78	10080
+lisp	2	78	10048
+lisp	1	78	10016
+lis		0	78	9984
+lisp	3	79	10208
+lisp	2	79	10176
+lisp	1	79	10144
+lis		0	79	10112
+lisp	3	80	10336
+lisp	2	80	10304
+lisp	1	80	10272
+lis		0	80	10240
+lisp	3	81	10464
+lisp	2	81	10432
+lisp	1	81	10400
+lis		0	81	10368
+lisp	3	82	10592
+lisp	2	82	10560
+lisp	1	82	10528
+lis		0	82	10496
+lisp	3	83	10720
+lisp	2	83	10688
+lisp	1	83	10656
+lis		0	83	10624
+lisp	3	84	10848
+lisp	2	84	10816
+lisp	1	84	10784
+lis		0	84	10752
+lisp	3	85	10976
+lisp	2	85	10944
+lisp	1	85	10912
+lis		0	85	10880
+lisp	3	86	11104
+lisp	2	86	11072
+lisp	1	86	11040
+lis		0	86	11008
+lisp	3	87	11232
+lisp	2	87	11200
+lisp	1	87	11168
+lis		0	87	11136
+lisp	3	88	11360
+lisp	2	88	11328
+lisp	1	88	11296
+lis		0	88	11264
+lisp	3	89	11488
+lisp	2	89	11456
+lisp	1	89	11424
+lis		0	89	11392
+lisp	3	90	11616
+lisp	2	90	11584
+lisp	1	90	11552
+lis		0	90	11520
+lisp	3	91	11744
+lisp	2	91	11712
+lisp	1	91	11680
+lis		0	91	11648
+lisp	3	92	11872
+lisp	2	92	11840
+lisp	1	92	11808
+lis		0	92	11776
+lisp	3	93	12000
+lisp	2	93	11968
+lisp	1	93	11936
+lis		0	93	11904
+lisp	3	94	12128
+lisp	2	94	12096
+lisp	1	94	12064
+lis		0	94	12032
+lisp	3	95	12256
+lisp	2	95	12224
+lisp	1	95	12192
+lis		0	95	12160
+lisp	3	96	12384
+lisp	2	96	12352
+lisp	1	96	12320
+lis		0	96	12288
+lisp	3	97	12512
+lisp	2	97	12480
+lisp	1	97	12448
+lis		0	97	12416
+lisp	3	98	12640
+lisp	2	98	12608
+lisp	1	98	12576
+lis		0	98	12544
+lisp	3	99	12768
+lisp	2	99	12736
+lisp	1	99	12704
+lis		0	99	12672
+lisp	3	100	12896
+lisp	2	100	12864
+lisp	1	100	12832
+lis		0	100	12800
+lisp	3	101	13024
+lisp	2	101	12992
+lisp	1	101	12960
+lis		0	101	12928
+lisp	3	102	13152
+lisp	2	102	13120
+lisp	1	102	13088
+lis		0	102	13056
+lisp	3	103	13280
+lisp	2	103	13248
+lisp	1	103	13216
+lis		0	103	13184
+lisp	3	104	13408
+lisp	2	104	13376
+lisp	1	104	13344
+lis		0	104	13312
+lisp	3	105	13536
+lisp	2	105	13504
+lisp	1	105	13472
+lis		0	105	13440
+lisp	3	106	13664
+lisp	2	106	13632
+lisp	1	106	13600
+lis		0	106	13568
+lisp	3	107	13792
+lisp	2	107	13760
+lisp	1	107	13728
+lis		0	107	13696
+lisp	3	108	13920
+lisp	2	108	13888
+lisp	1	108	13856
+lis		0	108	13824
+lisp	3	109	14048
+lisp	2	109	14016
+lisp	1	109	13984
+lis		0	109	13952
+lisp	3	110	14176
+lisp	2	110	14144
+lisp	1	110	14112
+lis		0	110	14080
+lisp	3	111	14304
+lisp	2	111	14272
+lisp	1	111	14240
+lis		0	111	14208
+lisp	3	112	14432
+lisp	2	112	14400
+lisp	1	112	14368
+lis		0	112	14336
+lisp	3	113	14560
+lisp	2	113	14528
+lisp	1	113	14496
+lis		0	113	14464
+lisp	3	114	14688
+lisp	2	114	14656
+lisp	1	114	14624
+lis		0	114	14592
+lisp	3	115	14816
+lisp	2	115	14784
+lisp	1	115	14752
+lis		0	115	14720
+lisp	3	116	14944
+lisp	2	116	14912
+lisp	1	116	14880
+lis		0	116	14848
+lisp	3	117	15072
+lisp	2	117	15040
+lisp	1	117	15008
+lis		0	117	14976
+lisp	3	118	15200
+lisp	2	118	15168
+lisp	1	118	15136
+lis		0	118	15104
+lisp	3	119	15328
+lisp	2	119	15296
+lisp	1	119	15264
+lis		0	119	15232
+lisp	3	120	15456
+lisp	2	120	15424
+lisp	1	120	15392
+lis		0	120	15360
+lisp	3	121	15584
+lisp	2	121	15552
+lisp	1	121	15520
+lis		0	121	15488
+lisp	3	122	15712
+lisp	2	122	15680
+lisp	1	122	15648
+lis		0	122	15616
+lisp	3	123	15840
+lisp	2	123	15808
+lisp	1	123	15776
+lis		0	123	15744
+lisp	3	124	15968
+lisp	2	124	15936
+lisp	1	124	15904
+lis		0	124	15872
+lisp	3	125	16096
+lisp	2	125	16064
+lisp	1	125	16032
+lis		0	125	16000
+lisp	3	126	16224
+lisp	2	126	16192
+lisp	1	126	16160
+lis		0	126	16128
+lisp	3	127	16352
+lisp	2	127	16320
+lisp	1	127	16288
+lis		0	127	16256
+lisp	3	128	16480
+lisp	2	128	16448
+lisp	1	128	16416
+lis		0	128	16384
+lisp	3	129	16608
+lisp	2	129	16576
+lisp	1	129	16544
+lis		0	129	16512
+lisp	3	130	16736
+lisp	2	130	16704
+lisp	1	130	16672
+lis		0	130	16640
+lisp	3	131	16864
+lisp	2	131	16832
+lisp	1	131	16800
+lis		0	131	16768
+lisp	3	132	16992
+lisp	2	132	16960
+lisp	1	132	16928
+lis		0	132	16896
+lisp	3	133	17120
+lisp	2	133	17088
+lisp	1	133	17056
+lis		0	133	17024
+lisp	3	134	17248
+lisp	2	134	17216
+lisp	1	134	17184
+lis		0	134	17152
+lisp	3	135	17376
+lisp	2	135	17344
+lisp	1	135	17312
+lis		0	135	17280
+lisp	3	136	17504
+lisp	2	136	17472
+lisp	1	136	17440
+lis		0	136	17408
+lisp	3	137	17632
+lisp	2	137	17600
+lisp	1	137	17568
+lis		0	137	17536
+lisp	3	138	17760
+lisp	2	138	17728
+lisp	1	138	17696
+lis		0	138	17664
+lisp	3	139	17888
+lisp	2	139	17856
+lisp	1	139	17824
+lis		0	139	17792
+lisp	3	140	18016
+lisp	2	140	17984
+lisp	1	140	17952
+lis		0	140	17920
+lisp	3	141	18144
+lisp	2	141	18112
+lisp	1	141	18080
+lis		0	141	18048
+lisp	3	142	18272
+lisp	2	142	18240
+lisp	1	142	18208
+lis		0	142	18176
+lisp	3	143	18400
+lisp	2	143	18368
+lisp	1	143	18336
+lis		0	143	18304
+lisp	3	144	18528
+lisp	2	144	18496
+lisp	1	144	18464
+lis		0	144	18432
+lisp	3	145	18656
+lisp	2	145	18624
+lisp	1	145	18592
+lis		0	145	18560
+lisp	3	146	18784
+lisp	2	146	18752
+lisp	1	146	18720
+lis		0	146	18688
+lisp	3	147	18912
+lisp	2	147	18880
+lisp	1	147	18848
+lis		0	147	18816
+lisp	3	148	19040
+lisp	2	148	19008
+lisp	1	148	18976
+lis		0	148	18944
+lisp	3	149	19168
+lisp	2	149	19136
+lisp	1	149	19104
+lis		0	149	19072
+lisp	3	150	19296
+lisp	2	150	19264
+lisp	1	150	19232
+lis		0	150	19200
+lisp	3	151	19424
+lisp	2	151	19392
+lisp	1	151	19360
+lis		0	151	19328
+lisp	3	152	19552
+lisp	2	152	19520
+lisp	1	152	19488
+lis		0	152	19456
+lisp	3	153	19680
+lisp	2	153	19648
+lisp	1	153	19616
+lis		0	153	19584
+lisp	3	154	19808
+lisp	2	154	19776
+lisp	1	154	19744
+lis		0	154	19712
+lisp	3	155	19936
+lisp	2	155	19904
+lisp	1	155	19872
+lis		0	155	19840
+lisp	3	156	20064
+lisp	2	156	20032
+lisp	1	156	20000
+lis		0	156	19968
+lisp	3	157	20192
+lisp	2	157	20160
+lisp	1	157	20128
+lis		0	157	20096
+lisp	3	158	20320
+lisp	2	158	20288
+lisp	1	158	20256
+lis		0	158	20224
+lisp	3	159	20448
+lisp	2	159	20416
+lisp	1	159	20384
+lis		0	159	20352
+lisp	3	160	20576
+lisp	2	160	20544
+lisp	1	160	20512
+lis		0	160	20480
+lisp	3	161	20704
+lisp	2	161	20672
+lisp	1	161	20640
+lis		0	161	20608
+lisp	3	162	20832
+lisp	2	162	20800
+lisp	1	162	20768
+lis		0	162	20736
+lisp	3	163	20960
+lisp	2	163	20928
+lisp	1	163	20896
+lis		0	163	20864
+lisp	3	164	21088
+lisp	2	164	21056
+lisp	1	164	21024
+lis		0	164	20992
+lisp	3	165	21216
+lisp	2	165	21184
+lisp	1	165	21152
+lis		0	165	21120
+lisp	3	166	21344
+lisp	2	166	21312
+lisp	1	166	21280
+lis		0	166	21248
+lisp	3	167	21472
+lisp	2	167	21440
+lisp	1	167	21408
+lis		0	167	21376
+lisp	3	168	21600
+lisp	2	168	21568
+lisp	1	168	21536
+lis		0	168	21504
+lisp	3	169	21728
+lisp	2	169	21696
+lisp	1	169	21664
+lis		0	169	21632
+lisp	3	170	21856
+lisp	2	170	21824
+lisp	1	170	21792
+lis		0	170	21760
+lisp	3	171	21984
+lisp	2	171	21952
+lisp	1	171	21920
+lis		0	171	21888
+lisp	3	172	22112
+lisp	2	172	22080
+lisp	1	172	22048
+lis		0	172	22016
+lisp	3	173	22240
+lisp	2	173	22208
+lisp	1	173	22176
+lis		0	173	22144
+lisp	3	174	22368
+lisp	2	174	22336
+lisp	1	174	22304
+lis		0	174	22272
+lisp	3	175	22496
+lisp	2	175	22464
+lisp	1	175	22432
+lis		0	175	22400
+lisp	3	176	22624
+lisp	2	176	22592
+lisp	1	176	22560
+lis		0	176	22528
+lisp	3	177	22752
+lisp	2	177	22720
+lisp	1	177	22688
+lis		0	177	22656
+lisp	3	178	22880
+lisp	2	178	22848
+lisp	1	178	22816
+lis		0	178	22784
+lisp	3	179	23008
+lisp	2	179	22976
+lisp	1	179	22944
+lis		0	179	22912
+lisp	3	180	23136
+lisp	2	180	23104
+lisp	1	180	23072
+lis		0	180	23040
+lisp	3	181	23264
+lisp	2	181	23232
+lisp	1	181	23200
+lis		0	181	23168
+lisp	3	182	23392
+lisp	2	182	23360
+lisp	1	182	23328
+lis		0	182	23296
+lisp	3	183	23520
+lisp	2	183	23488
+lisp	1	183	23456
+lis		0	183	23424
+lisp	3	184	23648
+lisp	2	184	23616
+lisp	1	184	23584
+lis		0	184	23552
+lisp	3	185	23776
+lisp	2	185	23744
+lisp	1	185	23712
+lis		0	185	23680
+lisp	3	186	23904
+lisp	2	186	23872
+lisp	1	186	23840
+lis		0	186	23808
+lisp	3	187	24032
+lisp	2	187	24000
+lisp	1	187	23968
+lis		0	187	23936
+lisp	3	188	24160
+lisp	2	188	24128
+lisp	1	188	24096
+lis		0	188	24064
+lisp	3	189	24288
+lisp	2	189	24256
+lisp	1	189	24224
+lis		0	189	24192
+lisp	3	190	24416
+lisp	2	190	24384
+lisp	1	190	24352
+lis		0	190	24320
+lisp	3	191	24544
+lisp	2	191	24512
+lisp	1	191	24480
+lis		0	191	24448
+lisp	3	192	24672
+lisp	2	192	24640
+lisp	1	192	24608
+lis		0	192	24576
+lisp	3	193	24800
+lisp	2	193	24768
+lisp	1	193	24736
+lis		0	193	24704
+lisp	3	194	24928
+lisp	2	194	24896
+lisp	1	194	24864
+lis		0	194	24832
+lisp	3	195	25056
+lisp	2	195	25024
+lisp	1	195	24992
+lis		0	195	24960
+lisp	3	196	25184
+lisp	2	196	25152
+lisp	1	196	25120
+lis		0	196	25088
+lisp	3	197	25312
+lisp	2	197	25280
+lisp	1	197	25248
+lis		0	197	25216
+lisp	3	198	25440
+lisp	2	198	25408
+lisp	1	198	25376
+lis		0	198	25344
+lisp	3	199	25568
+lisp	2	199	25536
+lisp	1	199	25504
+lis		0	199	25472
+lisp	3	200	25696
+lisp	2	200	25664
+lisp	1	200	25632
+lis		0	200	25600
+lisp	3	201	25824
+lisp	2	201	25792
+lisp	1	201	25760
+lis		0	201	25728
+lisp	3	202	25952
+lisp	2	202	25920
+lisp	1	202	25888
+lis		0	202	25856
+lisp	3	203	26080
+lisp	2	203	26048
+lisp	1	203	26016
+lis		0	203	25984
+lisp	3	204	26208
+lisp	2	204	26176
+lisp	1	204	26144
+lis		0	204	26112
+lisp	3	205	26336
+lisp	2	205	26304
+lisp	1	205	26272
+lis		0	205	26240
+lisp	3	206	26464
+lisp	2	206	26432
+lisp	1	206	26400
+lis		0	206	26368
+lisp	3	207	26592
+lisp	2	207	26560
+lisp	1	207	26528
+lis		0	207	26496
+lisp	3	208	26720
+lisp	2	208	26688
+lisp	1	208	26656
+lis		0	208	26624
+lisp	3	209	26848
+lisp	2	209	26816
+lisp	1	209	26784
+lis		0	209	26752
+lisp	3	210	26976
+lisp	2	210	26944
+lisp	1	210	26912
+lis		0	210	26880
+lisp	3	211	27104
+lisp	2	211	27072
+lisp	1	211	27040
+lis		0	211	27008
+lisp	3	212	27232
+lisp	2	212	27200
+lisp	1	212	27168
+lis		0	212	27136
+lisp	3	213	27360
+lisp	2	213	27328
+lisp	1	213	27296
+lis		0	213	27264
+lisp	3	214	27488
+lisp	2	214	27456
+lisp	1	214	27424
+lis		0	214	27392
+lisp	3	215	27616
+lisp	2	215	27584
+lisp	1	215	27552
+lis		0	215	27520
+lisp	3	216	27744
+lisp	2	216	27712
+lisp	1	216	27680
+lis		0	216	27648
+lisp	3	217	27872
+lisp	2	217	27840
+lisp	1	217	27808
+lis		0	217	27776
+lisp	3	218	28000
+lisp	2	218	27968
+lisp	1	218	27936
+lis		0	218	27904
+lisp	3	219	28128
+lisp	2	219	28096
+lisp	1	219	28064
+lis		0	219	28032
+lisp	3	220	28256
+lisp	2	220	28224
+lisp	1	220	28192
+lis		0	220	28160
+lisp	3	221	28384
+lisp	2	221	28352
+lisp	1	221	28320
+lis		0	221	28288
+lisp	3	222	28512
+lisp	2	222	28480
+lisp	1	222	28448
+lis		0	222	28416
+lisp	3	223	28640
+lisp	2	223	28608
+lisp	1	223	28576
+lis		0	223	28544
+lisp	3	224	28768
+lisp	2	224	28736
+lisp	1	224	28704
+lis		0	224	28672
+lisp	3	225	28896
+lisp	2	225	28864
+lisp	1	225	28832
+lis		0	225	28800
+lisp	3	226	29024
+lisp	2	226	28992
+lisp	1	226	28960
+lis		0	226	28928
+lisp	3	227	29152
+lisp	2	227	29120
+lisp	1	227	29088
+lis		0	227	29056
+lisp	3	228	29280
+lisp	2	228	29248
+lisp	1	228	29216
+lis		0	228	29184
+lisp	3	229	29408
+lisp	2	229	29376
+lisp	1	229	29344
+lis		0	229	29312
+lisp	3	230	29536
+lisp	2	230	29504
+lisp	1	230	29472
+lis		0	230	29440
+lisp	3	231	29664
+lisp	2	231	29632
+lisp	1	231	29600
+lis		0	231	29568
+lisp	3	232	29792
+lisp	2	232	29760
+lisp	1	232	29728
+lis		0	232	29696
+lisp	3	233	29920
+lisp	2	233	29888
+lisp	1	233	29856
+lis		0	233	29824
+lisp	3	234	30048
+lisp	2	234	30016
+lisp	1	234	29984
+lis		0	234	29952
+lisp	3	235	30176
+lisp	2	235	30144
+lisp	1	235	30112
+lis		0	235	30080
+lisp	3	236	30304
+lisp	2	236	30272
+lisp	1	236	30240
+lis		0	236	30208
+lisp	3	237	30432
+lisp	2	237	30400
+lisp	1	237	30368
+lis		0	237	30336
+lisp	3	238	30560
+lisp	2	238	30528
+lisp	1	238	30496
+lis		0	238	30464
+lisp	3	239	30688
+lisp	2	239	30656
+lisp	1	239	30624
+lis		0	239	30592
+lisp	3	240	30816
+lisp	2	240	30784
+lisp	1	240	30752
+lis		0	240	30720
+lisp	3	241	30944
+lisp	2	241	30912
+lisp	1	241	30880
+lis		0	241	30848
+lisp	3	242	31072
+lisp	2	242	31040
+lisp	1	242	31008
+lis		0	242	30976
+lisp	3	243	31200
+lisp	2	243	31168
+lisp	1	243	31136
+lis		0	243	31104
+lisp	3	244	31328
+lisp	2	244	31296
+lisp	1	244	31264
+lis		0	244	31232
+lisp	3	245	31456
+lisp	2	245	31424
+lisp	1	245	31392
+lis		0	245	31360
+lisp	3	246	31584
+lisp	2	246	31552
+lisp	1	246	31520
+lis		0	246	31488
+lisp	3	247	31712
+lisp	2	247	31680
+lisp	1	247	31648
+lis		0	247	31616
+lisp	3	248	31840
+lisp	2	248	31808
+lisp	1	248	31776
+lis		0	248	31744
+lisp	3	249	31968
+lisp	2	249	31936
+lisp	1	249	31904
+lis		0	249	31872
+lisp	3	250	32096
+lisp	2	250	32064
+lisp	1	250	32032
+lis		0	250	32000
+lisp	3	251	32224
+lisp	2	251	32192
+lisp	1	251	32160
+lis		0	251	32128
+lisp	3	252	32352
+lisp	2	252	32320
+lisp	1	252	32288
+lis		0	252	32256
+lisp	3	253	32480
+lisp	2	253	32448
+lisp	1	253	32416
+lis		0	253	32384
+lisp	3	254	32608
+lisp	2	254	32576
+lisp	1	254	32544
+lis		0	254	32512
+lisp	3	255	32736
+lisp	2	255	32704
+lisp	1	255	32672
+lis		0	255	32640
+wu	3	0	0
+wu	2	4	0
+wu	1	8	0
+wu	0	12	0
+wu	3	16	512
+wu	2	20	512
+wu	1	24	512
+wu	0	28	512
+wu	3	32	1024
+wu	2	36	1024
+wu	1	40	1024
+wu	0	44	1024
+wu	3	48	1536
+wu	2	52	1536
+wu	1	56	1536
+wu	0	60	1536
+wu	3	64	2048
+wu	2	68	2048
+wu	1	72	2048
+wu	0	76	2048
+wu	3	80	2560
+wu	2	84	2560
+wu	1	88	2560
+wu	0	92	2560
+wu	3	96	3072
+wu	2	100	3072
+wu	1	104	3072
+wu	0	108	3072
+wu	3	112	3584
+wu	2	116	3584
+wu	1	120	3584
+wu	0	124	3584
+wu	3	128	4096
+wu	2	132	4096
+wu	1	136	4096
+wu	0	140	4096
+wu	3	144	4608
+wu	2	148	4608
+wu	1	152	4608
+wu	0	156	4608
+wu	3	160	5120
+wu	2	164	5120
+wu	1	168	5120
+wu	0	172	5120
+wu	3	176	5632
+wu	2	180	5632
+wu	1	184	5632
+wu	0	188	5632
+wu	3	192	6144
+wu	2	196	6144
+wu	1	200	6144
+wu	0	204	6144
+wu	3	208	6656
+wu	2	212	6656
+wu	1	216	6656
+wu	0	220	6656
+wu	3	224	7168
+wu	2	228	7168
+wu	1	232	7168
+wu	0	236	7168
+wu	3	240	7680
+wu	2	244	7680
+wu	1	248	7680
+wu	0	252	7680
+wu	3	1	8192
+wu	2	5	8192
+wu	1	9	8192
+wu	0	13	8192
+wu	3	17	8704
+wu	2	21	8704
+wu	1	25	8704
+wu	0	29	8704
+wu	3	33	9216
+wu	2	37	9216
+wu	1	41	9216
+wu	0	45	9216
+wu	3	49	9728
+wu	2	53	9728
+wu	1	57	9728
+wu	0	61	9728
+wu	3	65	10240
+wu	2	69	10240
+wu	1	73	10240
+wu	0	77	10240
+wu	3	81	10752
+wu	2	85	10752
+wu	1	89	10752
+wu	0	93	10752
+wu	3	97	11264
+wu	2	101	11264
+wu	1	105	11264
+wu	0	109	11264
+wu	3	113	11776
+wu	2	117	11776
+wu	1	121	11776
+wu	0	125	11776
+wu	3	129	12288
+wu	2	133	12288
+wu	1	137	12288
+wu	0	141	12288
+wu	3	145	12800
+wu	2	149	12800
+wu	1	153	12800
+wu	0	157	12800
+wu	3	161	13312
+wu	2	165	13312
+wu	1	169	13312
+wu	0	173	13312
+wu	3	177	13824
+wu	2	181	13824
+wu	1	185	13824
+wu	0	189	13824
+wu	3	193	14336
+wu	2	197	14336
+wu	1	201	14336
+wu	0	205	14336
+wu	3	209	14848
+wu	2	213	14848
+wu	1	217	14848
+wu	0	221	14848
+wu	3	225	15360
+wu	2	229	15360
+wu	1	233	15360
+wu	0	237	15360
+wu	3	241	15872
+wu	2	245	15872
+wu	1	249	15872
+wu	0	253	15872
+wu	3	2	16384
+wu	2	6	16384
+wu	1	10	16384
+wu	0	14	16384
+wu	3	18	16896
+wu	2	22	16896
+wu	1	26	16896
+wu	0	30	16896
+wu	3	34	17408
+wu	2	38	17408
+wu	1	42	17408
+wu	0	46	17408
+wu	3	50	17920
+wu	2	54	17920
+wu	1	58	17920
+wu	0	62	17920
+wu	3	66	18432
+wu	2	70	18432
+wu	1	74	18432
+wu	0	78	18432
+wu	3	82	18944
+wu	2	86	18944
+wu	1	90	18944
+wu	0	94	18944
+wu	3	98	19456
+wu	2	102	19456
+wu	1	106	19456
+wu	0	110	19456
+wu	3	114	19968
+wu	2	118	19968
+wu	1	122	19968
+wu	0	126	19968
+wu	3	130	20480
+wu	2	134	20480
+wu	1	138	20480
+wu	0	142	20480
+wu	3	146	20992
+wu	2	150	20992
+wu	1	154	20992
+wu	0	158	20992
+wu	3	162	21504
+wu	2	166	21504
+wu	1	170	21504
+wu	0	174	21504
+wu	3	178	22016
+wu	2	182	22016
+wu	1	186	22016
+wu	0	190	22016
+wu	3	194	22528
+wu	2	198	22528
+wu	1	202	22528
+wu	0	206	22528
+wu	3	210	23040
+wu	2	214	23040
+wu	1	218	23040
+wu	0	222	23040
+wu	3	226	23552
+wu	2	230	23552
+wu	1	234	23552
+wu	0	238	23552
+wu	3	242	24064
+wu	2	246	24064
+wu	1	250	24064
+wu	0	254	24064
+wu	3	3	24576
+wu	2	7	24576
+wu	1	11	24576
+wu	0	15	24576
+wu	3	19	25088
+wu	2	23	25088
+wu	1	27	25088
+wu	0	31	25088
+wu	3	35	25600
+wu	2	39	25600
+wu	1	43	25600
+wu	0	47	25600
+wu	3	51	26112
+wu	2	55	26112
+wu	1	59	26112
+wu	0	63	26112
+wu	3	67	26624
+wu	2	71	26624
+wu	1	75	26624
+wu	0	79	26624
+wu	3	83	27136
+wu	2	87	27136
+wu	1	91	27136
+wu	0	95	27136
+wu	3	99	27648
+wu	2	103	27648
+wu	1	107	27648
+wu	0	111	27648
+wu	3	115	28160
+wu	2	119	28160
+wu	1	123	28160
+wu	0	127	28160
+wu	3	131	28672
+wu	2	135	28672
+wu	1	139	28672
+wu	0	143	28672
+wu	3	147	29184
+wu	2	151	29184
+wu	1	155	29184
+wu	0	159	29184
+wu	3	163	29696
+wu	2	167	29696
+wu	1	171	29696
+wu	0	175	29696
+wu	3	179	30208
+wu	2	183	30208
+wu	1	187	30208
+wu	0	191	30208
+wu	3	195	30720
+wu	2	199	30720
+wu	1	203	30720
+wu	0	207	30720
+wu	3	211	31232
+wu	2	215	31232
+wu	1	219	31232
+wu	0	223	31232
+wu	3	227	31744
+wu	2	231	31744
+wu	1	235	31744
+wu	0	239	31744
+wu	3	243	32256
+wu	2	247	32256
+wu	1	251	32256
+wu	0	255	32256
+nop
+nop
+nop
+nop
+cmpfis	0	0	tos	0
+cmpfis	0	1	tos	1
+cmpfis	0	2	tos	2
+cmpfis	0	3	tos	3
+cmpfis	4	0	tos	5
+cmpfis	4	1	tos	6
+cmpfis	4	2	tos	7
+cmpfis	4	3	tos	8
+cmpfis	8	0	tos	10
+cmpfis	8	1	tos	11
+cmpfis	8	2	tos	12
+cmpfis	8	3	tos	13
+cmpfis	12	0	tos	15
+cmpfis	12	1	tos	16
+cmpfis	12	2	tos	17
+cmpfis	12	3	tos	18
+cmpfis	16	0	tos	20
+cmpfis	16	1	tos	21
+cmpfis	16	2	tos	22
+cmpfis	16	3	tos	23
+cmpfis	20	0	tos	25
+cmpfis	20	1	tos	26
+cmpfis	20	2	tos	27
+cmpfis	20	3	tos	28
+cmpfis	24	0	tos	30
+cmpfis	24	1	tos	31
+cmpfis	24	2	tos	32
+cmpfis	24	3	tos	33
+cmpfis	28	0	tos	35
+cmpfis	28	1	tos	36
+cmpfis	28	2	tos	37
+cmpfis	28	3	tos	38
+cmpfis	32	0	tos	40
+cmpfis	32	1	tos	41
+cmpfis	32	2	tos	42
+cmpfis	32	3	tos	43
+cmpfis	36	0	tos	45
+cmpfis	36	1	tos	46
+cmpfis	36	2	tos	47
+cmpfis	36	3	tos	48
+cmpfis	40	0	tos	50
+cmpfis	40	1	tos	51
+cmpfis	40	2	tos	52
+cmpfis	40	3	tos	53
+cmpfis	44	0	tos	55
+cmpfis	44	1	tos	56
+cmpfis	44	2	tos	57
+cmpfis	44	3	tos	58
+cmpfis	48	0	tos	60
+cmpfis	48	1	tos	61
+cmpfis	48	2	tos	62
+cmpfis	48	3	tos	63
+cmpfis	52	0	tos	65
+cmpfis	52	1	tos	66
+cmpfis	52	2	tos	67
+cmpfis	52	3	tos	68
+cmpfis	56	0	tos	70
+cmpfis	56	1	tos	71
+cmpfis	56	2	tos	72
+cmpfis	56	3	tos	73
+cmpfis	60	0	tos	75
+cmpfis	60	1	tos	76
+cmpfis	60	2	tos	77
+cmpfis	60	3	tos	78
+cmpfis	64	0	tos	80
+cmpfis	64	1	tos	81
+cmpfis	64	2	tos	82
+cmpfis	64	3	tos	83
+cmpfis	68	0	tos	85
+cmpfis	68	1	tos	86
+cmpfis	68	2	tos	87
+cmpfis	68	3	tos	88
+cmpfis	72	0	tos	90
+cmpfis	72	1	tos	91
+cmpfis	72	2	tos	92
+cmpfis	72	3	tos	93
+cmpfis	76	0	tos	95
+cmpfis	76	1	tos	96
+cmpfis	76	2	tos	97
+cmpfis	76	3	tos	98
+cmpfis	80	0	tos	100
+cmpfis	80	1	tos	101
+cmpfis	80	2	tos	102
+cmpfis	80	3	tos	103
+cmpfis	84	0	tos	105
+cmpfis	84	1	tos	106
+cmpfis	84	2	tos	107
+cmpfis	84	3	tos	108
+cmpfis	88	0	tos	110
+cmpfis	88	1	tos	111
+cmpfis	88	2	tos	112
+cmpfis	88	3	tos	113
+cmpfis	92	0	tos	115
+cmpfis	92	1	tos	116
+cmpfis	92	2	tos	117
+cmpfis	92	3	tos	118
+cmpfis	96	0	tos	120
+cmpfis	96	1	tos	121
+cmpfis	96	2	tos	122
+cmpfis	96	3	tos	123
+cmpfis	100	0	tos	125
+cmpfis	100	1	tos	126
+cmpfis	100	2	tos	127
+cmpfis	100	3	tos	128
+cmpfis	104	0	tos	130
+cmpfis	104	1	tos	131
+cmpfis	104	2	tos	132
+cmpfis	104	3	tos	133
+cmpfis	108	0	tos	135
+cmpfis	108	1	tos	136
+cmpfis	108	2	tos	137
+cmpfis	108	3	tos	138
+cmpfis	112	0	tos	140
+cmpfis	112	1	tos	141
+cmpfis	112	2	tos	142
+cmpfis	112	3	tos	143
+cmpfis	116	0	tos	145
+cmpfis	116	1	tos	146
+cmpfis	116	2	tos	147
+cmpfis	116	3	tos	148
+cmpfis	120	0	tos	150
+cmpfis	120	1	tos	151
+cmpfis	120	2	tos	152
+cmpfis	120	3	tos	153
+cmpfis	124	0	tos	155
+cmpfis	124	1	tos	156
+cmpfis	124	2	tos	157
+cmpfis	124	3	tos	158
+cmpfis	128	0	tos	160
+cmpfis	128	1	tos	161
+cmpfis	128	2	tos	162
+cmpfis	128	3	tos	163
+cmpfis	132	0	tos	165
+cmpfis	132	1	tos	166
+cmpfis	132	2	tos	167
+cmpfis	132	3	tos	168
+cmpfis	136	0	tos	170
+cmpfis	136	1	tos	171
+cmpfis	136	2	tos	172
+cmpfis	136	3	tos	173
+cmpfis	140	0	tos	175
+cmpfis	140	1	tos	176
+cmpfis	140	2	tos	177
+cmpfis	140	3	tos	178
+cmpfis	144	0	tos	180
+cmpfis	144	1	tos	181
+cmpfis	144	2	tos	182
+cmpfis	144	3	tos	183
+cmpfis	148	0	tos	185
+cmpfis	148	1	tos	186
+cmpfis	148	2	tos	187
+cmpfis	148	3	tos	188
+cmpfis	152	0	tos	190
+cmpfis	152	1	tos	191
+cmpfis	152	2	tos	192
+cmpfis	152	3	tos	193
+cmpfis	156	0	tos	195
+cmpfis	156	1	tos	196
+cmpfis	156	2	tos	197
+cmpfis	156	3	tos	198
+cmpfis	160	0	tos	200
+cmpfis	160	1	tos	201
+cmpfis	160	2	tos	202
+cmpfis	160	3	tos	203
+cmpfis	164	0	tos	205
+cmpfis	164	1	tos	206
+cmpfis	164	2	tos	207
+cmpfis	164	3	tos	208
+cmpfis	168	0	tos	210
+cmpfis	168	1	tos	211
+cmpfis	168	2	tos	212
+cmpfis	168	3	tos	213
+cmpfis	172	0	tos	215
+cmpfis	172	1	tos	216
+cmpfis	172	2	tos	217
+cmpfis	172	3	tos	218
+cmpfis	176	0	tos	220
+cmpfis	176	1	tos	221
+cmpfis	176	2	tos	222
+cmpfis	176	3	tos	223
+cmpfis	180	0	tos	225
+cmpfis	180	1	tos	226
+cmpfis	180	2	tos	227
+cmpfis	180	3	tos	228
+cmpfis	184	0	tos	230
+cmpfis	184	1	tos	231
+cmpfis	184	2	tos	232
+cmpfis	184	3	tos	233
+cmpfis	188	0	tos	235
+cmpfis	188	1	tos	236
+cmpfis	188	2	tos	237
+cmpfis	188	3	tos	238
+cmpfis	192	0	tos	240
+cmpfis	192	1	tos	241
+cmpfis	192	2	tos	242
+cmpfis	192	3	tos	243
+cmpfis	196	0	tos	245
+cmpfis	196	1	tos	246
+cmpfis	196	2	tos	247
+cmpfis	196	3	tos	248
+cmpfis	200	0	tos	250
+cmpfis	200	1	tos	251
+cmpfis	200	2	tos	252
+cmpfis	200	3	tos	253
+cmpfis	204	0	tos	255
+cmpfis	204	1	tos	256
+cmpfis	204	2	tos	257
+cmpfis	204	3	tos	258
+cmpfis	208	0	tos	260
+cmpfis	208	1	tos	261
+cmpfis	208	2	tos	262
+cmpfis	208	3	tos	263
+cmpfis	212	0	tos	265
+cmpfis	212	1	tos	266
+cmpfis	212	2	tos	267
+cmpfis	212	3	tos	268
+cmpfis	216	0	tos	270
+cmpfis	216	1	tos	271
+cmpfis	216	2	tos	272
+cmpfis	216	3	tos	273
+cmpfis	220	0	tos	275
+cmpfis	220	1	tos	276
+cmpfis	220	2	tos	277
+cmpfis	220	3	tos	278
+cmpfis	224	0	tos	280
+cmpfis	224	1	tos	281
+cmpfis	224	2	tos	282
+cmpfis	224	3	tos	283
+cmpfis	228	0	tos	285
+cmpfis	228	1	tos	286
+cmpfis	228	2	tos	287
+cmpfis	228	3	tos	288
+cmpfis	232	0	tos	290
+cmpfis	232	1	tos	291
+cmpfis	232	2	tos	292
+cmpfis	232	3	tos	293
+cmpfis	236	0	tos	295
+cmpfis	236	1	tos	296
+cmpfis	236	2	tos	297
+cmpfis	236	3	tos	298
+cmpfis	240	0	tos	300
+cmpfis	240	1	tos	301
+cmpfis	240	2	tos	302
+cmpfis	240	3	tos	303
+cmpfis	244	0	tos	305
+cmpfis	244	1	tos	306
+cmpfis	244	2	tos	307
+cmpfis	244	3	tos	308
+cmpfis	248	0	tos	310
+cmpfis	248	1	tos	311
+cmpfis	248	2	tos	312
+cmpfis	248	3	tos	313
+cmpfis	252	0	tos	315
+cmpfis	252	1	tos	316
+cmpfis	252	2	tos	317
+cmpfis	252	3	tos	318
+wu	3	0	32768
+wu	2	4	32768
+wu	1	8	32768
+wu	0	12	32768
+wu	3	16	33280
+wu	2	20	33280
+wu	1	24	33280
+wu	0	28	33280
+wu	3	32	33792
+wu	2	36	33792
+wu	1	40	33792
+wu	0	44	33792
+wu	3	48	34304
+wu	2	52	34304
+wu	1	56	34304
+wu	0	60	34304
+wu	3	64	34816
+wu	2	68	34816
+wu	1	72	34816
+wu	0	76	34816
+wu	3	80	35328
+wu	2	84	35328
+wu	1	88	35328
+wu	0	92	35328
+wu	3	96	35840
+wu	2	100	35840
+wu	1	104	35840
+wu	0	108	35840
+wu	3	112	36352
+wu	2	116	36352
+wu	1	120	36352
+wu	0	124	36352
+wu	3	128	36864
+wu	2	132	36864
+wu	1	136	36864
+wu	0	140	36864
+wu	3	144	37376
+wu	2	148	37376
+wu	1	152	37376
+wu	0	156	37376
+wu	3	160	37888
+wu	2	164	37888
+wu	1	168	37888
+wu	0	172	37888
+wu	3	176	38400
+wu	2	180	38400
+wu	1	184	38400
+wu	0	188	38400
+wu	3	192	38912
+wu	2	196	38912
+wu	1	200	38912
+wu	0	204	38912
+wu	3	208	39424
+wu	2	212	39424
+wu	1	216	39424
+wu	0	220	39424
+wu	3	224	39936
+wu	2	228	39936
+wu	1	232	39936
+wu	0	236	39936
+wu	3	240	40448
+wu	2	244	40448
+wu	1	248	40448
+wu	0	252	40448
+wu	3	1	128
+wu	2	5	128
+wu	1	9	128
+wu	0	13	128
+wu	3	17	640
+wu	2	21	640
+wu	1	25	640
+wu	0	29	640
+wu	3	33	1152
+wu	2	37	1152
+wu	1	41	1152
+wu	0	45	1152
+wu	3	49	1664
+wu	2	53	1664
+wu	1	57	1664
+wu	0	61	1664
+wu	3	65	2176
+wu	2	69	2176
+wu	1	73	2176
+wu	0	77	2176
+wu	3	81	2688
+wu	2	85	2688
+wu	1	89	2688
+wu	0	93	2688
+wu	3	97	3200
+wu	2	101	3200
+wu	1	105	3200
+wu	0	109	3200
+wu	3	113	3712
+wu	2	117	3712
+wu	1	121	3712
+wu	0	125	3712
+wu	3	129	4224
+wu	2	133	4224
+wu	1	137	4224
+wu	0	141	4224
+wu	3	145	4736
+wu	2	149	4736
+wu	1	153	4736
+wu	0	157	4736
+wu	3	161	5248
+wu	2	165	5248
+wu	1	169	5248
+wu	0	173	5248
+wu	3	177	5760
+wu	2	181	5760
+wu	1	185	5760
+wu	0	189	5760
+wu	3	193	6272
+wu	2	197	6272
+wu	1	201	6272
+wu	0	205	6272
+wu	3	209	6784
+wu	2	213	6784
+wu	1	217	6784
+wu	0	221	6784
+wu	3	225	7296
+wu	2	229	7296
+wu	1	233	7296
+wu	0	237	7296
+wu	3	241	7808
+wu	2	245	7808
+wu	1	249	7808
+wu	0	253	7808
+wu	3	2	8320
+wu	2	6	8320
+wu	1	10	8320
+wu	0	14	8320
+wu	3	18	8832
+wu	2	22	8832
+wu	1	26	8832
+wu	0	30	8832
+wu	3	34	9344
+wu	2	38	9344
+wu	1	42	9344
+wu	0	46	9344
+wu	3	50	9856
+wu	2	54	9856
+wu	1	58	9856
+wu	0	62	9856
+wu	3	66	10368
+wu	2	70	10368
+wu	1	74	10368
+wu	0	78	10368
+wu	3	82	10880
+wu	2	86	10880
+wu	1	90	10880
+wu	0	94	10880
+wu	3	98	11392
+wu	2	102	11392
+wu	1	106	11392
+wu	0	110	11392
+wu	3	114	11904
+wu	2	118	11904
+wu	1	122	11904
+wu	0	126	11904
+wu	3	130	12416
+wu	2	134	12416
+wu	1	138	12416
+wu	0	142	12416
+wu	3	146	12928
+wu	2	150	12928
+wu	1	154	12928
+wu	0	158	12928
+wu	3	162	13440
+wu	2	166	13440
+wu	1	170	13440
+wu	0	174	13440
+wu	3	178	13952
+wu	2	182	13952
+wu	1	186	13952
+wu	0	190	13952
+wu	3	194	14464
+wu	2	198	14464
+wu	1	202	14464
+wu	0	206	14464
+wu	3	210	14976
+wu	2	214	14976
+wu	1	218	14976
+wu	0	222	14976
+wu	3	226	15488
+wu	2	230	15488
+wu	1	234	15488
+wu	0	238	15488
+wu	3	242	16000
+wu	2	246	16000
+wu	1	250	16000
+wu	0	254	16000
+wu	3	3	16512
+wu	2	7	16512
+wu	1	11	16512
+wu	0	15	16512
+wu	3	19	17024
+wu	2	23	17024
+wu	1	27	17024
+wu	0	31	17024
+wu	3	35	17536
+wu	2	39	17536
+wu	1	43	17536
+wu	0	47	17536
+wu	3	51	18048
+wu	2	55	18048
+wu	1	59	18048
+wu	0	63	18048
+wu	3	67	18560
+wu	2	71	18560
+wu	1	75	18560
+wu	0	79	18560
+wu	3	83	19072
+wu	2	87	19072
+wu	1	91	19072
+wu	0	95	19072
+wu	3	99	19584
+wu	2	103	19584
+wu	1	107	19584
+wu	0	111	19584
+wu	3	115	20096
+wu	2	119	20096
+wu	1	123	20096
+wu	0	127	20096
+wu	3	131	20608
+wu	2	135	20608
+wu	1	139	20608
+wu	0	143	20608
+wu	3	147	21120
+wu	2	151	21120
+wu	1	155	21120
+wu	0	159	21120
+wu	3	163	21632
+wu	2	167	21632
+wu	1	171	21632
+wu	0	175	21632
+wu	3	179	22144
+wu	2	183	22144
+wu	1	187	22144
+wu	0	191	22144
+wu	3	195	22656
+wu	2	199	22656
+wu	1	203	22656
+wu	0	207	22656
+wu	3	211	23168
+wu	2	215	23168
+wu	1	219	23168
+wu	0	223	23168
+wu	3	227	23680
+wu	2	231	23680
+wu	1	235	23680
+wu	0	239	23680
+wu	3	243	24192
+wu	2	247	24192
+wu	1	251	24192
+wu	0	255	24192
+nop
+nop
+nop read_OS_line 0
+nop
+cmpfis	0	0	tos	4
+cmpfis	1	1	aos	0 read_OS_line 1
+cmpfis	1	2	aos	1 read_OS_line 2
+cmpfis	1	3	aos	2 read_OS_line 5
+cmpfis	4	0	tos	9
+cmpfis	5	1	aos	5 read_OS_line 6
+cmpfis	5	2	aos	6 read_OS_line 7
+cmpfis	5	3	aos	7 read_OS_line 10
+cmpfis	8	0	tos	14
+cmpfis	9	1	aos	10 read_OS_line 11
+cmpfis	9	2	aos	11 read_OS_line 12
+cmpfis	9	3	aos	12 read_OS_line 15
+cmpfis	12	0	tos	19
+cmpfis	13	1	aos	15 read_OS_line 16
+cmpfis	13	2	aos	16 read_OS_line 17
+cmpfis	13	3	aos	17 read_OS_line 20
+cmpfis	16	0	tos	24
+cmpfis	17	1	aos	20 read_OS_line 21
+cmpfis	17	2	aos	21 read_OS_line 22
+cmpfis	17	3	aos	22 read_OS_line 25
+cmpfis	20	0	tos	29
+cmpfis	21	1	aos	25 read_OS_line 26
+cmpfis	21	2	aos	26 read_OS_line 27
+cmpfis	21	3	aos	27 read_OS_line 30
+cmpfis	24	0	tos	34
+cmpfis	25	1	aos	30 read_OS_line 31
+cmpfis	25	2	aos	31 read_OS_line 32
+cmpfis	25	3	aos	32 read_OS_line 35
+cmpfis	28	0	tos	39
+cmpfis	29	1	aos	35 read_OS_line 36
+cmpfis	29	2	aos	36 read_OS_line 37
+cmpfis	29	3	aos	37 read_OS_line 40
+cmpfis	32	0	tos	44
+cmpfis	33	1	aos	40 read_OS_line 41
+cmpfis	33	2	aos	41 read_OS_line 42
+cmpfis	33	3	aos	42 read_OS_line 45
+cmpfis	36	0	tos	49
+cmpfis	37	1	aos	45 read_OS_line 46
+cmpfis	37	2	aos	46 read_OS_line 47
+cmpfis	37	3	aos	47 read_OS_line 50
+cmpfis	40	0	tos	54
+cmpfis	41	1	aos	50 read_OS_line 51
+cmpfis	41	2	aos	51 read_OS_line 52
+cmpfis	41	3	aos	52 read_OS_line 55
+cmpfis	44	0	tos	59
+cmpfis	45	1	aos	55 read_OS_line 56
+cmpfis	45	2	aos	56 read_OS_line 57
+cmpfis	45	3	aos	57 read_OS_line 60
+cmpfis	48	0	tos	64
+cmpfis	49	1	aos	60 read_OS_line 61
+cmpfis	49	2	aos	61 read_OS_line 62
+cmpfis	49	3	aos	62 read_OS_line 65
+cmpfis	52	0	tos	69
+cmpfis	53	1	aos	65 read_OS_line 66
+cmpfis	53	2	aos	66 read_OS_line 67
+cmpfis	53	3	aos	67 read_OS_line 70
+cmpfis	56	0	tos	74
+cmpfis	57	1	aos	70 read_OS_line 71
+cmpfis	57	2	aos	71 read_OS_line 72
+cmpfis	57	3	aos	72 read_OS_line 75
+cmpfis	60	0	tos	79
+cmpfis	61	1	aos	75 read_OS_line 76
+cmpfis	61	2	aos	76 read_OS_line 77
+cmpfis	61	3	aos	77 read_OS_line 80
+cmpfis	64	0	tos	84
+cmpfis	65	1	aos	80 read_OS_line 81
+cmpfis	65	2	aos	81 read_OS_line 82
+cmpfis	65	3	aos	82 read_OS_line 85
+cmpfis	68	0	tos	89
+cmpfis	69	1	aos	85 read_OS_line 86
+cmpfis	69	2	aos	86 read_OS_line 87
+cmpfis	69	3	aos	87 read_OS_line 90
+cmpfis	72	0	tos	94
+cmpfis	73	1	aos	90 read_OS_line 91
+cmpfis	73	2	aos	91 read_OS_line 92
+cmpfis	73	3	aos	92 read_OS_line 95
+cmpfis	76	0	tos	99
+cmpfis	77	1	aos	95 read_OS_line 96
+cmpfis	77	2	aos	96 read_OS_line 97
+cmpfis	77	3	aos	97 read_OS_line 100
+cmpfis	80	0	tos	104
+cmpfis	81	1	aos	100 read_OS_line 101
+cmpfis	81	2	aos	101 read_OS_line 102
+cmpfis	81	3	aos	102 read_OS_line 105
+cmpfis	84	0	tos	109
+cmpfis	85	1	aos	105 read_OS_line 106
+cmpfis	85	2	aos	106 read_OS_line 107
+cmpfis	85	3	aos	107 read_OS_line 110
+cmpfis	88	0	tos	114
+cmpfis	89	1	aos	110 read_OS_line 111
+cmpfis	89	2	aos	111 read_OS_line 112
+cmpfis	89	3	aos	112 read_OS_line 115
+cmpfis	92	0	tos	119
+cmpfis	93	1	aos	115 read_OS_line 116
+cmpfis	93	2	aos	116 read_OS_line 117
+cmpfis	93	3	aos	117 read_OS_line 120
+cmpfis	96	0	tos	124
+cmpfis	97	1	aos	120 read_OS_line 121
+cmpfis	97	2	aos	121 read_OS_line 122
+cmpfis	97	3	aos	122 read_OS_line 125
+cmpfis	100	0	tos	129
+cmpfis	101	1	aos	125 read_OS_line 126
+cmpfis	101	2	aos	126 read_OS_line 127
+cmpfis	101	3	aos	127 read_OS_line 130
+cmpfis	104	0	tos	134
+cmpfis	105	1	aos	130 read_OS_line 131
+cmpfis	105	2	aos	131 read_OS_line 132
+cmpfis	105	3	aos	132 read_OS_line 135
+cmpfis	108	0	tos	139
+cmpfis	109	1	aos	135 read_OS_line 136
+cmpfis	109	2	aos	136 read_OS_line 137
+cmpfis	109	3	aos	137 read_OS_line 140
+cmpfis	112	0	tos	144
+cmpfis	113	1	aos	140 read_OS_line 141
+cmpfis	113	2	aos	141 read_OS_line 142
+cmpfis	113	3	aos	142 read_OS_line 145
+cmpfis	116	0	tos	149
+cmpfis	117	1	aos	145 read_OS_line 146
+cmpfis	117	2	aos	146 read_OS_line 147
+cmpfis	117	3	aos	147 read_OS_line 150
+cmpfis	120	0	tos	154
+cmpfis	121	1	aos	150 read_OS_line 151
+cmpfis	121	2	aos	151 read_OS_line 152
+cmpfis	121	3	aos	152 read_OS_line 155
+cmpfis	124	0	tos	159
+cmpfis	125	1	aos	155 read_OS_line 156
+cmpfis	125	2	aos	156 read_OS_line 157
+cmpfis	125	3	aos	157 read_OS_line 160
+cmpfis	128	0	tos	164
+cmpfis	129	1	aos	160 read_OS_line 161
+cmpfis	129	2	aos	161 read_OS_line 162
+cmpfis	129	3	aos	162 read_OS_line 165
+cmpfis	132	0	tos	169
+cmpfis	133	1	aos	165 read_OS_line 166
+cmpfis	133	2	aos	166 read_OS_line 167
+cmpfis	133	3	aos	167 read_OS_line 170
+cmpfis	136	0	tos	174
+cmpfis	137	1	aos	170 read_OS_line 171
+cmpfis	137	2	aos	171 read_OS_line 172
+cmpfis	137	3	aos	172 read_OS_line 175
+cmpfis	140	0	tos	179
+cmpfis	141	1	aos	175 read_OS_line 176
+cmpfis	141	2	aos	176 read_OS_line 177
+cmpfis	141	3	aos	177 read_OS_line 180
+cmpfis	144	0	tos	184
+cmpfis	145	1	aos	180 read_OS_line 181
+cmpfis	145	2	aos	181 read_OS_line 182
+cmpfis	145	3	aos	182 read_OS_line 185
+cmpfis	148	0	tos	189
+cmpfis	149	1	aos	185 read_OS_line 186
+cmpfis	149	2	aos	186 read_OS_line 187
+cmpfis	149	3	aos	187 read_OS_line 190
+cmpfis	152	0	tos	194
+cmpfis	153	1	aos	190 read_OS_line 191
+cmpfis	153	2	aos	191 read_OS_line 192
+cmpfis	153	3	aos	192 read_OS_line 195
+cmpfis	156	0	tos	199
+cmpfis	157	1	aos	195 read_OS_line 196
+cmpfis	157	2	aos	196 read_OS_line 197
+cmpfis	157	3	aos	197 read_OS_line 200
+cmpfis	160	0	tos	204
+cmpfis	161	1	aos	200 read_OS_line 201
+cmpfis	161	2	aos	201 read_OS_line 202
+cmpfis	161	3	aos	202 read_OS_line 205
+cmpfis	164	0	tos	209
+cmpfis	165	1	aos	205 read_OS_line 206
+cmpfis	165	2	aos	206 read_OS_line 207
+cmpfis	165	3	aos	207 read_OS_line 210
+cmpfis	168	0	tos	214
+cmpfis	169	1	aos	210 read_OS_line 211
+cmpfis	169	2	aos	211 read_OS_line 212
+cmpfis	169	3	aos	212 read_OS_line 215
+cmpfis	172	0	tos	219
+cmpfis	173	1	aos	215 read_OS_line 216
+cmpfis	173	2	aos	216 read_OS_line 217
+cmpfis	173	3	aos	217 read_OS_line 220
+cmpfis	176	0	tos	224
+cmpfis	177	1	aos	220 read_OS_line 221
+cmpfis	177	2	aos	221 read_OS_line 222
+cmpfis	177	3	aos	222 read_OS_line 225
+cmpfis	180	0	tos	229
+cmpfis	181	1	aos	225 read_OS_line 226
+cmpfis	181	2	aos	226 read_OS_line 227
+cmpfis	181	3	aos	227 read_OS_line 230
+cmpfis	184	0	tos	234
+cmpfis	185	1	aos	230 read_OS_line 231
+cmpfis	185	2	aos	231 read_OS_line 232
+cmpfis	185	3	aos	232 read_OS_line 235
+cmpfis	188	0	tos	239
+cmpfis	189	1	aos	235 read_OS_line 236
+cmpfis	189	2	aos	236 read_OS_line 237
+cmpfis	189	3	aos	237 read_OS_line 240
+cmpfis	192	0	tos	244
+cmpfis	193	1	aos	240 read_OS_line 241
+cmpfis	193	2	aos	241 read_OS_line 242
+cmpfis	193	3	aos	242 read_OS_line 245
+cmpfis	196	0	tos	249
+cmpfis	197	1	aos	245 read_OS_line 246
+cmpfis	197	2	aos	246 read_OS_line 247
+cmpfis	197	3	aos	247 read_OS_line 250
+cmpfis	200	0	tos	254
+cmpfis	201	1	aos	250 read_OS_line 251
+cmpfis	201	2	aos	251 read_OS_line 252
+cmpfis	201	3	aos	252 read_OS_line 255
+cmpfis	204	0	tos	259
+cmpfis	205	1	aos	255 read_OS_line 256
+cmpfis	205	2	aos	256 read_OS_line 257
+cmpfis	205	3	aos	257 read_OS_line 260
+cmpfis	208	0	tos	264
+cmpfis	209	1	aos	260 read_OS_line 261
+cmpfis	209	2	aos	261 read_OS_line 262
+cmpfis	209	3	aos	262 read_OS_line 265
+cmpfis	212	0	tos	269
+cmpfis	213	1	aos	265 read_OS_line 266
+cmpfis	213	2	aos	266 read_OS_line 267
+cmpfis	213	3	aos	267 read_OS_line 270
+cmpfis	216	0	tos	274
+cmpfis	217	1	aos	270 read_OS_line 271
+cmpfis	217	2	aos	271 read_OS_line 272
+cmpfis	217	3	aos	272 read_OS_line 275
+cmpfis	220	0	tos	279
+cmpfis	221	1	aos	275 read_OS_line 276
+cmpfis	221	2	aos	276 read_OS_line 277
+cmpfis	221	3	aos	277 read_OS_line 280
+cmpfis	224	0	tos	284
+cmpfis	225	1	aos	280 read_OS_line 281
+cmpfis	225	2	aos	281 read_OS_line 282
+cmpfis	225	3	aos	282 read_OS_line 285
+cmpfis	228	0	tos	289
+cmpfis	229	1	aos	285 read_OS_line 286
+cmpfis	229	2	aos	286 read_OS_line 287
+cmpfis	229	3	aos	287 read_OS_line 290
+cmpfis	232	0	tos	294
+cmpfis	233	1	aos	290 read_OS_line 291
+cmpfis	233	2	aos	291 read_OS_line 292
+cmpfis	233	3	aos	292 read_OS_line 295
+cmpfis	236	0	tos	299
+cmpfis	237	1	aos	295 read_OS_line 296
+cmpfis	237	2	aos	296 read_OS_line 297
+cmpfis	237	3	aos	297 read_OS_line 300
+cmpfis	240	0	tos	304
+cmpfis	241	1	aos	300 read_OS_line 301
+cmpfis	241	2	aos	301 read_OS_line 302
+cmpfis	241	3	aos	302 read_OS_line 305
+cmpfis	244	0	tos	309
+cmpfis	245	1	aos	305 read_OS_line 306
+cmpfis	245	2	aos	306 read_OS_line 307
+cmpfis	245	3	aos	307 read_OS_line 310
+cmpfis	248	0	tos	314
+cmpfis	249	1	aos	310 read_OS_line 311
+cmpfis	249	2	aos	311 read_OS_line 312
+cmpfis	249	3	aos	312 read_OS_line 315
+cmpfis	252	0	tos	319
+cmpfis	253	1	aos	315 read_OS_line 316
+cmpfis	253	2	aos	316 read_OS_line 317
+cmpfis	253	3	aos	317
+wu	3	0	24704
+wu	2	4	24704
+wu	1	8	24704
+wu	0	12	24704
+wu	3	16	25216
+wu	2	20	25216
+wu	1	24	25216
+wu	0	28	25216
+wu	3	32	25728
+wu	2	36	25728
+wu	1	40	25728
+wu	0	44	25728
+wu	3	48	26240
+wu	2	52	26240
+wu	1	56	26240
+wu	0	60	26240
+wu	3	64	26752
+wu	2	68	26752
+wu	1	72	26752
+wu	0	76	26752
+wu	3	80	27264
+wu	2	84	27264
+wu	1	88	27264
+wu	0	92	27264
+wu	3	96	27776
+wu	2	100	27776
+wu	1	104	27776
+wu	0	108	27776
+wu	3	112	28288
+wu	2	116	28288
+wu	1	120	28288
+wu	0	124	28288
+wu	3	128	28800
+wu	2	132	28800
+wu	1	136	28800
+wu	0	140	28800
+wu	3	144	29312
+wu	2	148	29312
+wu	1	152	29312
+wu	0	156	29312
+wu	3	160	29824
+wu	2	164	29824
+wu	1	168	29824
+wu	0	172	29824
+wu	3	176	30336
+wu	2	180	30336
+wu	1	184	30336
+wu	0	188	30336
+wu	3	192	30848
+wu	2	196	30848
+wu	1	200	30848
+wu	0	204	30848
+wu	3	208	31360
+wu	2	212	31360
+wu	1	216	31360
+wu	0	220	31360
+wu	3	224	31872
+wu	2	228	31872
+wu	1	232	31872
+wu	0	236	31872
+wu	3	240	32384
+wu	2	244	32384
+wu	1	248	32384
+wu	0	252	32384
+wu	3	1	32896
+wu	2	5	32896
+wu	1	9	32896
+wu	0	13	32896
+wu	3	17	33408
+wu	2	21	33408
+wu	1	25	33408
+wu	0	29	33408
+wu	3	33	33920
+wu	2	37	33920
+wu	1	41	33920
+wu	0	45	33920
+wu	3	49	34432
+wu	2	53	34432
+wu	1	57	34432
+wu	0	61	34432
+wu	3	65	34944
+wu	2	69	34944
+wu	1	73	34944
+wu	0	77	34944
+wu	3	81	35456
+wu	2	85	35456
+wu	1	89	35456
+wu	0	93	35456
+wu	3	97	35968
+wu	2	101	35968
+wu	1	105	35968
+wu	0	109	35968
+wu	3	113	36480
+wu	2	117	36480
+wu	1	121	36480
+wu	0	125	36480
+wu	3	129	36992
+wu	2	133	36992
+wu	1	137	36992
+wu	0	141	36992
+wu	3	145	37504
+wu	2	149	37504
+wu	1	153	37504
+wu	0	157	37504
+wu	3	161	38016
+wu	2	165	38016
+wu	1	169	38016
+wu	0	173	38016
+wu	3	177	38528
+wu	2	181	38528
+wu	1	185	38528
+wu	0	189	38528
+wu	3	193	39040
+wu	2	197	39040
+wu	1	201	39040
+wu	0	205	39040
+wu	3	209	39552
+wu	2	213	39552
+wu	1	217	39552
+wu	0	221	39552
+wu	3	225	40064
+wu	2	229	40064
+wu	1	233	40064
+wu	0	237	40064
+wu	3	241	40576
+wu	2	245	40576
+wu	1	249	40576
+wu	0	253	40576
+wu	3	2	256
+wu	2	6	256
+wu	1	10	256
+wu	0	14	256
+wu	3	18	768
+wu	2	22	768
+wu	1	26	768
+wu	0	30	768
+wu	3	34	1280
+wu	2	38	1280
+wu	1	42	1280
+wu	0	46	1280
+wu	3	50	1792
+wu	2	54	1792
+wu	1	58	1792
+wu	0	62	1792
+wu	3	66	2304
+wu	2	70	2304
+wu	1	74	2304
+wu	0	78	2304
+wu	3	82	2816
+wu	2	86	2816
+wu	1	90	2816
+wu	0	94	2816
+wu	3	98	3328
+wu	2	102	3328
+wu	1	106	3328
+wu	0	110	3328
+wu	3	114	3840
+wu	2	118	3840
+wu	1	122	3840
+wu	0	126	3840
+wu	3	130	4352
+wu	2	134	4352
+wu	1	138	4352
+wu	0	142	4352
+wu	3	146	4864
+wu	2	150	4864
+wu	1	154	4864
+wu	0	158	4864
+wu	3	162	5376
+wu	2	166	5376
+wu	1	170	5376
+wu	0	174	5376
+wu	3	178	5888
+wu	2	182	5888
+wu	1	186	5888
+wu	0	190	5888
+wu	3	194	6400
+wu	2	198	6400
+wu	1	202	6400
+wu	0	206	6400
+wu	3	210	6912
+wu	2	214	6912
+wu	1	218	6912
+wu	0	222	6912
+wu	3	226	7424
+wu	2	230	7424
+wu	1	234	7424
+wu	0	238	7424
+wu	3	242	7936
+wu	2	246	7936
+wu	1	250	7936
+wu	0	254	7936
+wu	3	3	8448
+wu	2	7	8448
+wu	1	11	8448
+wu	0	15	8448
+wu	3	19	8960
+wu	2	23	8960
+wu	1	27	8960
+wu	0	31	8960
+wu	3	35	9472
+wu	2	39	9472
+wu	1	43	9472
+wu	0	47	9472
+wu	3	51	9984
+wu	2	55	9984
+wu	1	59	9984
+wu	0	63	9984
+wu	3	67	10496
+wu	2	71	10496
+wu	1	75	10496
+wu	0	79	10496
+wu	3	83	11008
+wu	2	87	11008
+wu	1	91	11008
+wu	0	95	11008
+wu	3	99	11520
+wu	2	103	11520
+wu	1	107	11520
+wu	0	111	11520
+wu	3	115	12032
+wu	2	119	12032
+wu	1	123	12032
+wu	0	127	12032
+wu	3	131	12544
+wu	2	135	12544
+wu	1	139	12544
+wu	0	143	12544
+wu	3	147	13056
+wu	2	151	13056
+wu	1	155	13056
+wu	0	159	13056
+wu	3	163	13568
+wu	2	167	13568
+wu	1	171	13568
+wu	0	175	13568
+wu	3	179	14080
+wu	2	183	14080
+wu	1	187	14080
+wu	0	191	14080
+wu	3	195	14592
+wu	2	199	14592
+wu	1	203	14592
+wu	0	207	14592
+wu	3	211	15104
+wu	2	215	15104
+wu	1	219	15104
+wu	0	223	15104
+wu	3	227	15616
+wu	2	231	15616
+wu	1	235	15616
+wu	0	239	15616
+wu	3	243	16128
+wu	2	247	16128
+wu	1	251	16128
+wu	0	255	16128
+nop
+nop
+nop read_OS_line 3
+nop
+cmpfis	1	0	aos	3 read_OS_line 4 read_OS_line 0
+cmpfis	1	1	aos	4
+cmpfis	2	2	aos	0 read_OS_line 1
+cmpfis	2	3	aos	1 read_OS_line 8
+cmpfis	5	0	aos	8 read_OS_line 9 read_OS_line 5
+cmpfis	5	1	aos	9
+cmpfis	6	2	aos	5 read_OS_line 6
+cmpfis	6	3	aos	6 read_OS_line 13
+cmpfis	9	0	aos	13 read_OS_line 14 read_OS_line 10
+cmpfis	9	1	aos	14
+cmpfis	10	2	aos	10 read_OS_line 11
+cmpfis	10	3	aos	11 read_OS_line 18
+cmpfis	13	0	aos	18 read_OS_line 19 read_OS_line 15
+cmpfis	13	1	aos	19
+cmpfis	14	2	aos	15 read_OS_line 16
+cmpfis	14	3	aos	16 read_OS_line 23
+cmpfis	17	0	aos	23 read_OS_line 24 read_OS_line 20
+cmpfis	17	1	aos	24
+cmpfis	18	2	aos	20 read_OS_line 21
+cmpfis	18	3	aos	21 read_OS_line 28
+cmpfis	21	0	aos	28 read_OS_line 29 read_OS_line 25
+cmpfis	21	1	aos	29
+cmpfis	22	2	aos	25 read_OS_line 26
+cmpfis	22	3	aos	26 read_OS_line 33
+cmpfis	25	0	aos	33 read_OS_line 34 read_OS_line 30
+cmpfis	25	1	aos	34
+cmpfis	26	2	aos	30 read_OS_line 31
+cmpfis	26	3	aos	31 read_OS_line 38
+cmpfis	29	0	aos	38 read_OS_line 39 read_OS_line 35
+cmpfis	29	1	aos	39
+cmpfis	30	2	aos	35 read_OS_line 36
+cmpfis	30	3	aos	36 read_OS_line 43
+cmpfis	33	0	aos	43 read_OS_line 44 read_OS_line 40
+cmpfis	33	1	aos	44
+cmpfis	34	2	aos	40 read_OS_line 41
+cmpfis	34	3	aos	41 read_OS_line 48
+cmpfis	37	0	aos	48 read_OS_line 49 read_OS_line 45
+cmpfis	37	1	aos	49
+cmpfis	38	2	aos	45 read_OS_line 46
+cmpfis	38	3	aos	46 read_OS_line 53
+cmpfis	41	0	aos	53 read_OS_line 54 read_OS_line 50
+cmpfis	41	1	aos	54
+cmpfis	42	2	aos	50 read_OS_line 51
+cmpfis	42	3	aos	51 read_OS_line 58
+cmpfis	45	0	aos	58 read_OS_line 59 read_OS_line 55
+cmpfis	45	1	aos	59
+cmpfis	46	2	aos	55 read_OS_line 56
+cmpfis	46	3	aos	56 read_OS_line 63
+cmpfis	49	0	aos	63 read_OS_line 64 read_OS_line 60
+cmpfis	49	1	aos	64
+cmpfis	50	2	aos	60 read_OS_line 61
+cmpfis	50	3	aos	61 read_OS_line 68
+cmpfis	53	0	aos	68 read_OS_line 69 read_OS_line 65
+cmpfis	53	1	aos	69
+cmpfis	54	2	aos	65 read_OS_line 66
+cmpfis	54	3	aos	66 read_OS_line 73
+cmpfis	57	0	aos	73 read_OS_line 74 read_OS_line 70
+cmpfis	57	1	aos	74
+cmpfis	58	2	aos	70 read_OS_line 71
+cmpfis	58	3	aos	71 read_OS_line 78
+cmpfis	61	0	aos	78 read_OS_line 79 read_OS_line 75
+cmpfis	61	1	aos	79
+cmpfis	62	2	aos	75 read_OS_line 76
+cmpfis	62	3	aos	76 read_OS_line 83
+cmpfis	65	0	aos	83 read_OS_line 84 read_OS_line 80
+cmpfis	65	1	aos	84
+cmpfis	66	2	aos	80 read_OS_line 81
+cmpfis	66	3	aos	81 read_OS_line 88
+cmpfis	69	0	aos	88 read_OS_line 89 read_OS_line 85
+cmpfis	69	1	aos	89
+cmpfis	70	2	aos	85 read_OS_line 86
+cmpfis	70	3	aos	86 read_OS_line 93
+cmpfis	73	0	aos	93 read_OS_line 94 read_OS_line 90
+cmpfis	73	1	aos	94
+cmpfis	74	2	aos	90 read_OS_line 91
+cmpfis	74	3	aos	91 read_OS_line 98
+cmpfis	77	0	aos	98 read_OS_line 99 read_OS_line 95
+cmpfis	77	1	aos	99
+cmpfis	78	2	aos	95 read_OS_line 96
+cmpfis	78	3	aos	96 read_OS_line 103
+cmpfis	81	0	aos	103 read_OS_line 104 read_OS_line 100
+cmpfis	81	1	aos	104
+cmpfis	82	2	aos	100 read_OS_line 101
+cmpfis	82	3	aos	101 read_OS_line 108
+cmpfis	85	0	aos	108 read_OS_line 109 read_OS_line 105
+cmpfis	85	1	aos	109
+cmpfis	86	2	aos	105 read_OS_line 106
+cmpfis	86	3	aos	106 read_OS_line 113
+cmpfis	89	0	aos	113 read_OS_line 114 read_OS_line 110
+cmpfis	89	1	aos	114
+cmpfis	90	2	aos	110 read_OS_line 111
+cmpfis	90	3	aos	111 read_OS_line 118
+cmpfis	93	0	aos	118 read_OS_line 119 read_OS_line 115
+cmpfis	93	1	aos	119
+cmpfis	94	2	aos	115 read_OS_line 116
+cmpfis	94	3	aos	116 read_OS_line 123
+cmpfis	97	0	aos	123 read_OS_line 124 read_OS_line 120
+cmpfis	97	1	aos	124
+cmpfis	98	2	aos	120 read_OS_line 121
+cmpfis	98	3	aos	121 read_OS_line 128
+cmpfis	101	0	aos	128 read_OS_line 129 read_OS_line 125
+cmpfis	101	1	aos	129
+cmpfis	102	2	aos	125 read_OS_line 126
+cmpfis	102	3	aos	126 read_OS_line 133
+cmpfis	105	0	aos	133 read_OS_line 134 read_OS_line 130
+cmpfis	105	1	aos	134
+cmpfis	106	2	aos	130 read_OS_line 131
+cmpfis	106	3	aos	131 read_OS_line 138
+cmpfis	109	0	aos	138 read_OS_line 139 read_OS_line 135
+cmpfis	109	1	aos	139
+cmpfis	110	2	aos	135 read_OS_line 136
+cmpfis	110	3	aos	136 read_OS_line 143
+cmpfis	113	0	aos	143 read_OS_line 144 read_OS_line 140
+cmpfis	113	1	aos	144
+cmpfis	114	2	aos	140 read_OS_line 141
+cmpfis	114	3	aos	141 read_OS_line 148
+cmpfis	117	0	aos	148 read_OS_line 149 read_OS_line 145
+cmpfis	117	1	aos	149
+cmpfis	118	2	aos	145 read_OS_line 146
+cmpfis	118	3	aos	146 read_OS_line 153
+cmpfis	121	0	aos	153 read_OS_line 154 read_OS_line 150
+cmpfis	121	1	aos	154
+cmpfis	122	2	aos	150 read_OS_line 151
+cmpfis	122	3	aos	151 read_OS_line 158
+cmpfis	125	0	aos	158 read_OS_line 159 read_OS_line 155
+cmpfis	125	1	aos	159
+cmpfis	126	2	aos	155 read_OS_line 156
+cmpfis	126	3	aos	156 read_OS_line 163
+cmpfis	129	0	aos	163 read_OS_line 164 read_OS_line 160
+cmpfis	129	1	aos	164
+cmpfis	130	2	aos	160 read_OS_line 161
+cmpfis	130	3	aos	161 read_OS_line 168
+cmpfis	133	0	aos	168 read_OS_line 169 read_OS_line 165
+cmpfis	133	1	aos	169
+cmpfis	134	2	aos	165 read_OS_line 166
+cmpfis	134	3	aos	166 read_OS_line 173
+cmpfis	137	0	aos	173 read_OS_line 174 read_OS_line 170
+cmpfis	137	1	aos	174
+cmpfis	138	2	aos	170 read_OS_line 171
+cmpfis	138	3	aos	171 read_OS_line 178
+cmpfis	141	0	aos	178 read_OS_line 179 read_OS_line 175
+cmpfis	141	1	aos	179
+cmpfis	142	2	aos	175 read_OS_line 176
+cmpfis	142	3	aos	176 read_OS_line 183
+cmpfis	145	0	aos	183 read_OS_line 184 read_OS_line 180
+cmpfis	145	1	aos	184
+cmpfis	146	2	aos	180 read_OS_line 181
+cmpfis	146	3	aos	181 read_OS_line 188
+cmpfis	149	0	aos	188 read_OS_line 189 read_OS_line 185
+cmpfis	149	1	aos	189
+cmpfis	150	2	aos	185 read_OS_line 186
+cmpfis	150	3	aos	186 read_OS_line 193
+cmpfis	153	0	aos	193 read_OS_line 194 read_OS_line 190
+cmpfis	153	1	aos	194
+cmpfis	154	2	aos	190 read_OS_line 191
+cmpfis	154	3	aos	191 read_OS_line 198
+cmpfis	157	0	aos	198 read_OS_line 199 read_OS_line 195
+cmpfis	157	1	aos	199
+cmpfis	158	2	aos	195 read_OS_line 196
+cmpfis	158	3	aos	196 read_OS_line 203
+cmpfis	161	0	aos	203 read_OS_line 204 read_OS_line 200
+cmpfis	161	1	aos	204
+cmpfis	162	2	aos	200 read_OS_line 201
+cmpfis	162	3	aos	201 read_OS_line 208
+cmpfis	165	0	aos	208 read_OS_line 209 read_OS_line 205
+cmpfis	165	1	aos	209
+cmpfis	166	2	aos	205 read_OS_line 206
+cmpfis	166	3	aos	206 read_OS_line 213
+cmpfis	169	0	aos	213 read_OS_line 214 read_OS_line 210
+cmpfis	169	1	aos	214
+cmpfis	170	2	aos	210 read_OS_line 211
+cmpfis	170	3	aos	211 read_OS_line 218
+cmpfis	173	0	aos	218 read_OS_line 219 read_OS_line 215
+cmpfis	173	1	aos	219
+cmpfis	174	2	aos	215 read_OS_line 216
+cmpfis	174	3	aos	216 read_OS_line 223
+cmpfis	177	0	aos	223 read_OS_line 224 read_OS_line 220
+cmpfis	177	1	aos	224
+cmpfis	178	2	aos	220 read_OS_line 221
+cmpfis	178	3	aos	221 read_OS_line 228
+cmpfis	181	0	aos	228 read_OS_line 229 read_OS_line 225
+cmpfis	181	1	aos	229
+cmpfis	182	2	aos	225 read_OS_line 226
+cmpfis	182	3	aos	226 read_OS_line 233
+cmpfis	185	0	aos	233 read_OS_line 234 read_OS_line 230
+cmpfis	185	1	aos	234
+cmpfis	186	2	aos	230 read_OS_line 231
+cmpfis	186	3	aos	231 read_OS_line 238
+cmpfis	189	0	aos	238 read_OS_line 239 read_OS_line 235
+cmpfis	189	1	aos	239
+cmpfis	190	2	aos	235 read_OS_line 236
+cmpfis	190	3	aos	236 read_OS_line 243
+cmpfis	193	0	aos	243 read_OS_line 244 read_OS_line 240
+cmpfis	193	1	aos	244
+cmpfis	194	2	aos	240 read_OS_line 241
+cmpfis	194	3	aos	241 read_OS_line 248
+cmpfis	197	0	aos	248 read_OS_line 249 read_OS_line 245
+cmpfis	197	1	aos	249
+cmpfis	198	2	aos	245 read_OS_line 246
+cmpfis	198	3	aos	246 read_OS_line 253
+cmpfis	201	0	aos	253 read_OS_line 254 read_OS_line 250
+cmpfis	201	1	aos	254
+cmpfis	202	2	aos	250 read_OS_line 251
+cmpfis	202	3	aos	251 read_OS_line 258
+cmpfis	205	0	aos	258 read_OS_line 259 read_OS_line 255
+cmpfis	205	1	aos	259
+cmpfis	206	2	aos	255 read_OS_line 256
+cmpfis	206	3	aos	256 read_OS_line 263
+cmpfis	209	0	aos	263 read_OS_line 264 read_OS_line 260
+cmpfis	209	1	aos	264
+cmpfis	210	2	aos	260 read_OS_line 261
+cmpfis	210	3	aos	261 read_OS_line 268
+cmpfis	213	0	aos	268 read_OS_line 269 read_OS_line 265
+cmpfis	213	1	aos	269
+cmpfis	214	2	aos	265 read_OS_line 266
+cmpfis	214	3	aos	266 read_OS_line 273
+cmpfis	217	0	aos	273 read_OS_line 274 read_OS_line 270
+cmpfis	217	1	aos	274
+cmpfis	218	2	aos	270 read_OS_line 271
+cmpfis	218	3	aos	271 read_OS_line 278
+cmpfis	221	0	aos	278 read_OS_line 279 read_OS_line 275
+cmpfis	221	1	aos	279
+cmpfis	222	2	aos	275 read_OS_line 276
+cmpfis	222	3	aos	276 read_OS_line 283
+cmpfis	225	0	aos	283 read_OS_line 284 read_OS_line 280
+cmpfis	225	1	aos	284
+cmpfis	226	2	aos	280 read_OS_line 281
+cmpfis	226	3	aos	281 read_OS_line 288
+cmpfis	229	0	aos	288 read_OS_line 289 read_OS_line 285
+cmpfis	229	1	aos	289
+cmpfis	230	2	aos	285 read_OS_line 286
+cmpfis	230	3	aos	286 read_OS_line 293
+cmpfis	233	0	aos	293 read_OS_line 294 read_OS_line 290
+cmpfis	233	1	aos	294
+cmpfis	234	2	aos	290 read_OS_line 291
+cmpfis	234	3	aos	291 read_OS_line 298
+cmpfis	237	0	aos	298 read_OS_line 299 read_OS_line 295
+cmpfis	237	1	aos	299
+cmpfis	238	2	aos	295 read_OS_line 296
+cmpfis	238	3	aos	296 read_OS_line 303
+cmpfis	241	0	aos	303 read_OS_line 304 read_OS_line 300
+cmpfis	241	1	aos	304
+cmpfis	242	2	aos	300 read_OS_line 301
+cmpfis	242	3	aos	301 read_OS_line 308
+cmpfis	245	0	aos	308 read_OS_line 309 read_OS_line 305
+cmpfis	245	1	aos	309
+cmpfis	246	2	aos	305 read_OS_line 306
+cmpfis	246	3	aos	306 read_OS_line 313
+cmpfis	249	0	aos	313 read_OS_line 314 read_OS_line 310
+cmpfis	249	1	aos	314
+cmpfis	250	2	aos	310 read_OS_line 311
+cmpfis	250	3	aos	311 read_OS_line 318
+cmpfis	253	0	aos	318 read_OS_line 319 read_OS_line 315
+cmpfis	253	1	aos	319
+cmpfis	254	2	aos	315 read_OS_line 316
+cmpfis	254	3	aos	316
+wu	3	0	16640
+wu	2	4	16640
+wu	1	8	16640
+wu	0	12	16640
+wu	3	16	17152
+wu	2	20	17152
+wu	1	24	17152
+wu	0	28	17152
+wu	3	32	17664
+wu	2	36	17664
+wu	1	40	17664
+wu	0	44	17664
+wu	3	48	18176
+wu	2	52	18176
+wu	1	56	18176
+wu	0	60	18176
+wu	3	64	18688
+wu	2	68	18688
+wu	1	72	18688
+wu	0	76	18688
+wu	3	80	19200
+wu	2	84	19200
+wu	1	88	19200
+wu	0	92	19200
+wu	3	96	19712
+wu	2	100	19712
+wu	1	104	19712
+wu	0	108	19712
+wu	3	112	20224
+wu	2	116	20224
+wu	1	120	20224
+wu	0	124	20224
+wu	3	128	20736
+wu	2	132	20736
+wu	1	136	20736
+wu	0	140	20736
+wu	3	144	21248
+wu	2	148	21248
+wu	1	152	21248
+wu	0	156	21248
+wu	3	160	21760
+wu	2	164	21760
+wu	1	168	21760
+wu	0	172	21760
+wu	3	176	22272
+wu	2	180	22272
+wu	1	184	22272
+wu	0	188	22272
+wu	3	192	22784
+wu	2	196	22784
+wu	1	200	22784
+wu	0	204	22784
+wu	3	208	23296
+wu	2	212	23296
+wu	1	216	23296
+wu	0	220	23296
+wu	3	224	23808
+wu	2	228	23808
+wu	1	232	23808
+wu	0	236	23808
+wu	3	240	24320
+wu	2	244	24320
+wu	1	248	24320
+wu	0	252	24320
+wu	3	1	24832
+wu	2	5	24832
+wu	1	9	24832
+wu	0	13	24832
+wu	3	17	25344
+wu	2	21	25344
+wu	1	25	25344
+wu	0	29	25344
+wu	3	33	25856
+wu	2	37	25856
+wu	1	41	25856
+wu	0	45	25856
+wu	3	49	26368
+wu	2	53	26368
+wu	1	57	26368
+wu	0	61	26368
+wu	3	65	26880
+wu	2	69	26880
+wu	1	73	26880
+wu	0	77	26880
+wu	3	81	27392
+wu	2	85	27392
+wu	1	89	27392
+wu	0	93	27392
+wu	3	97	27904
+wu	2	101	27904
+wu	1	105	27904
+wu	0	109	27904
+wu	3	113	28416
+wu	2	117	28416
+wu	1	121	28416
+wu	0	125	28416
+wu	3	129	28928
+wu	2	133	28928
+wu	1	137	28928
+wu	0	141	28928
+wu	3	145	29440
+wu	2	149	29440
+wu	1	153	29440
+wu	0	157	29440
+wu	3	161	29952
+wu	2	165	29952
+wu	1	169	29952
+wu	0	173	29952
+wu	3	177	30464
+wu	2	181	30464
+wu	1	185	30464
+wu	0	189	30464
+wu	3	193	30976
+wu	2	197	30976
+wu	1	201	30976
+wu	0	205	30976
+wu	3	209	31488
+wu	2	213	31488
+wu	1	217	31488
+wu	0	221	31488
+wu	3	225	32000
+wu	2	229	32000
+wu	1	233	32000
+wu	0	237	32000
+wu	3	241	32512
+wu	2	245	32512
+wu	1	249	32512
+wu	0	253	32512
+wu	3	2	33024
+wu	2	6	33024
+wu	1	10	33024
+wu	0	14	33024
+wu	3	18	33536
+wu	2	22	33536
+wu	1	26	33536
+wu	0	30	33536
+wu	3	34	34048
+wu	2	38	34048
+wu	1	42	34048
+wu	0	46	34048
+wu	3	50	34560
+wu	2	54	34560
+wu	1	58	34560
+wu	0	62	34560
+wu	3	66	35072
+wu	2	70	35072
+wu	1	74	35072
+wu	0	78	35072
+wu	3	82	35584
+wu	2	86	35584
+wu	1	90	35584
+wu	0	94	35584
+wu	3	98	36096
+wu	2	102	36096
+wu	1	106	36096
+wu	0	110	36096
+wu	3	114	36608
+wu	2	118	36608
+wu	1	122	36608
+wu	0	126	36608
+wu	3	130	37120
+wu	2	134	37120
+wu	1	138	37120
+wu	0	142	37120
+wu	3	146	37632
+wu	2	150	37632
+wu	1	154	37632
+wu	0	158	37632
+wu	3	162	38144
+wu	2	166	38144
+wu	1	170	38144
+wu	0	174	38144
+wu	3	178	38656
+wu	2	182	38656
+wu	1	186	38656
+wu	0	190	38656
+wu	3	194	39168
+wu	2	198	39168
+wu	1	202	39168
+wu	0	206	39168
+wu	3	210	39680
+wu	2	214	39680
+wu	1	218	39680
+wu	0	222	39680
+wu	3	226	40192
+wu	2	230	40192
+wu	1	234	40192
+wu	0	238	40192
+wu	3	242	40704
+wu	2	246	40704
+wu	1	250	40704
+wu	0	254	40704
+wu	3	3	384
+wu	2	7	384
+wu	1	11	384
+wu	0	15	384
+wu	3	19	896
+wu	2	23	896
+wu	1	27	896
+wu	0	31	896
+wu	3	35	1408
+wu	2	39	1408
+wu	1	43	1408
+wu	0	47	1408
+wu	3	51	1920
+wu	2	55	1920
+wu	1	59	1920
+wu	0	63	1920
+wu	3	67	2432
+wu	2	71	2432
+wu	1	75	2432
+wu	0	79	2432
+wu	3	83	2944
+wu	2	87	2944
+wu	1	91	2944
+wu	0	95	2944
+wu	3	99	3456
+wu	2	103	3456
+wu	1	107	3456
+wu	0	111	3456
+wu	3	115	3968
+wu	2	119	3968
+wu	1	123	3968
+wu	0	127	3968
+wu	3	131	4480
+wu	2	135	4480
+wu	1	139	4480
+wu	0	143	4480
+wu	3	147	4992
+wu	2	151	4992
+wu	1	155	4992
+wu	0	159	4992
+wu	3	163	5504
+wu	2	167	5504
+wu	1	171	5504
+wu	0	175	5504
+wu	3	179	6016
+wu	2	183	6016
+wu	1	187	6016
+wu	0	191	6016
+wu	3	195	6528
+wu	2	199	6528
+wu	1	203	6528
+wu	0	207	6528
+wu	3	211	7040
+wu	2	215	7040
+wu	1	219	7040
+wu	0	223	7040
+wu	3	227	7552
+wu	2	231	7552
+wu	1	235	7552
+wu	0	239	7552
+wu	3	243	8064
+wu	2	247	8064
+wu	1	251	8064
+wu	0	255	8064
+nop
+nop
+nop read_OS_line 2
+nop
+cmpfis	2	0	aos	2 read_OS_line 3
+cmpfis	2	1	aos	3 read_OS_line 4 read_OS_line 0
+cmpfis	2	2	aos	4
+cmpfis	3	3	aos	0 read_OS_line 7
+cmpfis	6	0	aos	7 read_OS_line 8
+cmpfis	6	1	aos	8 read_OS_line 9 read_OS_line 5
+cmpfis	6	2	aos	9
+cmpfis	7	3	aos	5 read_OS_line 12
+cmpfis	10	0	aos	12 read_OS_line 13
+cmpfis	10	1	aos	13 read_OS_line 14 read_OS_line 10
+cmpfis	10	2	aos	14
+cmpfis	11	3	aos	10 read_OS_line 17
+cmpfis	14	0	aos	17 read_OS_line 18
+cmpfis	14	1	aos	18 read_OS_line 19 read_OS_line 15
+cmpfis	14	2	aos	19
+cmpfis	15	3	aos	15 read_OS_line 22
+cmpfis	18	0	aos	22 read_OS_line 23
+cmpfis	18	1	aos	23 read_OS_line 24 read_OS_line 20
+cmpfis	18	2	aos	24
+cmpfis	19	3	aos	20 read_OS_line 27
+cmpfis	22	0	aos	27 read_OS_line 28
+cmpfis	22	1	aos	28 read_OS_line 29 read_OS_line 25
+cmpfis	22	2	aos	29
+cmpfis	23	3	aos	25 read_OS_line 32
+cmpfis	26	0	aos	32 read_OS_line 33
+cmpfis	26	1	aos	33 read_OS_line 34 read_OS_line 30
+cmpfis	26	2	aos	34
+cmpfis	27	3	aos	30 read_OS_line 37
+cmpfis	30	0	aos	37 read_OS_line 38
+cmpfis	30	1	aos	38 read_OS_line 39 read_OS_line 35
+cmpfis	30	2	aos	39
+cmpfis	31	3	aos	35 read_OS_line 42
+cmpfis	34	0	aos	42 read_OS_line 43
+cmpfis	34	1	aos	43 read_OS_line 44 read_OS_line 40
+cmpfis	34	2	aos	44
+cmpfis	35	3	aos	40 read_OS_line 47
+cmpfis	38	0	aos	47 read_OS_line 48
+cmpfis	38	1	aos	48 read_OS_line 49 read_OS_line 45
+cmpfis	38	2	aos	49
+cmpfis	39	3	aos	45 read_OS_line 52
+cmpfis	42	0	aos	52 read_OS_line 53
+cmpfis	42	1	aos	53 read_OS_line 54 read_OS_line 50
+cmpfis	42	2	aos	54
+cmpfis	43	3	aos	50 read_OS_line 57
+cmpfis	46	0	aos	57 read_OS_line 58
+cmpfis	46	1	aos	58 read_OS_line 59 read_OS_line 55
+cmpfis	46	2	aos	59
+cmpfis	47	3	aos	55 read_OS_line 62
+cmpfis	50	0	aos	62 read_OS_line 63
+cmpfis	50	1	aos	63 read_OS_line 64 read_OS_line 60
+cmpfis	50	2	aos	64
+cmpfis	51	3	aos	60 read_OS_line 67
+cmpfis	54	0	aos	67 read_OS_line 68
+cmpfis	54	1	aos	68 read_OS_line 69 read_OS_line 65
+cmpfis	54	2	aos	69
+cmpfis	55	3	aos	65 read_OS_line 72
+cmpfis	58	0	aos	72 read_OS_line 73
+cmpfis	58	1	aos	73 read_OS_line 74 read_OS_line 70
+cmpfis	58	2	aos	74
+cmpfis	59	3	aos	70 read_OS_line 77
+cmpfis	62	0	aos	77 read_OS_line 78
+cmpfis	62	1	aos	78 read_OS_line 79 read_OS_line 75
+cmpfis	62	2	aos	79
+cmpfis	63	3	aos	75 read_OS_line 82
+cmpfis	66	0	aos	82 read_OS_line 83
+cmpfis	66	1	aos	83 read_OS_line 84 read_OS_line 80
+cmpfis	66	2	aos	84
+cmpfis	67	3	aos	80 read_OS_line 87
+cmpfis	70	0	aos	87 read_OS_line 88
+cmpfis	70	1	aos	88 read_OS_line 89 read_OS_line 85
+cmpfis	70	2	aos	89
+cmpfis	71	3	aos	85 read_OS_line 92
+cmpfis	74	0	aos	92 read_OS_line 93
+cmpfis	74	1	aos	93 read_OS_line 94 read_OS_line 90
+cmpfis	74	2	aos	94
+cmpfis	75	3	aos	90 read_OS_line 97
+cmpfis	78	0	aos	97 read_OS_line 98
+cmpfis	78	1	aos	98 read_OS_line 99 read_OS_line 95
+cmpfis	78	2	aos	99
+cmpfis	79	3	aos	95 read_OS_line 102
+cmpfis	82	0	aos	102 read_OS_line 103
+cmpfis	82	1	aos	103 read_OS_line 104 read_OS_line 100
+cmpfis	82	2	aos	104
+cmpfis	83	3	aos	100 read_OS_line 107
+cmpfis	86	0	aos	107 read_OS_line 108
+cmpfis	86	1	aos	108 read_OS_line 109 read_OS_line 105
+cmpfis	86	2	aos	109
+cmpfis	87	3	aos	105 read_OS_line 112
+cmpfis	90	0	aos	112 read_OS_line 113
+cmpfis	90	1	aos	113 read_OS_line 114 read_OS_line 110
+cmpfis	90	2	aos	114
+cmpfis	91	3	aos	110 read_OS_line 117
+cmpfis	94	0	aos	117 read_OS_line 118
+cmpfis	94	1	aos	118 read_OS_line 119 read_OS_line 115
+cmpfis	94	2	aos	119
+cmpfis	95	3	aos	115 read_OS_line 122
+cmpfis	98	0	aos	122 read_OS_line 123
+cmpfis	98	1	aos	123 read_OS_line 124 read_OS_line 120
+cmpfis	98	2	aos	124
+cmpfis	99	3	aos	120 read_OS_line 127
+cmpfis	102	0	aos	127 read_OS_line 128
+cmpfis	102	1	aos	128 read_OS_line 129 read_OS_line 125
+cmpfis	102	2	aos	129
+cmpfis	103	3	aos	125 read_OS_line 132
+cmpfis	106	0	aos	132 read_OS_line 133
+cmpfis	106	1	aos	133 read_OS_line 134 read_OS_line 130
+cmpfis	106	2	aos	134
+cmpfis	107	3	aos	130 read_OS_line 137
+cmpfis	110	0	aos	137 read_OS_line 138
+cmpfis	110	1	aos	138 read_OS_line 139 read_OS_line 135
+cmpfis	110	2	aos	139
+cmpfis	111	3	aos	135 read_OS_line 142
+cmpfis	114	0	aos	142 read_OS_line 143
+cmpfis	114	1	aos	143 read_OS_line 144 read_OS_line 140
+cmpfis	114	2	aos	144
+cmpfis	115	3	aos	140 read_OS_line 147
+cmpfis	118	0	aos	147 read_OS_line 148
+cmpfis	118	1	aos	148 read_OS_line 149 read_OS_line 145
+cmpfis	118	2	aos	149
+cmpfis	119	3	aos	145 read_OS_line 152
+cmpfis	122	0	aos	152 read_OS_line 153
+cmpfis	122	1	aos	153 read_OS_line 154 read_OS_line 150
+cmpfis	122	2	aos	154
+cmpfis	123	3	aos	150 read_OS_line 157
+cmpfis	126	0	aos	157 read_OS_line 158
+cmpfis	126	1	aos	158 read_OS_line 159 read_OS_line 155
+cmpfis	126	2	aos	159
+cmpfis	127	3	aos	155 read_OS_line 162
+cmpfis	130	0	aos	162 read_OS_line 163
+cmpfis	130	1	aos	163 read_OS_line 164 read_OS_line 160
+cmpfis	130	2	aos	164
+cmpfis	131	3	aos	160 read_OS_line 167
+cmpfis	134	0	aos	167 read_OS_line 168
+cmpfis	134	1	aos	168 read_OS_line 169 read_OS_line 165
+cmpfis	134	2	aos	169
+cmpfis	135	3	aos	165 read_OS_line 172
+cmpfis	138	0	aos	172 read_OS_line 173
+cmpfis	138	1	aos	173 read_OS_line 174 read_OS_line 170
+cmpfis	138	2	aos	174
+cmpfis	139	3	aos	170 read_OS_line 177
+cmpfis	142	0	aos	177 read_OS_line 178
+cmpfis	142	1	aos	178 read_OS_line 179 read_OS_line 175
+cmpfis	142	2	aos	179
+cmpfis	143	3	aos	175 read_OS_line 182
+cmpfis	146	0	aos	182 read_OS_line 183
+cmpfis	146	1	aos	183 read_OS_line 184 read_OS_line 180
+cmpfis	146	2	aos	184
+cmpfis	147	3	aos	180 read_OS_line 187
+cmpfis	150	0	aos	187 read_OS_line 188
+cmpfis	150	1	aos	188 read_OS_line 189 read_OS_line 185
+cmpfis	150	2	aos	189
+cmpfis	151	3	aos	185 read_OS_line 192
+cmpfis	154	0	aos	192 read_OS_line 193
+cmpfis	154	1	aos	193 read_OS_line 194 read_OS_line 190
+cmpfis	154	2	aos	194
+cmpfis	155	3	aos	190 read_OS_line 197
+cmpfis	158	0	aos	197 read_OS_line 198
+cmpfis	158	1	aos	198 read_OS_line 199 read_OS_line 195
+cmpfis	158	2	aos	199
+cmpfis	159	3	aos	195 read_OS_line 202
+cmpfis	162	0	aos	202 read_OS_line 203
+cmpfis	162	1	aos	203 read_OS_line 204 read_OS_line 200
+cmpfis	162	2	aos	204
+cmpfis	163	3	aos	200 read_OS_line 207
+cmpfis	166	0	aos	207 read_OS_line 208
+cmpfis	166	1	aos	208 read_OS_line 209 read_OS_line 205
+cmpfis	166	2	aos	209
+cmpfis	167	3	aos	205 read_OS_line 212
+cmpfis	170	0	aos	212 read_OS_line 213
+cmpfis	170	1	aos	213 read_OS_line 214 read_OS_line 210
+cmpfis	170	2	aos	214
+cmpfis	171	3	aos	210 read_OS_line 217
+cmpfis	174	0	aos	217 read_OS_line 218
+cmpfis	174	1	aos	218 read_OS_line 219 read_OS_line 215
+cmpfis	174	2	aos	219
+cmpfis	175	3	aos	215 read_OS_line 222
+cmpfis	178	0	aos	222 read_OS_line 223
+cmpfis	178	1	aos	223 read_OS_line 224 read_OS_line 220
+cmpfis	178	2	aos	224
+cmpfis	179	3	aos	220 read_OS_line 227
+cmpfis	182	0	aos	227 read_OS_line 228
+cmpfis	182	1	aos	228 read_OS_line 229 read_OS_line 225
+cmpfis	182	2	aos	229
+cmpfis	183	3	aos	225 read_OS_line 232
+cmpfis	186	0	aos	232 read_OS_line 233
+cmpfis	186	1	aos	233 read_OS_line 234 read_OS_line 230
+cmpfis	186	2	aos	234
+cmpfis	187	3	aos	230 read_OS_line 237
+cmpfis	190	0	aos	237 read_OS_line 238
+cmpfis	190	1	aos	238 read_OS_line 239 read_OS_line 235
+cmpfis	190	2	aos	239
+cmpfis	191	3	aos	235 read_OS_line 242
+cmpfis	194	0	aos	242 read_OS_line 243
+cmpfis	194	1	aos	243 read_OS_line 244 read_OS_line 240
+cmpfis	194	2	aos	244
+cmpfis	195	3	aos	240 read_OS_line 247
+cmpfis	198	0	aos	247 read_OS_line 248
+cmpfis	198	1	aos	248 read_OS_line 249 read_OS_line 245
+cmpfis	198	2	aos	249
+cmpfis	199	3	aos	245 read_OS_line 252
+cmpfis	202	0	aos	252 read_OS_line 253
+cmpfis	202	1	aos	253 read_OS_line 254 read_OS_line 250
+cmpfis	202	2	aos	254
+cmpfis	203	3	aos	250 read_OS_line 257
+cmpfis	206	0	aos	257 read_OS_line 258
+cmpfis	206	1	aos	258 read_OS_line 259 read_OS_line 255
+cmpfis	206	2	aos	259
+cmpfis	207	3	aos	255 read_OS_line 262
+cmpfis	210	0	aos	262 read_OS_line 263
+cmpfis	210	1	aos	263 read_OS_line 264 read_OS_line 260
+cmpfis	210	2	aos	264
+cmpfis	211	3	aos	260 read_OS_line 267
+cmpfis	214	0	aos	267 read_OS_line 268
+cmpfis	214	1	aos	268 read_OS_line 269 read_OS_line 265
+cmpfis	214	2	aos	269
+cmpfis	215	3	aos	265 read_OS_line 272
+cmpfis	218	0	aos	272 read_OS_line 273
+cmpfis	218	1	aos	273 read_OS_line 274 read_OS_line 270
+cmpfis	218	2	aos	274
+cmpfis	219	3	aos	270 read_OS_line 277
+cmpfis	222	0	aos	277 read_OS_line 278
+cmpfis	222	1	aos	278 read_OS_line 279 read_OS_line 275
+cmpfis	222	2	aos	279
+cmpfis	223	3	aos	275 read_OS_line 282
+cmpfis	226	0	aos	282 read_OS_line 283
+cmpfis	226	1	aos	283 read_OS_line 284 read_OS_line 280
+cmpfis	226	2	aos	284
+cmpfis	227	3	aos	280 read_OS_line 287
+cmpfis	230	0	aos	287 read_OS_line 288
+cmpfis	230	1	aos	288 read_OS_line 289 read_OS_line 285
+cmpfis	230	2	aos	289
+cmpfis	231	3	aos	285 read_OS_line 292
+cmpfis	234	0	aos	292 read_OS_line 293
+cmpfis	234	1	aos	293 read_OS_line 294 read_OS_line 290
+cmpfis	234	2	aos	294
+cmpfis	235	3	aos	290 read_OS_line 297
+cmpfis	238	0	aos	297 read_OS_line 298
+cmpfis	238	1	aos	298 read_OS_line 299 read_OS_line 295
+cmpfis	238	2	aos	299
+cmpfis	239	3	aos	295 read_OS_line 302
+cmpfis	242	0	aos	302 read_OS_line 303
+cmpfis	242	1	aos	303 read_OS_line 304 read_OS_line 300
+cmpfis	242	2	aos	304
+cmpfis	243	3	aos	300 read_OS_line 307
+cmpfis	246	0	aos	307 read_OS_line 308
+cmpfis	246	1	aos	308 read_OS_line 309 read_OS_line 305
+cmpfis	246	2	aos	309
+cmpfis	247	3	aos	305 read_OS_line 312
+cmpfis	250	0	aos	312 read_OS_line 313
+cmpfis	250	1	aos	313 read_OS_line 314 read_OS_line 310
+cmpfis	250	2	aos	314
+cmpfis	251	3	aos	310 read_OS_line 317
+cmpfis	254	0	aos	317 read_OS_line 318
+cmpfis	254	1	aos	318 read_OS_line 319 read_OS_line 315
+cmpfis	254	2	aos	319
+cmpfis	255	3	aos	315
+wu	3	0	8576
+wu	2	4	8576
+wu	1	8	8576
+wu	0	12	8576
+wu	3	16	9088
+wu	2	20	9088
+wu	1	24	9088
+wu	0	28	9088
+wu	3	32	9600
+wu	2	36	9600
+wu	1	40	9600
+wu	0	44	9600
+wu	3	48	10112
+wu	2	52	10112
+wu	1	56	10112
+wu	0	60	10112
+wu	3	64	10624
+wu	2	68	10624
+wu	1	72	10624
+wu	0	76	10624
+wu	3	80	11136
+wu	2	84	11136
+wu	1	88	11136
+wu	0	92	11136
+wu	3	96	11648
+wu	2	100	11648
+wu	1	104	11648
+wu	0	108	11648
+wu	3	112	12160
+wu	2	116	12160
+wu	1	120	12160
+wu	0	124	12160
+wu	3	128	12672
+wu	2	132	12672
+wu	1	136	12672
+wu	0	140	12672
+wu	3	144	13184
+wu	2	148	13184
+wu	1	152	13184
+wu	0	156	13184
+wu	3	160	13696
+wu	2	164	13696
+wu	1	168	13696
+wu	0	172	13696
+wu	3	176	14208
+wu	2	180	14208
+wu	1	184	14208
+wu	0	188	14208
+wu	3	192	14720
+wu	2	196	14720
+wu	1	200	14720
+wu	0	204	14720
+wu	3	208	15232
+wu	2	212	15232
+wu	1	216	15232
+wu	0	220	15232
+wu	3	224	15744
+wu	2	228	15744
+wu	1	232	15744
+wu	0	236	15744
+wu	3	240	16256
+wu	2	244	16256
+wu	1	248	16256
+wu	0	252	16256
+wu	3	1	16768
+wu	2	5	16768
+wu	1	9	16768
+wu	0	13	16768
+wu	3	17	17280
+wu	2	21	17280
+wu	1	25	17280
+wu	0	29	17280
+wu	3	33	17792
+wu	2	37	17792
+wu	1	41	17792
+wu	0	45	17792
+wu	3	49	18304
+wu	2	53	18304
+wu	1	57	18304
+wu	0	61	18304
+wu	3	65	18816
+wu	2	69	18816
+wu	1	73	18816
+wu	0	77	18816
+wu	3	81	19328
+wu	2	85	19328
+wu	1	89	19328
+wu	0	93	19328
+wu	3	97	19840
+wu	2	101	19840
+wu	1	105	19840
+wu	0	109	19840
+wu	3	113	20352
+wu	2	117	20352
+wu	1	121	20352
+wu	0	125	20352
+wu	3	129	20864
+wu	2	133	20864
+wu	1	137	20864
+wu	0	141	20864
+wu	3	145	21376
+wu	2	149	21376
+wu	1	153	21376
+wu	0	157	21376
+wu	3	161	21888
+wu	2	165	21888
+wu	1	169	21888
+wu	0	173	21888
+wu	3	177	22400
+wu	2	181	22400
+wu	1	185	22400
+wu	0	189	22400
+wu	3	193	22912
+wu	2	197	22912
+wu	1	201	22912
+wu	0	205	22912
+wu	3	209	23424
+wu	2	213	23424
+wu	1	217	23424
+wu	0	221	23424
+wu	3	225	23936
+wu	2	229	23936
+wu	1	233	23936
+wu	0	237	23936
+wu	3	241	24448
+wu	2	245	24448
+wu	1	249	24448
+wu	0	253	24448
+wu	3	2	24960
+wu	2	6	24960
+wu	1	10	24960
+wu	0	14	24960
+wu	3	18	25472
+wu	2	22	25472
+wu	1	26	25472
+wu	0	30	25472
+wu	3	34	25984
+wu	2	38	25984
+wu	1	42	25984
+wu	0	46	25984
+wu	3	50	26496
+wu	2	54	26496
+wu	1	58	26496
+wu	0	62	26496
+wu	3	66	27008
+wu	2	70	27008
+wu	1	74	27008
+wu	0	78	27008
+wu	3	82	27520
+wu	2	86	27520
+wu	1	90	27520
+wu	0	94	27520
+wu	3	98	28032
+wu	2	102	28032
+wu	1	106	28032
+wu	0	110	28032
+wu	3	114	28544
+wu	2	118	28544
+wu	1	122	28544
+wu	0	126	28544
+wu	3	130	29056
+wu	2	134	29056
+wu	1	138	29056
+wu	0	142	29056
+wu	3	146	29568
+wu	2	150	29568
+wu	1	154	29568
+wu	0	158	29568
+wu	3	162	30080
+wu	2	166	30080
+wu	1	170	30080
+wu	0	174	30080
+wu	3	178	30592
+wu	2	182	30592
+wu	1	186	30592
+wu	0	190	30592
+wu	3	194	31104
+wu	2	198	31104
+wu	1	202	31104
+wu	0	206	31104
+wu	3	210	31616
+wu	2	214	31616
+wu	1	218	31616
+wu	0	222	31616
+wu	3	226	32128
+wu	2	230	32128
+wu	1	234	32128
+wu	0	238	32128
+wu	3	242	32640
+wu	2	246	32640
+wu	1	250	32640
+wu	0	254	32640
+wu	3	3	33152
+wu	2	7	33152
+wu	1	11	33152
+wu	0	15	33152
+wu	3	19	33664
+wu	2	23	33664
+wu	1	27	33664
+wu	0	31	33664
+wu	3	35	34176
+wu	2	39	34176
+wu	1	43	34176
+wu	0	47	34176
+wu	3	51	34688
+wu	2	55	34688
+wu	1	59	34688
+wu	0	63	34688
+wu	3	67	35200
+wu	2	71	35200
+wu	1	75	35200
+wu	0	79	35200
+wu	3	83	35712
+wu	2	87	35712
+wu	1	91	35712
+wu	0	95	35712
+wu	3	99	36224
+wu	2	103	36224
+wu	1	107	36224
+wu	0	111	36224
+wu	3	115	36736
+wu	2	119	36736
+wu	1	123	36736
+wu	0	127	36736
+wu	3	131	37248
+wu	2	135	37248
+wu	1	139	37248
+wu	0	143	37248
+wu	3	147	37760
+wu	2	151	37760
+wu	1	155	37760
+wu	0	159	37760
+wu	3	163	38272
+wu	2	167	38272
+wu	1	171	38272
+wu	0	175	38272
+wu	3	179	38784
+wu	2	183	38784
+wu	1	187	38784
+wu	0	191	38784
+wu	3	195	39296
+wu	2	199	39296
+wu	1	203	39296
+wu	0	207	39296
+wu	3	211	39808
+wu	2	215	39808
+wu	1	219	39808
+wu	0	223	39808
+wu	3	227	40320
+wu	2	231	40320
+wu	1	235	40320
+wu	0	239	40320
+wu	3	243	40832
+wu	2	247	40832
+wu	1	251	40832
+wu	0	255	40832
+nop
+nop read_OS_line 1
+nop
+nop
+cmpfis	3	0	aos	1 read_OS_line 2
+cmpfis	3	1	aos	2 read_OS_line 3
+cmpfis	3	2	aos	3 read_OS_line 4 read_OS_line 6
+cmpfis	3	3	aos	4
+cmpfis	7	0	aos	6 read_OS_line 7
+cmpfis	7	1	aos	7 read_OS_line 8
+cmpfis	7	2	aos	8 read_OS_line 9 read_OS_line 11
+cmpfis	7	3	aos	9
+cmpfis	11	0	aos	11 read_OS_line 12
+cmpfis	11	1	aos	12 read_OS_line 13
+cmpfis	11	2	aos	13 read_OS_line 14 read_OS_line 16
+cmpfis	11	3	aos	14
+cmpfis	15	0	aos	16 read_OS_line 17
+cmpfis	15	1	aos	17 read_OS_line 18
+cmpfis	15	2	aos	18 read_OS_line 19 read_OS_line 21
+cmpfis	15	3	aos	19
+cmpfis	19	0	aos	21 read_OS_line 22
+cmpfis	19	1	aos	22 read_OS_line 23
+cmpfis	19	2	aos	23 read_OS_line 24 read_OS_line 26
+cmpfis	19	3	aos	24
+cmpfis	23	0	aos	26 read_OS_line 27
+cmpfis	23	1	aos	27 read_OS_line 28
+cmpfis	23	2	aos	28 read_OS_line 29 read_OS_line 31
+cmpfis	23	3	aos	29
+cmpfis	27	0	aos	31 read_OS_line 32
+cmpfis	27	1	aos	32 read_OS_line 33
+cmpfis	27	2	aos	33 read_OS_line 34 read_OS_line 36
+cmpfis	27	3	aos	34
+cmpfis	31	0	aos	36 read_OS_line 37
+cmpfis	31	1	aos	37 read_OS_line 38
+cmpfis	31	2	aos	38 read_OS_line 39 read_OS_line 41
+cmpfis	31	3	aos	39
+cmpfis	35	0	aos	41 read_OS_line 42
+cmpfis	35	1	aos	42 read_OS_line 43
+cmpfis	35	2	aos	43 read_OS_line 44 read_OS_line 46
+cmpfis	35	3	aos	44
+cmpfis	39	0	aos	46 read_OS_line 47
+cmpfis	39	1	aos	47 read_OS_line 48
+cmpfis	39	2	aos	48 read_OS_line 49 read_OS_line 51
+cmpfis	39	3	aos	49
+cmpfis	43	0	aos	51 read_OS_line 52
+cmpfis	43	1	aos	52 read_OS_line 53
+cmpfis	43	2	aos	53 read_OS_line 54 read_OS_line 56
+cmpfis	43	3	aos	54
+cmpfis	47	0	aos	56 read_OS_line 57
+cmpfis	47	1	aos	57 read_OS_line 58
+cmpfis	47	2	aos	58 read_OS_line 59 read_OS_line 61
+cmpfis	47	3	aos	59
+cmpfis	51	0	aos	61 read_OS_line 62
+cmpfis	51	1	aos	62 read_OS_line 63
+cmpfis	51	2	aos	63 read_OS_line 64 read_OS_line 66
+cmpfis	51	3	aos	64
+cmpfis	55	0	aos	66 read_OS_line 67
+cmpfis	55	1	aos	67 read_OS_line 68
+cmpfis	55	2	aos	68 read_OS_line 69 read_OS_line 71
+cmpfis	55	3	aos	69
+cmpfis	59	0	aos	71 read_OS_line 72
+cmpfis	59	1	aos	72 read_OS_line 73
+cmpfis	59	2	aos	73 read_OS_line 74 read_OS_line 76
+cmpfis	59	3	aos	74
+cmpfis	63	0	aos	76 read_OS_line 77
+cmpfis	63	1	aos	77 read_OS_line 78
+cmpfis	63	2	aos	78 read_OS_line 79 read_OS_line 81
+cmpfis	63	3	aos	79
+cmpfis	67	0	aos	81 read_OS_line 82
+cmpfis	67	1	aos	82 read_OS_line 83
+cmpfis	67	2	aos	83 read_OS_line 84 read_OS_line 86
+cmpfis	67	3	aos	84
+cmpfis	71	0	aos	86 read_OS_line 87
+cmpfis	71	1	aos	87 read_OS_line 88
+cmpfis	71	2	aos	88 read_OS_line 89 read_OS_line 91
+cmpfis	71	3	aos	89
+cmpfis	75	0	aos	91 read_OS_line 92
+cmpfis	75	1	aos	92 read_OS_line 93
+cmpfis	75	2	aos	93 read_OS_line 94 read_OS_line 96
+cmpfis	75	3	aos	94
+cmpfis	79	0	aos	96 read_OS_line 97
+cmpfis	79	1	aos	97 read_OS_line 98
+cmpfis	79	2	aos	98 read_OS_line 99 read_OS_line 101
+cmpfis	79	3	aos	99
+cmpfis	83	0	aos	101 read_OS_line 102
+cmpfis	83	1	aos	102 read_OS_line 103
+cmpfis	83	2	aos	103 read_OS_line 104 read_OS_line 106
+cmpfis	83	3	aos	104
+cmpfis	87	0	aos	106 read_OS_line 107
+cmpfis	87	1	aos	107 read_OS_line 108
+cmpfis	87	2	aos	108 read_OS_line 109 read_OS_line 111
+cmpfis	87	3	aos	109
+cmpfis	91	0	aos	111 read_OS_line 112
+cmpfis	91	1	aos	112 read_OS_line 113
+cmpfis	91	2	aos	113 read_OS_line 114 read_OS_line 116
+cmpfis	91	3	aos	114
+cmpfis	95	0	aos	116 read_OS_line 117
+cmpfis	95	1	aos	117 read_OS_line 118
+cmpfis	95	2	aos	118 read_OS_line 119 read_OS_line 121
+cmpfis	95	3	aos	119
+cmpfis	99	0	aos	121 read_OS_line 122
+cmpfis	99	1	aos	122 read_OS_line 123
+cmpfis	99	2	aos	123 read_OS_line 124 read_OS_line 126
+cmpfis	99	3	aos	124
+cmpfis	103	0	aos	126 read_OS_line 127
+cmpfis	103	1	aos	127 read_OS_line 128
+cmpfis	103	2	aos	128 read_OS_line 129 read_OS_line 131
+cmpfis	103	3	aos	129
+cmpfis	107	0	aos	131 read_OS_line 132
+cmpfis	107	1	aos	132 read_OS_line 133
+cmpfis	107	2	aos	133 read_OS_line 134 read_OS_line 136
+cmpfis	107	3	aos	134
+cmpfis	111	0	aos	136 read_OS_line 137
+cmpfis	111	1	aos	137 read_OS_line 138
+cmpfis	111	2	aos	138 read_OS_line 139 read_OS_line 141
+cmpfis	111	3	aos	139
+cmpfis	115	0	aos	141 read_OS_line 142
+cmpfis	115	1	aos	142 read_OS_line 143
+cmpfis	115	2	aos	143 read_OS_line 144 read_OS_line 146
+cmpfis	115	3	aos	144
+cmpfis	119	0	aos	146 read_OS_line 147
+cmpfis	119	1	aos	147 read_OS_line 148
+cmpfis	119	2	aos	148 read_OS_line 149 read_OS_line 151
+cmpfis	119	3	aos	149
+cmpfis	123	0	aos	151 read_OS_line 152
+cmpfis	123	1	aos	152 read_OS_line 153
+cmpfis	123	2	aos	153 read_OS_line 154 read_OS_line 156
+cmpfis	123	3	aos	154
+cmpfis	127	0	aos	156 read_OS_line 157
+cmpfis	127	1	aos	157 read_OS_line 158
+cmpfis	127	2	aos	158 read_OS_line 159 read_OS_line 161
+cmpfis	127	3	aos	159
+cmpfis	131	0	aos	161 read_OS_line 162
+cmpfis	131	1	aos	162 read_OS_line 163
+cmpfis	131	2	aos	163 read_OS_line 164 read_OS_line 166
+cmpfis	131	3	aos	164
+cmpfis	135	0	aos	166 read_OS_line 167
+cmpfis	135	1	aos	167 read_OS_line 168
+cmpfis	135	2	aos	168 read_OS_line 169 read_OS_line 171
+cmpfis	135	3	aos	169
+cmpfis	139	0	aos	171 read_OS_line 172
+cmpfis	139	1	aos	172 read_OS_line 173
+cmpfis	139	2	aos	173 read_OS_line 174 read_OS_line 176
+cmpfis	139	3	aos	174
+cmpfis	143	0	aos	176 read_OS_line 177
+cmpfis	143	1	aos	177 read_OS_line 178
+cmpfis	143	2	aos	178 read_OS_line 179 read_OS_line 181
+cmpfis	143	3	aos	179
+cmpfis	147	0	aos	181 read_OS_line 182
+cmpfis	147	1	aos	182 read_OS_line 183
+cmpfis	147	2	aos	183 read_OS_line 184 read_OS_line 186
+cmpfis	147	3	aos	184
+cmpfis	151	0	aos	186 read_OS_line 187
+cmpfis	151	1	aos	187 read_OS_line 188
+cmpfis	151	2	aos	188 read_OS_line 189 read_OS_line 191
+cmpfis	151	3	aos	189
+cmpfis	155	0	aos	191 read_OS_line 192
+cmpfis	155	1	aos	192 read_OS_line 193
+cmpfis	155	2	aos	193 read_OS_line 194 read_OS_line 196
+cmpfis	155	3	aos	194
+cmpfis	159	0	aos	196 read_OS_line 197
+cmpfis	159	1	aos	197 read_OS_line 198
+cmpfis	159	2	aos	198 read_OS_line 199 read_OS_line 201
+cmpfis	159	3	aos	199
+cmpfis	163	0	aos	201 read_OS_line 202
+cmpfis	163	1	aos	202 read_OS_line 203
+cmpfis	163	2	aos	203 read_OS_line 204 read_OS_line 206
+cmpfis	163	3	aos	204
+cmpfis	167	0	aos	206 read_OS_line 207
+cmpfis	167	1	aos	207 read_OS_line 208
+cmpfis	167	2	aos	208 read_OS_line 209 read_OS_line 211
+cmpfis	167	3	aos	209
+cmpfis	171	0	aos	211 read_OS_line 212
+cmpfis	171	1	aos	212 read_OS_line 213
+cmpfis	171	2	aos	213 read_OS_line 214 read_OS_line 216
+cmpfis	171	3	aos	214
+cmpfis	175	0	aos	216 read_OS_line 217
+cmpfis	175	1	aos	217 read_OS_line 218
+cmpfis	175	2	aos	218 read_OS_line 219 read_OS_line 221
+cmpfis	175	3	aos	219
+cmpfis	179	0	aos	221 read_OS_line 222
+cmpfis	179	1	aos	222 read_OS_line 223
+cmpfis	179	2	aos	223 read_OS_line 224 read_OS_line 226
+cmpfis	179	3	aos	224
+cmpfis	183	0	aos	226 read_OS_line 227
+cmpfis	183	1	aos	227 read_OS_line 228
+cmpfis	183	2	aos	228 read_OS_line 229 read_OS_line 231
+cmpfis	183	3	aos	229
+cmpfis	187	0	aos	231 read_OS_line 232
+cmpfis	187	1	aos	232 read_OS_line 233
+cmpfis	187	2	aos	233 read_OS_line 234 read_OS_line 236
+cmpfis	187	3	aos	234
+cmpfis	191	0	aos	236 read_OS_line 237
+cmpfis	191	1	aos	237 read_OS_line 238
+cmpfis	191	2	aos	238 read_OS_line 239 read_OS_line 241
+cmpfis	191	3	aos	239
+cmpfis	195	0	aos	241 read_OS_line 242
+cmpfis	195	1	aos	242 read_OS_line 243
+cmpfis	195	2	aos	243 read_OS_line 244 read_OS_line 246
+cmpfis	195	3	aos	244
+cmpfis	199	0	aos	246 read_OS_line 247
+cmpfis	199	1	aos	247 read_OS_line 248
+cmpfis	199	2	aos	248 read_OS_line 249 read_OS_line 251
+cmpfis	199	3	aos	249
+cmpfis	203	0	aos	251 read_OS_line 252
+cmpfis	203	1	aos	252 read_OS_line 253
+cmpfis	203	2	aos	253 read_OS_line 254 read_OS_line 256
+cmpfis	203	3	aos	254
+cmpfis	207	0	aos	256 read_OS_line 257
+cmpfis	207	1	aos	257 read_OS_line 258
+cmpfis	207	2	aos	258 read_OS_line 259 read_OS_line 261
+cmpfis	207	3	aos	259
+cmpfis	211	0	aos	261 read_OS_line 262
+cmpfis	211	1	aos	262 read_OS_line 263
+cmpfis	211	2	aos	263 read_OS_line 264 read_OS_line 266
+cmpfis	211	3	aos	264
+cmpfis	215	0	aos	266 read_OS_line 267
+cmpfis	215	1	aos	267 read_OS_line 268
+cmpfis	215	2	aos	268 read_OS_line 269 read_OS_line 271
+cmpfis	215	3	aos	269
+cmpfis	219	0	aos	271 read_OS_line 272
+cmpfis	219	1	aos	272 read_OS_line 273
+cmpfis	219	2	aos	273 read_OS_line 274 read_OS_line 276
+cmpfis	219	3	aos	274
+cmpfis	223	0	aos	276 read_OS_line 277
+cmpfis	223	1	aos	277 read_OS_line 278
+cmpfis	223	2	aos	278 read_OS_line 279 read_OS_line 281
+cmpfis	223	3	aos	279
+cmpfis	227	0	aos	281 read_OS_line 282
+cmpfis	227	1	aos	282 read_OS_line 283
+cmpfis	227	2	aos	283 read_OS_line 284 read_OS_line 286
+cmpfis	227	3	aos	284
+cmpfis	231	0	aos	286 read_OS_line 287
+cmpfis	231	1	aos	287 read_OS_line 288
+cmpfis	231	2	aos	288 read_OS_line 289 read_OS_line 291
+cmpfis	231	3	aos	289
+cmpfis	235	0	aos	291 read_OS_line 292
+cmpfis	235	1	aos	292 read_OS_line 293
+cmpfis	235	2	aos	293 read_OS_line 294 read_OS_line 296
+cmpfis	235	3	aos	294
+cmpfis	239	0	aos	296 read_OS_line 297
+cmpfis	239	1	aos	297 read_OS_line 298
+cmpfis	239	2	aos	298 read_OS_line 299 read_OS_line 301
+cmpfis	239	3	aos	299
+cmpfis	243	0	aos	301 read_OS_line 302
+cmpfis	243	1	aos	302 read_OS_line 303
+cmpfis	243	2	aos	303 read_OS_line 304 read_OS_line 306
+cmpfis	243	3	aos	304
+cmpfis	247	0	aos	306 read_OS_line 307
+cmpfis	247	1	aos	307 read_OS_line 308
+cmpfis	247	2	aos	308 read_OS_line 309 read_OS_line 311
+cmpfis	247	3	aos	309
+cmpfis	251	0	aos	311 read_OS_line 312
+cmpfis	251	1	aos	312 read_OS_line 313
+cmpfis	251	2	aos	313 read_OS_line 314 read_OS_line 316
+cmpfis	251	3	aos	314
+cmpfis	255	0	aos	316 read_OS_line 317
+cmpfis	255	1	aos	317 read_OS_line 318
+cmpfis	255	2	aos	318 read_OS_line 319
+cmpfis	255	3	aos	319

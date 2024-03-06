@@ -132,7 +132,7 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
     # atos_flag = int(atos_matrix[i_pt,i_at])
     atos_flag = atos_dict[int(atos_matrix[i_pt,i_at].item())]
     os_addr = i_input_channel * para_times + i_pt
-    is_addr = i_input_channel * rows_per_input_channel + i_at
+    is_addr = is_addr = i_input_channel % input_channels_per_ISload * rows_per_input_channel + i_at
 
     if atos_matrix[i_pt,i_at] == 0:
         write_status = 0
