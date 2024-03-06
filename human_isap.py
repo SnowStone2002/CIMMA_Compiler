@@ -17,7 +17,7 @@ from inst_stack import inst_stack
 import os
 
 # 可变参数
-config = Config(al=64, pc=16, scr=4, is_depth=32, os_depth=32)
+config = Config(al=64, pc=16, scr=4, is_depth=32, os_depth=1)
 acc0 = hwc(config)
 gli = ['mvm', (55, 1024, 64)]
 
@@ -186,17 +186,21 @@ def CMP(i_input_channel, computing_block):# 输入channel, computing block, 对�
             #f.write("cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr> ' +str(os_addr) + '\n')
             if atos_flag == 'aos': # aos 
                 if os_addr > os_virtual_depth: # aos, os overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
                     stk.push(inst="pload\t\n")
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>'+ '\n')
                 else: # aos, os not overflow
                     if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                         os_virtual_depth += 1
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical ?
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
                     else: # gen aos rd request
                         stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) 
 
             elif atos_flag == 'tos': # tos
                 if os_addr > os_virtual_depth: # tos, os overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
                 else: # tos, os not overflow
                     if i_at == acc_times-1: #gen rd request
@@ -209,7 +213,7 @@ def CMP(i_input_channel, computing_block):# 输入channel, computing block, 对�
                 stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\n')
 
 
-    # ws_history.update("write_status") 
+# ws_history.update("write_status") 
 
 
 # region isap
