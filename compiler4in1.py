@@ -37,9 +37,9 @@ IS_load_times_per_inst = m.ceil(input_map_channel / input_channels_per_ISload)
 IS_load_rows = [input_channels_per_ISload * rows_per_input_channel] * (IS_load_times_per_inst)
 if input_map_channel % input_channels_per_ISload != 0:
     IS_load_rows[IS_load_times_per_inst-1] = input_map_channel % input_channels_per_ISload * rows_per_input_channel
-# endregin
+# endregion
 
-# 将weight map切成CIM size的block，放入CIM中
+# region 将weight map切成CIM size的block，放入CIM中
 weight_block_row = m.ceil(weight_map_channel / config.PC)
 weight_block_col = m.ceil(weight_map_length / config.AL)
 weight_block_num = weight_block_col * weight_block_row
@@ -48,6 +48,7 @@ weight_update_times_per_inst = m.ceil(weight_block_num / config.SCR)
 weight_update_ls = [config.SCR] * weight_update_times_per_inst
 if weight_block_num % config.SCR != 0:
     weight_update_ls[weight_update_times_per_inst-1] = weight_block_num % config.SCR
+# endregion
 
 para_times = weight_block_row
 acc_times = weight_block_col
@@ -109,9 +110,17 @@ def LOADIS_BLOCK(num_rows, input_map_position): #输入现在正要存的数据�
             input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
             for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                 if j_reg != 0:
-                    stk.push(inst="lis_p\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
+                    if VERIFY:
+                        stk.push(inst="lis_p\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+
+                                 "\t <input_map> "+str(input_map_position)+"\n")
+                    else:
+                        stk.push(inst="lis_p\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
                 else:
-                    stk.push(inst="lis\t\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
+                    if VERIFY:
+                        stk.push(inst="lis\t\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+
+                                 "\t <input_map> "+str(input_map_position)+"\n")
+                    else:
+                        stk.push(inst="lis\t\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+"\n")
                 input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
                 # !!! 每一个channel的最后一行，可能要填0
             input_map_position += int(acc0.InputSRAMWidth / config.DATA_WIDTH) + int(config.BUS_WIDTH / config.DATA_WIDTH)
@@ -134,9 +143,17 @@ def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个
                     row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW - 1 - k_reg) // (acc0.CIMsWriteWidth//acc0.BusWidth)
                     pause_reg = k_reg % (acc0.CIMsWriteWidth//acc0.BusWidth)
                     if pause_reg == 0:
-                        stk.push(inst="wu\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
+                        if VERIFY:
+                            stk.push(inst="wu\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                                     "\t <weight_map> "+str(weight_map_position)+"\n")
+                        else:
+                            stk.push(inst="wu\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
                     else:
-                        stk.push(inst="wu_p\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
+                        if VERIFY:
+                            stk.push(inst="wu_p\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
+                                     "\t <weight_map> "+str(weight_map_position)+"\n")
+                        else:
+                            stk.push(inst="wu_p\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
             i_block += 1
 
 def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 对当前channel内所有内容遍历CIM进行计算
@@ -162,12 +179,19 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
             if os_addr > os_virtual_depth: # aos, os overflow
                 if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                     os_virtual_depth += 1
-                stk.push(inst="pload\t\n")
-                stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>'+ '\n')
+                if VERIFY:
+                    stk.push(inst="pload\t" + str(os_addr) + '\n')
+                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                else:
+                    stk.push(inst="pload\t\n")
+                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n')
             else: # aos, os not overflow
                 if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                     os_virtual_depth += 1
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                    if VERIFY:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                    else:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
                 else: # gen aos rd request
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) 
 
@@ -175,11 +199,17 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
             if os_addr > os_virtual_depth: # tos, os overflow
                 if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                     os_virtual_depth += 1
-                stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
+                if VERIFY:
+                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                else:
+                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
             else: # tos, os not overflow
                 if i_at == acc_times-1: #gen rd request
                     os_virtual_depth += 1
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
+                    if VERIFY:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
+                    else:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
                 else: # tos
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n')
         
@@ -237,6 +267,8 @@ stk = inst_stack(fifo_len)
 
 # for os_overflow penalty
 os_virtual_depth = acc0.OutputSRAMDepth
+
+VERIFY = 1
 
 LOG_INIT()
 

@@ -20,6 +20,8 @@ class inst_stack:
         self.inst_fifo = ['\n' for i in range(len)]
         self.req_quene = [0 for i in range(len)]
         self.addr_quene = [0 for i in range(len)]
+        self.preq_quene = [0 for i in range(len)]
+        self.paddr_quene = [0 for i in range(len)]
 
     def push(self, inst = '\n', rd_req = 0, rd_addr = 0):
         if rd_req == 1: # new rd request
@@ -30,19 +32,17 @@ class inst_stack:
                     rd_req = 0 #Read Request Solved
                     break
                 else:
-                    if i == 0: 
-                        self.req_quene[i] = 2
-                        self.addr_quene[i] = rd_addr
-                        # print("@@@@@@@@@@@@@@@@@@@@@!Warning! Unsolved Read Request!!@@@@@@@@@@@@@@@@@@@@@")
+                    if i == 0: #Read Request Unsolved
+                        print("@@@@@@@@@@@@@@@@@@@@@!Warning! Unsolved Read Request!!@@@@@@@@@@@@@@@@@@@@@")
 
         with open("mi.log","a") as f:
+            if self.preq_quene[0] == 1:
+                f.write("nop\t <os_addr_rd> "+str(self.paddr_quene[0])+'\n')
+
             if self.req_quene[0] == 0:
                 f.write(str(self.inst_fifo[0]))
             elif self.req_quene[0] == 1:
                 f.write(str(self.inst_fifo[0][0:len(self.inst_fifo[0])-1]) + "\t <os_addr_rd> "+str(self.addr_quene[0])+'\n')
-            elif self.req_quene[0] == 2:
-                f.write(str(self.inst_fifo[0]))
-                f.write("nop\t <os_addr_rd> "+str(self.addr_quene[0])+'\n')
         
         # print(self.inst_fifo[0])
 
@@ -51,10 +51,15 @@ class inst_stack:
                 self.inst_fifo[i] = self.inst_fifo[i+1]
                 self.req_quene[i] = self.req_quene[i+1]
                 self.addr_quene[i] = self.addr_quene[i+1]
+                self.preq_quene[i] = self.preq_quene[i+1]
+                self.paddr_quene[i] = self.paddr_quene[i+1]
             else:
                 self.inst_fifo[i] = inst
-                self.req_quene[i] = rd_req
+                # self.req_quene[i] = rd_req
+                self.req_quene[i] = 0
                 self.addr_quene[i] = rd_addr
+                self.preq_quene[i] = rd_req
+                self.paddr_quene[i] = rd_addr
 
     def check(self):
         print("inst:\n\t", self.inst_fifo)

@@ -17,7 +17,7 @@ from inst_stack import inst_stack
 import os
 
 # 可变参数
-config = Config(al=64, pc=16, scr=4, is_depth=32, os_depth=1)
+config = Config(al=64, pc=16, scr=4, bus_width=128, is_depth=32, os_depth=1)
 acc0 = hwc(config)
 gli = ['mvm', (55, 1024, 64)]
 
