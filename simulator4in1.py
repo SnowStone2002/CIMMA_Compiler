@@ -2,12 +2,13 @@ from hw_config import hwc
 from hw_config import Config
 import math as m
 import torch
+from oob import TensorStack
 
 # 可变参数
 config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (32, 256, 32)]
-data_stream = 'wsap'
+gli = ['mvm', (32, 256, 1)]
+# gli = ['mvm', (1, 8, 1)]
 file_path = 'mi.log'
 
 # 两个length对应作点乘，channel互相无关
@@ -66,6 +67,9 @@ psum = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.i
 wu_row_reg = config.WEIGHT_ROW-1
 data_reg = torch.zeros(acc0.CIMsComputeWidth // config.DATA_WIDTH, dtype=torch.int8)
 
+oob_even = TensorStack(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4)
+oob_odd = TensorStack(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4)
+
 def LIS(reg = 0, IS_addr = 0, in_map_pos = 0):
     global IS
     i_input_map_channel = in_map_pos // operating_input_map_length
@@ -74,7 +78,8 @@ def LIS(reg = 0, IS_addr = 0, in_map_pos = 0):
     IS[IS_addr, reg * byte_count: (reg+1) * byte_count] = input_map[i_input_map_channel, i_input_data_channel : i_input_data_channel + byte_count]
 
 def WU(reg = 0, CIMaddress = 0, wt_map_pos = 0, ren = 0, read_addr = 0):
-    global OS_output
+    # global OS_output    
+    global oob_even, oob_odd
     global CIMaddress4
     global wu_row_reg
     # row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth - 1 - reg) // (acc0.CIMsWriteWidth//acc0.BusWidth // config.WEIGHT_ROW)
@@ -100,11 +105,15 @@ def WU(reg = 0, CIMaddress = 0, wt_map_pos = 0, ren = 0, read_addr = 0):
         wu_row_reg -= 1
 
     if ren:
-        OS_output = OS[read_addr,:]
+        # OS_output = OS[read_addr,:]
+        if read_addr % 2 == 1:
+            oob_odd.push(OS[read_addr,:])
+        elif read_addr % 2 == 0:
+            oob_even.push(OS[read_addr,:])
 
 def CMPFIS(IS_addr = 0, CA = 0, atos = '<aor>', OS_addr = 0, ren = 0, read_addr = 0):
     global sum_reg
-    global OS_output
+    # global OS_output
     global psum
     activation = IS[IS_addr,:]
     psum = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
@@ -118,19 +127,32 @@ def CMPFIS(IS_addr = 0, CA = 0, atos = '<aor>', OS_addr = 0, ren = 0, read_addr 
                 else:
                     psum[i] += (CIMS[row,2*j].to(dtype=torch.int32) * pow(2,2*k) - CIMS[row,2*j+1].to(dtype=torch.int32) * pow(2,2*k+1)) * activation[j].to(dtype=torch.int32)
     if ren:
-        OS_output = OS[read_addr,:]
+        if read_addr % 2 == 1:
+            oob_odd.push(OS[read_addr,:])
+        elif read_addr % 2 == 0:
+            oob_even.push(OS[read_addr,:])
+        # OS_output = OS[read_addr,:]
     if atos == '<aor>':
         sum_reg = psum + sum_reg
     elif atos == '<tos>' or atos == '<ptos>':
         OS[OS_addr,:] = sum_reg + psum
         sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
     else:
+        if OS_addr % 2 == 1:
+            OS_output = oob_odd.pop()
+        elif OS_addr % 2 == 0:
+            OS_output = oob_even.pop()
         OS[OS_addr,:] = sum_reg + psum + OS_output
         sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
 
 def Load_OS_Output(read_addr = 0):
-    global OS_output
-    OS_output = OS[read_addr,:]
+    global oob_even, oob_odd
+    if read_addr % 2 == 1:
+        oob_odd.push(OS[read_addr,:])
+    elif read_addr % 2 == 0:
+        oob_even.push(OS[read_addr,:])
+    # global OS_output
+    # OS_output = OS[read_addr,:]
 
 count = 0
 with open(file_path, 'r') as file:
@@ -195,11 +217,13 @@ with open(file_path, 'r') as file:
 
             elif parameters[0] == "nop":
                 if "<os_addr_rd>" in parameters:
-                    Load_OS_Output(read_addr = int(parameters[2]))
+                    read_addr = int(parameters[2])
+                    Load_OS_Output(read_addr = read_addr)
 
             elif parameters[0] == "pload":
                 if "<os_addr_rd>" in parameters:
-                    Load_OS_Output(read_addr = int(parameters[2]))
+                    read_addr = int(parameters[2])
+                    Load_OS_Output(read_addr = read_addr)
         continue
 
 # torch.set_printoptions(threshold=65536)  # 设置一个较大的阈值

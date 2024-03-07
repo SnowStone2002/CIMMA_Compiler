@@ -17,7 +17,8 @@ import os
 # 可变参数
 config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (32, 256, 32)]
+gli = ['mvm', (32, 256, 1)]
+# gli = ['mvm', (1, 8, 1)]
 data_stream = 'wsap'
 VERIFY = 1
 
