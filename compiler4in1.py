@@ -17,8 +17,8 @@ import os
 # 可变参数
 config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (80, 512, 64)]
-data_stream = 'wspp'
+gli = ['mvm', (32, 256, 32)]
+data_stream = 'wsap'
 VERIFY = 1
 
 # 两个length对应作点乘，channel互相无关
@@ -53,6 +53,12 @@ if weight_block_num % config.SCR != 0:
 
 para_times = weight_block_row
 acc_times = weight_block_col
+
+weight_map_channel = para_times * config.PC
+weight_map_length = acc_times * config.AL
+
+input_map_length  = acc_times * config.AL
+input_map_channel  = input_map_channel
 
 # region ls & atos matrix
 # ls代表了每一次cim计算local switch的状态（用第几个存储的数据做计算）
@@ -209,9 +215,9 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
                 if i_at == acc_times-1: #gen rd request
                     os_virtual_depth += 1
                     if VERIFY:
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
-                    else:
                         stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                    else:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
                 else: # tos
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n')
         
