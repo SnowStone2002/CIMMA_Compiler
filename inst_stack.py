@@ -4,8 +4,11 @@ def verify(inst, new_addr):
     if inst.find("tos") == -1 and inst.find("aos") == -1: # no tos/aos
         return True
 
-    elif inst.find("paos") != -1 or inst.find("ptos") != -1: # paos or ptos
-        return False
+    # elif inst.find("paos") != -1 or inst.find("ptos") != -1: # paos or ptos
+    #     return False
+    
+    elif inst.find("paos") == -1 or inst.find("ptos") == -1: # paos or ptos
+        return True
 
     else: # tos or aos 
         os_addr = int(inst[inst.find("<os_addr_wt>")+13 : len(inst)])

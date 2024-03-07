@@ -27,29 +27,8 @@ input_map_int32 = original_input_map.to(dtype=torch.int32)
 # # 执行矩阵乘法，并保证结果为int32类型
 golden_data = input_map_int32 @ weight_map_int32.transpose(0, 1)
 
-# 计算input map到IS的mapping
-# 对于Input_map 到 IS 的 mapping, 我们首先需要将一个channel的数据放入IS，如果一个channel放完，IS当前行未满，则后续补0，新的channel另起一行
-input_data_per_row = m.floor(acc0.InputSRAMWidth / config.DATA_WIDTH)
-rows_per_input_channel = m.ceil(input_map_length / input_data_per_row)
-input_channels_per_ISload = m.floor(acc0.InputSRAMDepth / rows_per_input_channel)
-IS_load_times_per_inst = m.ceil(input_map_channel / input_channels_per_ISload)
-
-IS_load_rows = [input_channels_per_ISload * rows_per_input_channel] * (IS_load_times_per_inst)
-if input_map_channel % input_channels_per_ISload != 0:
-    IS_load_rows[IS_load_times_per_inst-1] = input_map_channel % input_channels_per_ISload * rows_per_input_channel
-
-# 将weight map切成CIM size的block，放入CIM中
-weight_block_row = m.ceil(weight_map_channel / config.PC)
-weight_block_col = m.ceil(weight_map_length / config.AL)
-weight_block_num = weight_block_col * weight_block_row
-weight_update_times_per_inst = m.ceil(weight_block_num / config.SCR)
-
-weight_update_ls = [config.SCR] * weight_update_times_per_inst
-if weight_block_num % config.SCR != 0:
-    weight_update_ls[weight_update_times_per_inst-1] = weight_block_num % config.SCR
-
-para_times = weight_block_row
-acc_times = weight_block_col
+para_times = weight_map_channel // config.PC
+acc_times = weight_map_length // config.AL
 
 # 计算AL和PC整数倍的扩展矩阵尺寸
 operating_weight_map_channel = para_times * config.PC
@@ -66,43 +45,58 @@ input_map = torch.zeros((operating_input_map_channel, operating_input_map_length
 weight_map[:weight_map_channel, :weight_map_length] = original_weight_map
 input_map[:input_map_channel, :input_map_length] = original_input_map
 
-# OS & IS 反正没人看具体数据，无所谓，int8就行
+# OS & IS 用int8存
 IS = torch.zeros(acc0.InputSRAMDepth, acc0.InputSRAMWidth // config.DATA_WIDTH, dtype=torch.int8)
 OS = torch.zeros(acc0.OutputSRAMDepth, acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
 
 # CIMS 用bit存
 CIMS = torch.zeros(acc0.CIMsrows, acc0.CIMsWriteWidth, dtype=torch.bool)
 
-def LIS(reg = 0, IS_addr = 0, input_map_position = 0):
-    i_input_map_channel = input_map_position // input_map_length
-    i_input_data_channel = input_map_position % input_map_length
-    byte_count = config.BUS_WIDTH // config.DATA_WIDTH
-    IS[IS_addr, reg * byte_count: (reg+1) * byte_count] = input_map[i_input_map_channel, i_input_data_channel : i_input_data_channel + byte_count]
-
-CIMaddress4 = [0, 0, 0, 0]
+CIMaddress4 = [0, 0, 0, 0] #用4是为了区分，实际上4是weight row
 
 OS_output = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
-def WU(reg = 0, CIMaddress = 0, weight_map_position = 0, ren = 0, read_addr = 0):
-    global OS_output
-    global CIMaddress4
-    row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth - 1 - reg) // (acc0.CIMsWriteWidth//acc0.BusWidth // config.WEIGHT_ROW)
-    CIMaddress4[row_reg] = CIMaddress
-    if row_reg == config.WEIGHT_ROW-1:
-        byte_count = config.BUS_WIDTH // config.DATA_WIDTH
-        i_weight_map_channel = weight_map_position // weight_map_length
-        i_weight_data_channel = weight_map_position % weight_map_length
-        datas = weight_map[i_weight_map_channel,i_weight_data_channel:i_weight_data_channel+4*byte_count]
-        for i in range(byte_count*config.WEIGHT_ROW):
-            for j in range(config.WEIGHT_ROW):
-                CIMS[CIMaddress4[j],2*i] = datas[i]>>(2*j) & 1
-                CIMS[CIMaddress4[j],2*i+1] = datas[i]>>(2*j+1) & 1
-                # print(CIMS[CIMaddress4[j],2*i])
-    if ren:
-        OS_output = OS[read_addr,:]
 
 sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
 psum = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
-def CMPFIS(IS_addr = 0, CA = 0, atos = 0, OS_addr = 0, ren = 0, read_addr = 0):
+
+wu_row_reg = 0
+data_reg = torch.zeros(acc0.CIMsComputeWidth // config.DATA_WIDTH, dtype=torch.int8)
+
+def LIS(reg = 0, IS_addr = 0, in_map_pos = 0):
+    global IS
+    i_input_map_channel = in_map_pos // input_map_length
+    i_input_data_channel = in_map_pos % input_map_length
+    byte_count = config.BUS_WIDTH // config.DATA_WIDTH
+    IS[IS_addr, reg * byte_count: (reg+1) * byte_count] = input_map[i_input_map_channel, i_input_data_channel : i_input_data_channel + byte_count]
+
+def WU(reg = 0, CIMaddress = 0, wt_map_pos = 0, ren = 0, read_addr = 0):
+    global OS_output
+    global CIMaddress4
+    global wu_row_reg
+    # row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth - 1 - reg) // (acc0.CIMsWriteWidth//acc0.BusWidth // config.WEIGHT_ROW)
+    wu_reg = wu_row_reg * config.WEIGHT_COL + reg
+    byte_count = acc0.CIMsWriteWidth // config.WEIGHT_COL
+
+    CIMaddress4[wu_row_reg] = CIMaddress
+
+    i_weight_map_channel = wt_map_pos // weight_map_length
+    i_weight_data_channel = wt_map_pos % weight_map_length
+
+    data_reg[wu_reg*config.BUS_WIDTH//config.DATA_WIDTH:(wu_reg+1)*config.BUS_WIDTH//config.DATA_WIDTH] = weight_map[i_weight_map_channel,i_weight_data_channel:i_weight_data_channel+config.BUS_WIDTH//config.DATA_WIDTH]
+    
+    if (wu_row_reg == config.WEIGHT_ROW-1) and (reg == config.WEIGHT_COL-1):
+        for i in range(byte_count):
+            for j in range(config.WEIGHT_ROW):
+                CIMS[CIMaddress4[j],2*i] = data_reg[i]>>(2*j) & 1
+                CIMS[CIMaddress4[j],2*i+1] = data_reg[i]>>(2*j+1) & 1
+        wu_row_reg = 0
+    elif reg == config.WEIGHT_COL-1:
+        wu_row_reg += 1
+
+    if ren:
+        OS_output = OS[read_addr,:]
+
+def CMPFIS(IS_addr = 0, CA = 0, atos = 'aor', OS_addr = 0, ren = 0, read_addr = 0):
     global sum_reg
     global OS_output
     global psum
@@ -118,15 +112,18 @@ def CMPFIS(IS_addr = 0, CA = 0, atos = 0, OS_addr = 0, ren = 0, read_addr = 0):
                     psum[i] += (CIMS[row,2*j].to(dtype=torch.int32) * pow(2,2*k) - CIMS[row,2*j+1].to(dtype=torch.int32) * pow(2,2*k+1)) * activation[j].to(dtype=torch.int32)
     if ren:
         OS_output = OS[read_addr,:]
-    if atos == 0:
+    if atos == 'aor':
         sum_reg = psum + sum_reg
-    elif atos == 1:
+    elif atos == 'tos' or atos == 'ptos':
         OS[OS_addr,:] = sum_reg + psum
         sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
     else:
         OS[OS_addr,:] = sum_reg + psum + OS_output
         sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
-    
+
+def Load_OS_Output(read_addr = 0):
+    global OS_output
+    OS_output = OS[read_addr,:]
 
 count = 0
 with open(file_path, 'r') as file:
@@ -146,27 +143,49 @@ with open(file_path, 'r') as file:
         if start_processing:
             # get the instruction
             parameters = line.split()
-            #print(parameters[0])
-            if parameters[0] == "lis" | parameters[0] == "lisp":
-                LIS(int(parameters[1]), int(parameters[2]), int(parameters[3]))
 
-            elif parameters[0] == "wu" | parameters[0] == "wup":
-                if len(parameters) > 4:
-                    WU(int(parameters[1]), int(parameters[2]), int(parameters[3]), 1, int(parameters[5]))
-                else:
-                    WU(int(parameters[1]), int(parameters[2]), int(parameters[3]))
+            if parameters[0] == "lis" or parameters[0] == "lis_p":
+                LIS(reg         =   int(parameters[2]), 
+                    IS_addr     =   int(parameters[4]), 
+                    in_map_pos  =   int(parameters[6]))
 
-            elif parameters[0] == "cmpfis_int8":
-                if parameters[3] == "aor":
-                    atos = 0
-                elif parameters[3] == "tos":
-                    atos = 1
+            elif parameters[0] == "wu" or parameters[0] == "wu_p":
+                if "<os_addr_rd>" in parameters:
+                    WU(reg         =   int(parameters[2]), 
+                       CIMaddress  =   int(parameters[4]), 
+                       wt_map_pos  =   int(parameters[6]), 
+                       ren         =   1, 
+                       read_addr   =   int(parameters[8]))
                 else:
-                    atos = 2
-                if len(parameters) > 5:
-                    CMPFIS(int(parameters[1]), int(parameters[2]), atos, int(parameters[4]), 1, int(parameters[6]))
+                    WU(reg         =   int(parameters[2]), 
+                       CIMaddress  =   int(parameters[4]), 
+                       wt_map_pos  =   int(parameters[6]), 
+                       ren         =   0, 
+                       read_addr   =   0)
+
+            elif parameters[0] == "cmpfis":
+                if "<os_addr_rd>" in parameters:
+                    CMPFIS(IS_addr      =   int(parameters[2]), 
+                           CA           =   int(parameters[4]), 
+                           atos         =   parameters[5], 
+                           OS_addr      =   int(parameters[7]), 
+                           ren          =   1, 
+                           read_addr    =   int(parameters[9]))
                 else:
-                    CMPFIS(int(parameters[1]), int(parameters[2]), atos, int(parameters[4]))
+                    CMPFIS(IS_addr      =   int(parameters[2]), 
+                           CA           =   int(parameters[4]), 
+                           atos         =   parameters[5], 
+                           OS_addr      =   int(parameters[7]), 
+                           ren          =   0, 
+                           read_addr    =   0)
+
+            elif parameters[0] == "nop":
+                if "<os_addr_rd>" in parameters:
+                    Load_OS_Output(read_addr = parameters[2])
+
+            elif parameters[0] == "pload":
+                if "<os_addr_rd>" in parameters:
+                    Load_OS_Output(read_addr = parameters[2])
         continue
 
 print(OS)
