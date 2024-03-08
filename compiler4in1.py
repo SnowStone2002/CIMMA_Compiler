@@ -17,8 +17,10 @@ import os
 # 可变参数
 config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (80, 512, 64)]
-data_stream = 'wspp'
+gli = ['mvm', (32, 256, 1)]
+# gli = ['mvm', (1, 8, 1)]
+data_stream = 'wsap'
+VERIFY = 1
 
 # 两个length对应作点乘，channel互相无关
 weight_map_channel = gli[1][0]
@@ -52,6 +54,12 @@ if weight_block_num % config.SCR != 0:
 
 para_times = weight_block_row
 acc_times = weight_block_col
+
+weight_map_channel = para_times * config.PC
+weight_map_length = acc_times * config.AL
+
+input_map_length  = acc_times * config.AL
+input_map_channel  = input_map_channel
 
 # region ls & atos matrix
 # ls代表了每一次cim计算local switch的状态（用第几个存储的数据做计算）
@@ -140,6 +148,7 @@ def WU_LSBANK(num_ls, num_channel, i_block): #输入要存几个channel，几个
                 j_data_in_channel = i_at * config.AL
                 weight_map_position = i_weight_channel * weight_map_length + j_data_in_channel
                 for k_reg in reversed(range(acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW)):
+                    weight_map_position = i_weight_channel * weight_map_length + j_data_in_channel + k_reg * acc0.BusWidth // config.DATA_WIDTH
                     row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW - 1 - k_reg) // (acc0.CIMsWriteWidth//acc0.BusWidth)
                     pause_reg = k_reg % (acc0.CIMsWriteWidth//acc0.BusWidth)
                     if pause_reg == 0:
@@ -180,7 +189,7 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
                 if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                     os_virtual_depth += 1
                 if VERIFY:
-                    stk.push(inst="pload\t" + str(os_addr) + '\n')
+                    stk.push(inst="pload\t" + "<os_addr_rd>\t" + str(os_addr) + '\n')
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
                 else:
                     stk.push(inst="pload\t\n")
@@ -207,9 +216,9 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
                 if i_at == acc_times-1: #gen rd request
                     os_virtual_depth += 1
                     if VERIFY:
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
-                    else:
                         stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                    else:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
                 else: # tos
                     stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n')
         
@@ -267,8 +276,6 @@ stk = inst_stack(fifo_len)
 
 # for os_overflow penalty
 os_virtual_depth = acc0.OutputSRAMDepth
-
-VERIFY = 1
 
 LOG_INIT()
 
