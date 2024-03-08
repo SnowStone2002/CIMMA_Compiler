@@ -15,11 +15,11 @@ from inst_stack import inst_stack
 import os
 
 # 可变参数
-config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=16, scr=4, bus_width=256, is_depth=32, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (32, 256, 1)]
+gli = ['mvm', (64, 768, 64)]
 # gli = ['mvm', (1, 8, 1)]
-data_stream = 'wsap'
+data_stream = 'wspp'
 VERIFY = 1
 
 # 两个length对应作点乘，channel互相无关
@@ -262,11 +262,21 @@ def WS_Process():
         for i in range (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW):
             IDLE()
         
+        '''
         for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
             j_compute_block = i_block + j_ls
             for i_input_channel in range(input_map_channel):
                 COMPUTE(i_input_channel = i_input_channel, 
                         computing_block = j_compute_block)
+        '''
+        for i_input_channel in range(input_map_channel):
+            for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
+                j_compute_block = i_block + j_ls
+                COMPUTE(i_input_channel = i_input_channel, 
+                        computing_block = j_compute_block)
+                
+
+
         i_block += weight_update_ls[i_weight_update]
 
 # region main
