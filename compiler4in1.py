@@ -15,11 +15,11 @@ from inst_stack import inst_stack
 import os
 
 # 可变参数
-config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=2, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (32, 256, 1)]
+gli = ['mvm', (32, 256, 2)]
 # gli = ['mvm', (1, 8, 1)]
-data_stream = 'wsap'
+data_stream = 'wspp'
 VERIFY = 1
 
 # 两个length对应作点乘，channel互相无关
@@ -103,6 +103,8 @@ elif data_stream == 'ispp' or data_stream == 'wspp':   # pp 有限para
                 atos_matrix[i_pt,i_at] = aos
 
 # endregion
+                
+gt_in_map_record = 0
 
 def LOG_INIT():
     if os.path.exists('mi.log'):
@@ -177,54 +179,139 @@ def COMPUTE(i_input_channel, computing_block):# 输入channel, computing block, 
     atos_flag   =   atos_dict[int(atos_matrix[i_pt,i_at].item())]
     os_addr     =   i_input_channel * para_times + i_pt
 
+    global os_virtual_depth
+
     if data_stream == 'isap' or data_stream == 'ispp':
         is_addr = i_input_channel % input_channels_per_ISload * rows_per_input_channel + i_at
     elif data_stream == 'wsap' or data_stream == 'wspp':
         is_addr = i_input_channel * rows_per_input_channel + i_at
 
     with open('mi.log','a') as f:
-        global os_virtual_depth
-        if atos_flag == 'aos': # aos 
-            if os_addr > os_virtual_depth: # aos, os overflow
-                if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
-                    os_virtual_depth += 1
-                if VERIFY:
-                    stk.push(inst="pload\t" + "<os_addr_rd>\t" + str(os_addr) + '\n')
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
-                else:
-                    stk.push(inst="pload\t\n")
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n')
-            else: # aos, os not overflow
-                if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
-                    os_virtual_depth += 1
-                    if VERIFY:
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
-                    else:
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
-                else: # gen aos rd request
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) 
+        if ((data_stream == 'wsap' or data_stream == 'wspp') and (i_input_channel >= input_channels_per_ISload)):
+            global gt_in_map_record
 
-        elif atos_flag == 'tos': # tos
-            if os_addr > os_virtual_depth: # tos, os overflow
-                if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
-                    os_virtual_depth += 1
-                if VERIFY:
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
-                else:
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
-            else: # tos, os not overflow
-                if i_at == acc_times-1: #gen rd request
-                    os_virtual_depth += 1
+            input_map_position = i_input_channel * input_map_length + i_at * config.AL + int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
+            for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
+                print("input_map_position=",input_map_position,"gt_in_map_record=",gt_in_map_record)
+                if (gt_in_map_record // (acc0.InputSRAMWidth // config.DATA_WIDTH) == input_map_position // (acc0.InputSRAMWidth // config.DATA_WIDTH)) and (j_reg != 0):
+                    input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
+                    continue
+                if (j_reg != 0):  # cmpgtp
                     if VERIFY:
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                        stk.push(inst="cmpgtp\t " + "<pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\n')
                     else:
-                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
-                else: # tos
-                    stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n')
-        
-        else: # aor
-            stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\n')
+                        stk.push(inst="cmpgtp\t " + "<pos> \t" + str(j_reg))
+                    input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
+                else:           # cmpgt
+                    if atos_flag == 'aos': # aos 
+                        if os_addr > os_virtual_depth: # aos, os overflow
+                            if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                                os_virtual_depth += 1
+                            if VERIFY:
+                                stk.push(inst="pload\t" + "<os_addr_rd>\t" + str(os_addr) + '\n')
+                                stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + 
+                                         '\n')
+                            else:
+                                stk.push(inst="pload\t\n")
+                                stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <paos>' + 
+                                         '\n')
+                        else: # aos, os not overflow
+                            if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                                os_virtual_depth += 1
+                                if VERIFY:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + 
+                                             '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                                else:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <paos>' + 
+                                             '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                            else: # gen aos rd request
+                                if VERIFY:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' + str(os_addr) + 
+                                             '\n', rd_req = 1, rd_addr = os_addr) 
+                                else:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' + str(os_addr) + 
+                                             '\n', rd_req = 1, rd_addr = os_addr) 
 
+                    elif atos_flag == 'tos': # tos
+                        if os_addr > os_virtual_depth: # tos, os overflow
+                            if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                                os_virtual_depth += 1
+                            if VERIFY:
+                                stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\t <os_addr_wt> ' + str(os_addr) + 
+                                         '\n')
+                            else:
+                                stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + 
+                                         '\n')
+                        else: # tos, os not overflow
+                            if i_at == acc_times-1: #gen rd request
+                                os_virtual_depth += 1
+                                if VERIFY:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + 
+                                             '\n')
+                                else:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + 
+                                             '\n')
+                            else: # tos
+                                if VERIFY:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + 
+                                             '\n')
+                                else:
+                                    stk.push(inst="cmpgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + 
+                                             '\n')
+                    
+                    else: # aor
+                        if VERIFY:
+                            stk.push(inst="cmpgt" + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + 
+                                     ">\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\n')
+                        else:
+                            stk.push(inst="cmpgt" + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + 
+                                     ">\t <pos> \t" + str(j_reg) + '\n')
+
+                # input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
+
+            gt_in_map_record = input_map_position# + int(config.BUS_WIDTH / config.DATA_WIDTH)
+
+        else: # is or (ws & i_input_channel < input_channels_per_ISload)
+            if atos_flag == 'aos': # aos 
+                if os_addr > os_virtual_depth: # aos, os overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
+                    if VERIFY:
+                        stk.push(inst="pload\t" + "<os_addr_rd>\t" + str(os_addr) + '\n')
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                    else:
+                        stk.push(inst="pload\t\n")
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n')
+                else: # aos, os not overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
+                        if VERIFY:
+                            stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                        else:
+                            stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
+                    else: # gen aos rd request
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) 
+
+            elif atos_flag == 'tos': # tos
+                if os_addr > os_virtual_depth: # tos, os overflow
+                    if i_at == acc_times-1: # complete one output, gen rd request, aos: paos(go through)
+                        os_virtual_depth += 1
+                    if VERIFY:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                    else:
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
+                else: # tos, os not overflow
+                    if i_at == acc_times-1: #gen rd request
+                        os_virtual_depth += 1
+                        if VERIFY:
+                            stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
+                        else:
+                            stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
+                    else: # tos
+                        stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + '\n')
+            
+            else: # aor
+                stk.push(inst="cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\n')
 
 def IS_Process():
     input_map_position = 0 
@@ -262,11 +349,12 @@ def WS_Process():
         for i in range (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW):
             IDLE()
         
-        for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
-            j_compute_block = i_block + j_ls
-            for i_input_channel in range(input_map_channel):
+        for i_input_channel in range(input_map_channel):
+            for j_ls in range(weight_update_ls[i_weight_update]): #选中一个ls
+                j_compute_block = i_block + j_ls
                 COMPUTE(i_input_channel = i_input_channel, 
                         computing_block = j_compute_block)
+
         i_block += weight_update_ls[i_weight_update]
 
 # region main

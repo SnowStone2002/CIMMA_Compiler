@@ -5,9 +5,9 @@ import torch
 from oob import TensorStack
 
 # 可变参数
-config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=512, os_depth=1024)
+config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=4, os_depth=1024)
 acc0 = hwc(config)
-gli = ['mvm', (32, 256, 1)]
+gli = ['mvm', (32, 256, 2)]
 # gli = ['mvm', (1, 8, 1)]
 file_path = 'mi.log'
 
@@ -70,6 +70,8 @@ data_reg = torch.zeros(acc0.CIMsComputeWidth // config.DATA_WIDTH, dtype=torch.i
 oob_even = TensorStack(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4)
 oob_odd = TensorStack(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4)
 
+activation = torch.zeros(acc0.InputSRAMWidth // config.DATA_WIDTH, dtype=torch.int8)
+
 def LIS(reg = 0, IS_addr = 0, in_map_pos = 0):
     global IS
     i_input_map_channel = in_map_pos // operating_input_map_length
@@ -82,7 +84,6 @@ def WU(reg = 0, CIMaddress = 0, wt_map_pos = 0, ren = 0, read_addr = 0):
     global oob_even, oob_odd
     global CIMaddress4
     global wu_row_reg
-    # row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth - 1 - reg) // (acc0.CIMsWriteWidth//acc0.BusWidth // config.WEIGHT_ROW)
     wu_reg = wu_row_reg * config.WEIGHT_COL + reg
     byte_count = acc0.CIMsWriteWidth // config.WEIGHT_COL
 
@@ -92,20 +93,16 @@ def WU(reg = 0, CIMaddress = 0, wt_map_pos = 0, ren = 0, read_addr = 0):
     i_weight_data_channel = wt_map_pos % operating_weight_map_length
 
     data_reg[wu_reg*config.BUS_WIDTH//config.DATA_WIDTH:(wu_reg+1)*config.BUS_WIDTH//config.DATA_WIDTH] = weight_map[i_weight_map_channel,i_weight_data_channel:i_weight_data_channel+config.BUS_WIDTH//config.DATA_WIDTH]
-    # print(wt_map_pos,"\t",weight_map[i_weight_map_channel,i_weight_data_channel:i_weight_data_channel+config.BUS_WIDTH//config.DATA_WIDTH])
     if wu_reg == 0:
-        # print(data_reg,"\n")
         for i in range(byte_count):
             for j in range(config.WEIGHT_ROW):
                 CIMS[CIMaddress4[j],2*i] = data_reg[i]>>(2*j) & 1
                 CIMS[CIMaddress4[j],2*i+1] = data_reg[i]>>(2*j+1) & 1
-                # if (CIMS[CIMaddress4[j],2*i] and CIMS[CIMaddress4[j],2*i+1]): print("not zero !!!!!!!")
         wu_row_reg = config.WEIGHT_ROW-1
     elif reg == 0:
         wu_row_reg -= 1
 
     if ren:
-        # OS_output = OS[read_addr,:]
         if read_addr % 2 == 1:
             oob_odd.push(OS[read_addr,:])
         elif read_addr % 2 == 0:
@@ -113,8 +110,9 @@ def WU(reg = 0, CIMaddress = 0, wt_map_pos = 0, ren = 0, read_addr = 0):
 
 def CMPFIS(IS_addr = 0, CA = 0, atos = '<aor>', OS_addr = 0, ren = 0, read_addr = 0):
     global sum_reg
-    # global OS_output
+    global OS_output
     global psum
+    global oob_odd, oob_even
     activation = IS[IS_addr,:]
     psum = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
     for i in range(config.PC):
@@ -126,18 +124,66 @@ def CMPFIS(IS_addr = 0, CA = 0, atos = '<aor>', OS_addr = 0, ren = 0, read_addr 
                     psum[i] += (CIMS[row,2*j].to(dtype=torch.int32) * pow(2,2*k) + CIMS[row,2*j+1].to(dtype=torch.int32) * pow(2,2*k+1)) * activation[j].to(dtype=torch.int32)
                 else:
                     psum[i] += (CIMS[row,2*j].to(dtype=torch.int32) * pow(2,2*k) - CIMS[row,2*j+1].to(dtype=torch.int32) * pow(2,2*k+1)) * activation[j].to(dtype=torch.int32)
-    if ren:
-        if read_addr % 2 == 1:
-            oob_odd.push(OS[read_addr,:])
-        elif read_addr % 2 == 0:
-            oob_even.push(OS[read_addr,:])
-        # OS_output = OS[read_addr,:]
     if atos == '<aor>':
         sum_reg = psum + sum_reg
     elif atos == '<tos>' or atos == '<ptos>':
         OS[OS_addr,:] = sum_reg + psum
         sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
-    else:
+    elif atos == '<aos>' or atos == '<paos>':
+        if OS_addr % 2 == 1:
+            OS_output = oob_odd.pop()
+        elif OS_addr % 2 == 0:
+            OS_output = oob_even.pop()
+        OS[OS_addr,:] = sum_reg + psum + OS_output
+        sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
+    
+    if ren:
+        if read_addr % 2 == 1:
+            oob_odd.push(OS[read_addr,:])
+        elif read_addr % 2 == 0:
+            oob_even.push(OS[read_addr,:])
+
+def CMPGTP(reg = 0, in_map_pos = 0, ren = 0, read_addr = 0):
+    global activation
+    global oob_odd, oob_even
+    i_input_map_channel = in_map_pos // operating_input_map_length
+    i_input_data_channel = in_map_pos % operating_input_map_length
+    byte_count = config.BUS_WIDTH // config.DATA_WIDTH
+    activation[reg * byte_count: (reg+1) * byte_count] = input_map[i_input_map_channel, i_input_data_channel : i_input_data_channel + byte_count]
+
+    if ren:
+        if read_addr % 2 == 1:
+            oob_odd.push(OS[read_addr,:])
+        elif read_addr % 2 == 0:
+            oob_even.push(OS[read_addr,:])
+
+def CMPGT(reg = 0, in_map_pos = 0, CA = 0, atos = '<aor>', OS_addr = 0, ren = 0, read_addr = 0):
+    global sum_reg
+    global OS_output
+    global psum
+    global activation
+    global oob_odd, oob_even
+    i_input_map_channel = in_map_pos // operating_input_map_length
+    i_input_data_channel = in_map_pos % operating_input_map_length
+    byte_count = config.BUS_WIDTH // config.DATA_WIDTH
+    activation[reg * byte_count: (reg+1) * byte_count] = input_map[i_input_map_channel, i_input_data_channel : i_input_data_channel + byte_count]
+
+    psum = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
+    for i in range(config.PC):
+        for j in range(config.AL):
+            for k in range(config.WEIGHT_ROW):
+                # row = i * config.WEIGHT_ROW * config.SCR + k * config.SCR + CA
+                row = i * config.WEIGHT_ROW * config.SCR + (config.WEIGHT_ROW - 1 - k) * config.SCR + CA #不知道原理，应该是顺序反了
+                if k != config.WEIGHT_ROW-1:
+                    psum[i] += (CIMS[row,2*j].to(dtype=torch.int32) * pow(2,2*k) + CIMS[row,2*j+1].to(dtype=torch.int32) * pow(2,2*k+1)) * activation[j].to(dtype=torch.int32)
+                else:
+                    psum[i] += (CIMS[row,2*j].to(dtype=torch.int32) * pow(2,2*k) - CIMS[row,2*j+1].to(dtype=torch.int32) * pow(2,2*k+1)) * activation[j].to(dtype=torch.int32)
+    if atos == '<aor>':
+        sum_reg = psum + sum_reg
+    elif atos == '<tos>' or atos == '<ptos>':
+        OS[OS_addr,:] = sum_reg + psum
+        sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
+    elif atos == '<aos>' or atos == '<paos>':
         if OS_addr % 2 == 1:
             OS_output = oob_odd.pop()
         elif OS_addr % 2 == 0:
@@ -145,14 +191,18 @@ def CMPFIS(IS_addr = 0, CA = 0, atos = '<aor>', OS_addr = 0, ren = 0, read_addr 
         OS[OS_addr,:] = sum_reg + psum + OS_output
         sum_reg = torch.zeros(acc0.OutputSRAMWidth // config.DATA_WIDTH // 4, dtype=torch.int32)
 
+    if ren:
+        if read_addr % 2 == 1:
+            oob_odd.push(OS[read_addr,:])
+        elif read_addr % 2 == 0:
+            oob_even.push(OS[read_addr,:])
+
 def Load_OS_Output(read_addr = 0):
     global oob_even, oob_odd
     if read_addr % 2 == 1:
         oob_odd.push(OS[read_addr,:])
     elif read_addr % 2 == 0:
         oob_even.push(OS[read_addr,:])
-    # global OS_output
-    # OS_output = OS[read_addr,:]
 
 count = 0
 with open(file_path, 'r') as file:
@@ -172,8 +222,6 @@ with open(file_path, 'r') as file:
         if start_processing:
             # get the instruction
             parameters = line.split()
-
-            # print(parameters)
 
             if parameters[0] == "lis" or parameters[0] == "lis_p":
                 LIS(reg         =   int(parameters[2]), 
@@ -214,6 +262,41 @@ with open(file_path, 'r') as file:
                            OS_addr      =   os_addr, 
                            ren          =   0, 
                            read_addr    =   0)
+            
+            elif parameters[0] == "cmpgtp":
+                if "<os_addr_rd>" in parameters:
+                    CMPGTP(reg          =   int(parameters[2]), 
+                           in_map_pos   =   int(parameters[4]), 
+                           ren          =   1, 
+                           read_addr    =   int(parameters[6]))
+                else:
+                    CMPGTP(reg          =   int(parameters[2]), 
+                           in_map_pos   =   int(parameters[4]), 
+                           ren          =   0, 
+                           read_addr    =   0)
+                    
+            elif parameters[0] == "cmpgt":
+                if "<os_addr_wt>" in parameters:
+                    index = parameters.index("<os_addr_wt>")
+                    os_addr = int(parameters[index + 1])
+                else:
+                    os_addr = 0
+                if "<os_addr_rd>" in parameters:
+                    CMPGT(reg           =   int(parameters[2]), 
+                          in_map_pos    =   int(parameters[4]), 
+                          CA            =   int(parameters[6]), 
+                          atos          =   parameters[7], 
+                          OS_addr       =   os_addr, 
+                          ren           =   1, 
+                          read_addr     =   int(parameters[11]))
+                else:
+                    CMPGT(reg           =   int(parameters[2]), 
+                          in_map_pos    =   int(parameters[4]), 
+                          CA            =   int(parameters[6]), 
+                          atos          =   parameters[7], 
+                          OS_addr       =   os_addr, 
+                          ren           =   0, 
+                          read_addr     =   0)
 
             elif parameters[0] == "nop":
                 if "<os_addr_rd>" in parameters:
@@ -226,10 +309,8 @@ with open(file_path, 'r') as file:
                     Load_OS_Output(read_addr = read_addr)
         continue
 
-# torch.set_printoptions(threshold=65536)  # 设置一个较大的阈值
-
-print("OS:\n", OS[0,:])
-print("golden_data:\n", golden_data[0,:])
-print("weight_map:\n", weight_map)
-print("IS:\n", IS[0,:])
-print("CIMS:\n", CIMS)
+print("OS:\n", OS[0:4,:])
+print("golden_data:\n", golden_data[0:2,:])
+# print("weight_map:\n", weight_map)
+# print("IS:\n", IS[0,:])
+# print("CIMS:\n", CIMS)
