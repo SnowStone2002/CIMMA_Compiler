@@ -223,12 +223,12 @@ with open(file_path, 'r') as file:
             # get the instruction
             parameters = line.split()
 
-            if parameters[0] == "lis" or parameters[0] == "lis_p":
+            if parameters[0] == "Lin" or parameters[0] == "Linp":
                 LIS(reg         =   int(parameters[2]), 
                     IS_addr     =   int(parameters[4]), 
                     in_map_pos  =   int(parameters[6]))
 
-            elif parameters[0] == "wu" or parameters[0] == "wu_p":
+            elif parameters[0] == "Lwt" or parameters[0] == "Lwtp":
                 if "<os_addr_rd>" in parameters:
                     WU(reg         =   int(parameters[2]), 
                        CIMaddress  =   int(parameters[4]), 
@@ -242,7 +242,7 @@ with open(file_path, 'r') as file:
                        ren         =   0, 
                        read_addr   =   0)
 
-            elif parameters[0] == "cmpfis":
+            elif parameters[0] == "Cmpfis":
                 if "<os_addr_wt>" in parameters:
                     index = parameters.index("<os_addr_wt>")
                     os_addr = int(parameters[index + 1])
@@ -263,7 +263,7 @@ with open(file_path, 'r') as file:
                            ren          =   0, 
                            read_addr    =   0)
             
-            elif parameters[0] == "cmpgtp":
+            elif parameters[0] == "Cmpfgtp":
                 if "<os_addr_rd>" in parameters:
                     CMPGTP(reg          =   int(parameters[2]), 
                            in_map_pos   =   int(parameters[4]), 
@@ -275,7 +275,7 @@ with open(file_path, 'r') as file:
                            ren          =   0, 
                            read_addr    =   0)
                     
-            elif parameters[0] == "cmpgt":
+            elif parameters[0] == "Cmpfgt":
                 if "<os_addr_wt>" in parameters:
                     index = parameters.index("<os_addr_wt>")
                     os_addr = int(parameters[index + 1])
@@ -298,12 +298,12 @@ with open(file_path, 'r') as file:
                           ren           =   0, 
                           read_addr     =   0)
 
-            elif parameters[0] == "nop":
+            elif parameters[0] == "Nop":
                 if "<os_addr_rd>" in parameters:
                     read_addr = int(parameters[2])
                     Load_OS_Output(read_addr = read_addr)
 
-            elif parameters[0] == "pload":
+            elif parameters[0] == "Lpenalty":
                 if "<os_addr_rd>" in parameters:
                     read_addr = int(parameters[2])
                     Load_OS_Output(read_addr = read_addr)
@@ -314,3 +314,5 @@ print("golden_data:\n", golden_data[0:2,:])
 # print("weight_map:\n", weight_map)
 # print("IS:\n", IS[0,:])
 # print("CIMS:\n", CIMS)
+print("oob_even_size:",oob_even.max_size_reached())
+print("oob_odd_size:",oob_odd.max_size_reached())

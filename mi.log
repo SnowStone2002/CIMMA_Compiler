@@ -9,561 +9,561 @@
 
 
 starting compiler:
-lis_p	 <pos> 7	 <is_addr> 0	 <input_map> 112
-lis_p	 <pos> 6	 <is_addr> 0	 <input_map> 96
-lis_p	 <pos> 5	 <is_addr> 0	 <input_map> 80
-lis_p	 <pos> 4	 <is_addr> 0	 <input_map> 64
-lis_p	 <pos> 3	 <is_addr> 0	 <input_map> 48
-lis_p	 <pos> 2	 <is_addr> 0	 <input_map> 32
-lis_p	 <pos> 1	 <is_addr> 0	 <input_map> 16
-lis		 <pos> 0	 <is_addr> 0	 <input_map> 0
-lis_p	 <pos> 7	 <is_addr> 1	 <input_map> 240
-lis_p	 <pos> 6	 <is_addr> 1	 <input_map> 224
-lis_p	 <pos> 5	 <is_addr> 1	 <input_map> 208
-lis_p	 <pos> 4	 <is_addr> 1	 <input_map> 192
-lis_p	 <pos> 3	 <is_addr> 1	 <input_map> 176
-lis_p	 <pos> 2	 <is_addr> 1	 <input_map> 160
-lis_p	 <pos> 1	 <is_addr> 1	 <input_map> 144
-lis		 <pos> 0	 <is_addr> 1	 <input_map> 128
-wu_p	 <pos> 1	 <cm_addr> 0	 <weight_map> 112
-wu		 <pos> 0	 <cm_addr> 0	 <weight_map> 96
-wu_p	 <pos> 1	 <cm_addr> 4	 <weight_map> 80
-wu		 <pos> 0	 <cm_addr> 4	 <weight_map> 64
-wu_p	 <pos> 1	 <cm_addr> 8	 <weight_map> 48
-wu		 <pos> 0	 <cm_addr> 8	 <weight_map> 32
-wu_p	 <pos> 1	 <cm_addr> 12	 <weight_map> 16
-wu		 <pos> 0	 <cm_addr> 12	 <weight_map> 0
-wu_p	 <pos> 1	 <cm_addr> 16	 <weight_map> 368
-wu		 <pos> 0	 <cm_addr> 16	 <weight_map> 352
-wu_p	 <pos> 1	 <cm_addr> 20	 <weight_map> 336
-wu		 <pos> 0	 <cm_addr> 20	 <weight_map> 320
-wu_p	 <pos> 1	 <cm_addr> 24	 <weight_map> 304
-wu		 <pos> 0	 <cm_addr> 24	 <weight_map> 288
-wu_p	 <pos> 1	 <cm_addr> 28	 <weight_map> 272
-wu		 <pos> 0	 <cm_addr> 28	 <weight_map> 256
-wu_p	 <pos> 1	 <cm_addr> 32	 <weight_map> 624
-wu		 <pos> 0	 <cm_addr> 32	 <weight_map> 608
-wu_p	 <pos> 1	 <cm_addr> 36	 <weight_map> 592
-wu		 <pos> 0	 <cm_addr> 36	 <weight_map> 576
-wu_p	 <pos> 1	 <cm_addr> 40	 <weight_map> 560
-wu		 <pos> 0	 <cm_addr> 40	 <weight_map> 544
-wu_p	 <pos> 1	 <cm_addr> 44	 <weight_map> 528
-wu		 <pos> 0	 <cm_addr> 44	 <weight_map> 512
-wu_p	 <pos> 1	 <cm_addr> 48	 <weight_map> 880
-wu		 <pos> 0	 <cm_addr> 48	 <weight_map> 864
-wu_p	 <pos> 1	 <cm_addr> 52	 <weight_map> 848
-wu		 <pos> 0	 <cm_addr> 52	 <weight_map> 832
-wu_p	 <pos> 1	 <cm_addr> 56	 <weight_map> 816
-wu		 <pos> 0	 <cm_addr> 56	 <weight_map> 800
-wu_p	 <pos> 1	 <cm_addr> 60	 <weight_map> 784
-wu		 <pos> 0	 <cm_addr> 60	 <weight_map> 768
-wu_p	 <pos> 1	 <cm_addr> 64	 <weight_map> 1136
-wu		 <pos> 0	 <cm_addr> 64	 <weight_map> 1120
-wu_p	 <pos> 1	 <cm_addr> 68	 <weight_map> 1104
-wu		 <pos> 0	 <cm_addr> 68	 <weight_map> 1088
-wu_p	 <pos> 1	 <cm_addr> 72	 <weight_map> 1072
-wu		 <pos> 0	 <cm_addr> 72	 <weight_map> 1056
-wu_p	 <pos> 1	 <cm_addr> 76	 <weight_map> 1040
-wu		 <pos> 0	 <cm_addr> 76	 <weight_map> 1024
-wu_p	 <pos> 1	 <cm_addr> 80	 <weight_map> 1392
-wu		 <pos> 0	 <cm_addr> 80	 <weight_map> 1376
-wu_p	 <pos> 1	 <cm_addr> 84	 <weight_map> 1360
-wu		 <pos> 0	 <cm_addr> 84	 <weight_map> 1344
-wu_p	 <pos> 1	 <cm_addr> 88	 <weight_map> 1328
-wu		 <pos> 0	 <cm_addr> 88	 <weight_map> 1312
-wu_p	 <pos> 1	 <cm_addr> 92	 <weight_map> 1296
-wu		 <pos> 0	 <cm_addr> 92	 <weight_map> 1280
-wu_p	 <pos> 1	 <cm_addr> 96	 <weight_map> 1648
-wu		 <pos> 0	 <cm_addr> 96	 <weight_map> 1632
-wu_p	 <pos> 1	 <cm_addr> 100	 <weight_map> 1616
-wu		 <pos> 0	 <cm_addr> 100	 <weight_map> 1600
-wu_p	 <pos> 1	 <cm_addr> 104	 <weight_map> 1584
-wu		 <pos> 0	 <cm_addr> 104	 <weight_map> 1568
-wu_p	 <pos> 1	 <cm_addr> 108	 <weight_map> 1552
-wu		 <pos> 0	 <cm_addr> 108	 <weight_map> 1536
-wu_p	 <pos> 1	 <cm_addr> 112	 <weight_map> 1904
-wu		 <pos> 0	 <cm_addr> 112	 <weight_map> 1888
-wu_p	 <pos> 1	 <cm_addr> 116	 <weight_map> 1872
-wu		 <pos> 0	 <cm_addr> 116	 <weight_map> 1856
-wu_p	 <pos> 1	 <cm_addr> 120	 <weight_map> 1840
-wu		 <pos> 0	 <cm_addr> 120	 <weight_map> 1824
-wu_p	 <pos> 1	 <cm_addr> 124	 <weight_map> 1808
-wu		 <pos> 0	 <cm_addr> 124	 <weight_map> 1792
-wu_p	 <pos> 1	 <cm_addr> 128	 <weight_map> 2160
-wu		 <pos> 0	 <cm_addr> 128	 <weight_map> 2144
-wu_p	 <pos> 1	 <cm_addr> 132	 <weight_map> 2128
-wu		 <pos> 0	 <cm_addr> 132	 <weight_map> 2112
-wu_p	 <pos> 1	 <cm_addr> 136	 <weight_map> 2096
-wu		 <pos> 0	 <cm_addr> 136	 <weight_map> 2080
-wu_p	 <pos> 1	 <cm_addr> 140	 <weight_map> 2064
-wu		 <pos> 0	 <cm_addr> 140	 <weight_map> 2048
-wu_p	 <pos> 1	 <cm_addr> 144	 <weight_map> 2416
-wu		 <pos> 0	 <cm_addr> 144	 <weight_map> 2400
-wu_p	 <pos> 1	 <cm_addr> 148	 <weight_map> 2384
-wu		 <pos> 0	 <cm_addr> 148	 <weight_map> 2368
-wu_p	 <pos> 1	 <cm_addr> 152	 <weight_map> 2352
-wu		 <pos> 0	 <cm_addr> 152	 <weight_map> 2336
-wu_p	 <pos> 1	 <cm_addr> 156	 <weight_map> 2320
-wu		 <pos> 0	 <cm_addr> 156	 <weight_map> 2304
-wu_p	 <pos> 1	 <cm_addr> 160	 <weight_map> 2672
-wu		 <pos> 0	 <cm_addr> 160	 <weight_map> 2656
-wu_p	 <pos> 1	 <cm_addr> 164	 <weight_map> 2640
-wu		 <pos> 0	 <cm_addr> 164	 <weight_map> 2624
-wu_p	 <pos> 1	 <cm_addr> 168	 <weight_map> 2608
-wu		 <pos> 0	 <cm_addr> 168	 <weight_map> 2592
-wu_p	 <pos> 1	 <cm_addr> 172	 <weight_map> 2576
-wu		 <pos> 0	 <cm_addr> 172	 <weight_map> 2560
-wu_p	 <pos> 1	 <cm_addr> 176	 <weight_map> 2928
-wu		 <pos> 0	 <cm_addr> 176	 <weight_map> 2912
-wu_p	 <pos> 1	 <cm_addr> 180	 <weight_map> 2896
-wu		 <pos> 0	 <cm_addr> 180	 <weight_map> 2880
-wu_p	 <pos> 1	 <cm_addr> 184	 <weight_map> 2864
-wu		 <pos> 0	 <cm_addr> 184	 <weight_map> 2848
-wu_p	 <pos> 1	 <cm_addr> 188	 <weight_map> 2832
-wu		 <pos> 0	 <cm_addr> 188	 <weight_map> 2816
-wu_p	 <pos> 1	 <cm_addr> 192	 <weight_map> 3184
-wu		 <pos> 0	 <cm_addr> 192	 <weight_map> 3168
-wu_p	 <pos> 1	 <cm_addr> 196	 <weight_map> 3152
-wu		 <pos> 0	 <cm_addr> 196	 <weight_map> 3136
-wu_p	 <pos> 1	 <cm_addr> 200	 <weight_map> 3120
-wu		 <pos> 0	 <cm_addr> 200	 <weight_map> 3104
-wu_p	 <pos> 1	 <cm_addr> 204	 <weight_map> 3088
-wu		 <pos> 0	 <cm_addr> 204	 <weight_map> 3072
-wu_p	 <pos> 1	 <cm_addr> 208	 <weight_map> 3440
-wu		 <pos> 0	 <cm_addr> 208	 <weight_map> 3424
-wu_p	 <pos> 1	 <cm_addr> 212	 <weight_map> 3408
-wu		 <pos> 0	 <cm_addr> 212	 <weight_map> 3392
-wu_p	 <pos> 1	 <cm_addr> 216	 <weight_map> 3376
-wu		 <pos> 0	 <cm_addr> 216	 <weight_map> 3360
-wu_p	 <pos> 1	 <cm_addr> 220	 <weight_map> 3344
-wu		 <pos> 0	 <cm_addr> 220	 <weight_map> 3328
-wu_p	 <pos> 1	 <cm_addr> 224	 <weight_map> 3696
-wu		 <pos> 0	 <cm_addr> 224	 <weight_map> 3680
-wu_p	 <pos> 1	 <cm_addr> 228	 <weight_map> 3664
-wu		 <pos> 0	 <cm_addr> 228	 <weight_map> 3648
-wu_p	 <pos> 1	 <cm_addr> 232	 <weight_map> 3632
-wu		 <pos> 0	 <cm_addr> 232	 <weight_map> 3616
-wu_p	 <pos> 1	 <cm_addr> 236	 <weight_map> 3600
-wu		 <pos> 0	 <cm_addr> 236	 <weight_map> 3584
-wu_p	 <pos> 1	 <cm_addr> 240	 <weight_map> 3952
-wu		 <pos> 0	 <cm_addr> 240	 <weight_map> 3936
-wu_p	 <pos> 1	 <cm_addr> 244	 <weight_map> 3920
-wu		 <pos> 0	 <cm_addr> 244	 <weight_map> 3904
-wu_p	 <pos> 1	 <cm_addr> 248	 <weight_map> 3888
-wu		 <pos> 0	 <cm_addr> 248	 <weight_map> 3872
-wu_p	 <pos> 1	 <cm_addr> 252	 <weight_map> 3856
-wu		 <pos> 0	 <cm_addr> 252	 <weight_map> 3840
-wu_p	 <pos> 1	 <cm_addr> 1	 <weight_map> 4208
-wu		 <pos> 0	 <cm_addr> 1	 <weight_map> 4192
-wu_p	 <pos> 1	 <cm_addr> 5	 <weight_map> 4176
-wu		 <pos> 0	 <cm_addr> 5	 <weight_map> 4160
-wu_p	 <pos> 1	 <cm_addr> 9	 <weight_map> 4144
-wu		 <pos> 0	 <cm_addr> 9	 <weight_map> 4128
-wu_p	 <pos> 1	 <cm_addr> 13	 <weight_map> 4112
-wu		 <pos> 0	 <cm_addr> 13	 <weight_map> 4096
-wu_p	 <pos> 1	 <cm_addr> 17	 <weight_map> 4464
-wu		 <pos> 0	 <cm_addr> 17	 <weight_map> 4448
-wu_p	 <pos> 1	 <cm_addr> 21	 <weight_map> 4432
-wu		 <pos> 0	 <cm_addr> 21	 <weight_map> 4416
-wu_p	 <pos> 1	 <cm_addr> 25	 <weight_map> 4400
-wu		 <pos> 0	 <cm_addr> 25	 <weight_map> 4384
-wu_p	 <pos> 1	 <cm_addr> 29	 <weight_map> 4368
-wu		 <pos> 0	 <cm_addr> 29	 <weight_map> 4352
-wu_p	 <pos> 1	 <cm_addr> 33	 <weight_map> 4720
-wu		 <pos> 0	 <cm_addr> 33	 <weight_map> 4704
-wu_p	 <pos> 1	 <cm_addr> 37	 <weight_map> 4688
-wu		 <pos> 0	 <cm_addr> 37	 <weight_map> 4672
-wu_p	 <pos> 1	 <cm_addr> 41	 <weight_map> 4656
-wu		 <pos> 0	 <cm_addr> 41	 <weight_map> 4640
-wu_p	 <pos> 1	 <cm_addr> 45	 <weight_map> 4624
-wu		 <pos> 0	 <cm_addr> 45	 <weight_map> 4608
-wu_p	 <pos> 1	 <cm_addr> 49	 <weight_map> 4976
-wu		 <pos> 0	 <cm_addr> 49	 <weight_map> 4960
-wu_p	 <pos> 1	 <cm_addr> 53	 <weight_map> 4944
-wu		 <pos> 0	 <cm_addr> 53	 <weight_map> 4928
-wu_p	 <pos> 1	 <cm_addr> 57	 <weight_map> 4912
-wu		 <pos> 0	 <cm_addr> 57	 <weight_map> 4896
-wu_p	 <pos> 1	 <cm_addr> 61	 <weight_map> 4880
-wu		 <pos> 0	 <cm_addr> 61	 <weight_map> 4864
-wu_p	 <pos> 1	 <cm_addr> 65	 <weight_map> 5232
-wu		 <pos> 0	 <cm_addr> 65	 <weight_map> 5216
-wu_p	 <pos> 1	 <cm_addr> 69	 <weight_map> 5200
-wu		 <pos> 0	 <cm_addr> 69	 <weight_map> 5184
-wu_p	 <pos> 1	 <cm_addr> 73	 <weight_map> 5168
-wu		 <pos> 0	 <cm_addr> 73	 <weight_map> 5152
-wu_p	 <pos> 1	 <cm_addr> 77	 <weight_map> 5136
-wu		 <pos> 0	 <cm_addr> 77	 <weight_map> 5120
-wu_p	 <pos> 1	 <cm_addr> 81	 <weight_map> 5488
-wu		 <pos> 0	 <cm_addr> 81	 <weight_map> 5472
-wu_p	 <pos> 1	 <cm_addr> 85	 <weight_map> 5456
-wu		 <pos> 0	 <cm_addr> 85	 <weight_map> 5440
-wu_p	 <pos> 1	 <cm_addr> 89	 <weight_map> 5424
-wu		 <pos> 0	 <cm_addr> 89	 <weight_map> 5408
-wu_p	 <pos> 1	 <cm_addr> 93	 <weight_map> 5392
-wu		 <pos> 0	 <cm_addr> 93	 <weight_map> 5376
-wu_p	 <pos> 1	 <cm_addr> 97	 <weight_map> 5744
-wu		 <pos> 0	 <cm_addr> 97	 <weight_map> 5728
-wu_p	 <pos> 1	 <cm_addr> 101	 <weight_map> 5712
-wu		 <pos> 0	 <cm_addr> 101	 <weight_map> 5696
-wu_p	 <pos> 1	 <cm_addr> 105	 <weight_map> 5680
-wu		 <pos> 0	 <cm_addr> 105	 <weight_map> 5664
-wu_p	 <pos> 1	 <cm_addr> 109	 <weight_map> 5648
-wu		 <pos> 0	 <cm_addr> 109	 <weight_map> 5632
-wu_p	 <pos> 1	 <cm_addr> 113	 <weight_map> 6000
-wu		 <pos> 0	 <cm_addr> 113	 <weight_map> 5984
-wu_p	 <pos> 1	 <cm_addr> 117	 <weight_map> 5968
-wu		 <pos> 0	 <cm_addr> 117	 <weight_map> 5952
-wu_p	 <pos> 1	 <cm_addr> 121	 <weight_map> 5936
-wu		 <pos> 0	 <cm_addr> 121	 <weight_map> 5920
-wu_p	 <pos> 1	 <cm_addr> 125	 <weight_map> 5904
-wu		 <pos> 0	 <cm_addr> 125	 <weight_map> 5888
-wu_p	 <pos> 1	 <cm_addr> 129	 <weight_map> 6256
-wu		 <pos> 0	 <cm_addr> 129	 <weight_map> 6240
-wu_p	 <pos> 1	 <cm_addr> 133	 <weight_map> 6224
-wu		 <pos> 0	 <cm_addr> 133	 <weight_map> 6208
-wu_p	 <pos> 1	 <cm_addr> 137	 <weight_map> 6192
-wu		 <pos> 0	 <cm_addr> 137	 <weight_map> 6176
-wu_p	 <pos> 1	 <cm_addr> 141	 <weight_map> 6160
-wu		 <pos> 0	 <cm_addr> 141	 <weight_map> 6144
-wu_p	 <pos> 1	 <cm_addr> 145	 <weight_map> 6512
-wu		 <pos> 0	 <cm_addr> 145	 <weight_map> 6496
-wu_p	 <pos> 1	 <cm_addr> 149	 <weight_map> 6480
-wu		 <pos> 0	 <cm_addr> 149	 <weight_map> 6464
-wu_p	 <pos> 1	 <cm_addr> 153	 <weight_map> 6448
-wu		 <pos> 0	 <cm_addr> 153	 <weight_map> 6432
-wu_p	 <pos> 1	 <cm_addr> 157	 <weight_map> 6416
-wu		 <pos> 0	 <cm_addr> 157	 <weight_map> 6400
-wu_p	 <pos> 1	 <cm_addr> 161	 <weight_map> 6768
-wu		 <pos> 0	 <cm_addr> 161	 <weight_map> 6752
-wu_p	 <pos> 1	 <cm_addr> 165	 <weight_map> 6736
-wu		 <pos> 0	 <cm_addr> 165	 <weight_map> 6720
-wu_p	 <pos> 1	 <cm_addr> 169	 <weight_map> 6704
-wu		 <pos> 0	 <cm_addr> 169	 <weight_map> 6688
-wu_p	 <pos> 1	 <cm_addr> 173	 <weight_map> 6672
-wu		 <pos> 0	 <cm_addr> 173	 <weight_map> 6656
-wu_p	 <pos> 1	 <cm_addr> 177	 <weight_map> 7024
-wu		 <pos> 0	 <cm_addr> 177	 <weight_map> 7008
-wu_p	 <pos> 1	 <cm_addr> 181	 <weight_map> 6992
-wu		 <pos> 0	 <cm_addr> 181	 <weight_map> 6976
-wu_p	 <pos> 1	 <cm_addr> 185	 <weight_map> 6960
-wu		 <pos> 0	 <cm_addr> 185	 <weight_map> 6944
-wu_p	 <pos> 1	 <cm_addr> 189	 <weight_map> 6928
-wu		 <pos> 0	 <cm_addr> 189	 <weight_map> 6912
-wu_p	 <pos> 1	 <cm_addr> 193	 <weight_map> 7280
-wu		 <pos> 0	 <cm_addr> 193	 <weight_map> 7264
-wu_p	 <pos> 1	 <cm_addr> 197	 <weight_map> 7248
-wu		 <pos> 0	 <cm_addr> 197	 <weight_map> 7232
-wu_p	 <pos> 1	 <cm_addr> 201	 <weight_map> 7216
-wu		 <pos> 0	 <cm_addr> 201	 <weight_map> 7200
-wu_p	 <pos> 1	 <cm_addr> 205	 <weight_map> 7184
-wu		 <pos> 0	 <cm_addr> 205	 <weight_map> 7168
-wu_p	 <pos> 1	 <cm_addr> 209	 <weight_map> 7536
-wu		 <pos> 0	 <cm_addr> 209	 <weight_map> 7520
-wu_p	 <pos> 1	 <cm_addr> 213	 <weight_map> 7504
-wu		 <pos> 0	 <cm_addr> 213	 <weight_map> 7488
-wu_p	 <pos> 1	 <cm_addr> 217	 <weight_map> 7472
-wu		 <pos> 0	 <cm_addr> 217	 <weight_map> 7456
-wu_p	 <pos> 1	 <cm_addr> 221	 <weight_map> 7440
-wu		 <pos> 0	 <cm_addr> 221	 <weight_map> 7424
-wu_p	 <pos> 1	 <cm_addr> 225	 <weight_map> 7792
-wu		 <pos> 0	 <cm_addr> 225	 <weight_map> 7776
-wu_p	 <pos> 1	 <cm_addr> 229	 <weight_map> 7760
-wu		 <pos> 0	 <cm_addr> 229	 <weight_map> 7744
-wu_p	 <pos> 1	 <cm_addr> 233	 <weight_map> 7728
-wu		 <pos> 0	 <cm_addr> 233	 <weight_map> 7712
-wu_p	 <pos> 1	 <cm_addr> 237	 <weight_map> 7696
-wu		 <pos> 0	 <cm_addr> 237	 <weight_map> 7680
-wu_p	 <pos> 1	 <cm_addr> 241	 <weight_map> 8048
-wu		 <pos> 0	 <cm_addr> 241	 <weight_map> 8032
-wu_p	 <pos> 1	 <cm_addr> 245	 <weight_map> 8016
-wu		 <pos> 0	 <cm_addr> 245	 <weight_map> 8000
-wu_p	 <pos> 1	 <cm_addr> 249	 <weight_map> 7984
-wu		 <pos> 0	 <cm_addr> 249	 <weight_map> 7968
-wu_p	 <pos> 1	 <cm_addr> 253	 <weight_map> 7952
-wu		 <pos> 0	 <cm_addr> 253	 <weight_map> 7936
-wu_p	 <pos> 1	 <cm_addr> 2	 <weight_map> 240
-wu		 <pos> 0	 <cm_addr> 2	 <weight_map> 224
-wu_p	 <pos> 1	 <cm_addr> 6	 <weight_map> 208
-wu		 <pos> 0	 <cm_addr> 6	 <weight_map> 192
-wu_p	 <pos> 1	 <cm_addr> 10	 <weight_map> 176
-wu		 <pos> 0	 <cm_addr> 10	 <weight_map> 160
-wu_p	 <pos> 1	 <cm_addr> 14	 <weight_map> 144
-wu		 <pos> 0	 <cm_addr> 14	 <weight_map> 128
-wu_p	 <pos> 1	 <cm_addr> 18	 <weight_map> 496
-wu		 <pos> 0	 <cm_addr> 18	 <weight_map> 480
-wu_p	 <pos> 1	 <cm_addr> 22	 <weight_map> 464
-wu		 <pos> 0	 <cm_addr> 22	 <weight_map> 448
-wu_p	 <pos> 1	 <cm_addr> 26	 <weight_map> 432
-wu		 <pos> 0	 <cm_addr> 26	 <weight_map> 416
-wu_p	 <pos> 1	 <cm_addr> 30	 <weight_map> 400
-wu		 <pos> 0	 <cm_addr> 30	 <weight_map> 384
-wu_p	 <pos> 1	 <cm_addr> 34	 <weight_map> 752
-wu		 <pos> 0	 <cm_addr> 34	 <weight_map> 736
-wu_p	 <pos> 1	 <cm_addr> 38	 <weight_map> 720
-wu		 <pos> 0	 <cm_addr> 38	 <weight_map> 704
-wu_p	 <pos> 1	 <cm_addr> 42	 <weight_map> 688
-wu		 <pos> 0	 <cm_addr> 42	 <weight_map> 672
-wu_p	 <pos> 1	 <cm_addr> 46	 <weight_map> 656
-wu		 <pos> 0	 <cm_addr> 46	 <weight_map> 640
-wu_p	 <pos> 1	 <cm_addr> 50	 <weight_map> 1008
-wu		 <pos> 0	 <cm_addr> 50	 <weight_map> 992
-wu_p	 <pos> 1	 <cm_addr> 54	 <weight_map> 976
-wu		 <pos> 0	 <cm_addr> 54	 <weight_map> 960
-wu_p	 <pos> 1	 <cm_addr> 58	 <weight_map> 944
-wu		 <pos> 0	 <cm_addr> 58	 <weight_map> 928
-wu_p	 <pos> 1	 <cm_addr> 62	 <weight_map> 912
-wu		 <pos> 0	 <cm_addr> 62	 <weight_map> 896
-wu_p	 <pos> 1	 <cm_addr> 66	 <weight_map> 1264
-wu		 <pos> 0	 <cm_addr> 66	 <weight_map> 1248
-wu_p	 <pos> 1	 <cm_addr> 70	 <weight_map> 1232
-wu		 <pos> 0	 <cm_addr> 70	 <weight_map> 1216
-wu_p	 <pos> 1	 <cm_addr> 74	 <weight_map> 1200
-wu		 <pos> 0	 <cm_addr> 74	 <weight_map> 1184
-wu_p	 <pos> 1	 <cm_addr> 78	 <weight_map> 1168
-wu		 <pos> 0	 <cm_addr> 78	 <weight_map> 1152
-wu_p	 <pos> 1	 <cm_addr> 82	 <weight_map> 1520
-wu		 <pos> 0	 <cm_addr> 82	 <weight_map> 1504
-wu_p	 <pos> 1	 <cm_addr> 86	 <weight_map> 1488
-wu		 <pos> 0	 <cm_addr> 86	 <weight_map> 1472
-wu_p	 <pos> 1	 <cm_addr> 90	 <weight_map> 1456
-wu		 <pos> 0	 <cm_addr> 90	 <weight_map> 1440
-wu_p	 <pos> 1	 <cm_addr> 94	 <weight_map> 1424
-wu		 <pos> 0	 <cm_addr> 94	 <weight_map> 1408
-wu_p	 <pos> 1	 <cm_addr> 98	 <weight_map> 1776
-wu		 <pos> 0	 <cm_addr> 98	 <weight_map> 1760
-wu_p	 <pos> 1	 <cm_addr> 102	 <weight_map> 1744
-wu		 <pos> 0	 <cm_addr> 102	 <weight_map> 1728
-wu_p	 <pos> 1	 <cm_addr> 106	 <weight_map> 1712
-wu		 <pos> 0	 <cm_addr> 106	 <weight_map> 1696
-wu_p	 <pos> 1	 <cm_addr> 110	 <weight_map> 1680
-wu		 <pos> 0	 <cm_addr> 110	 <weight_map> 1664
-wu_p	 <pos> 1	 <cm_addr> 114	 <weight_map> 2032
-wu		 <pos> 0	 <cm_addr> 114	 <weight_map> 2016
-wu_p	 <pos> 1	 <cm_addr> 118	 <weight_map> 2000
-wu		 <pos> 0	 <cm_addr> 118	 <weight_map> 1984
-wu_p	 <pos> 1	 <cm_addr> 122	 <weight_map> 1968
-wu		 <pos> 0	 <cm_addr> 122	 <weight_map> 1952
-wu_p	 <pos> 1	 <cm_addr> 126	 <weight_map> 1936
-wu		 <pos> 0	 <cm_addr> 126	 <weight_map> 1920
-wu_p	 <pos> 1	 <cm_addr> 130	 <weight_map> 2288
-wu		 <pos> 0	 <cm_addr> 130	 <weight_map> 2272
-wu_p	 <pos> 1	 <cm_addr> 134	 <weight_map> 2256
-wu		 <pos> 0	 <cm_addr> 134	 <weight_map> 2240
-wu_p	 <pos> 1	 <cm_addr> 138	 <weight_map> 2224
-wu		 <pos> 0	 <cm_addr> 138	 <weight_map> 2208
-wu_p	 <pos> 1	 <cm_addr> 142	 <weight_map> 2192
-wu		 <pos> 0	 <cm_addr> 142	 <weight_map> 2176
-wu_p	 <pos> 1	 <cm_addr> 146	 <weight_map> 2544
-wu		 <pos> 0	 <cm_addr> 146	 <weight_map> 2528
-wu_p	 <pos> 1	 <cm_addr> 150	 <weight_map> 2512
-wu		 <pos> 0	 <cm_addr> 150	 <weight_map> 2496
-wu_p	 <pos> 1	 <cm_addr> 154	 <weight_map> 2480
-wu		 <pos> 0	 <cm_addr> 154	 <weight_map> 2464
-wu_p	 <pos> 1	 <cm_addr> 158	 <weight_map> 2448
-wu		 <pos> 0	 <cm_addr> 158	 <weight_map> 2432
-wu_p	 <pos> 1	 <cm_addr> 162	 <weight_map> 2800
-wu		 <pos> 0	 <cm_addr> 162	 <weight_map> 2784
-wu_p	 <pos> 1	 <cm_addr> 166	 <weight_map> 2768
-wu		 <pos> 0	 <cm_addr> 166	 <weight_map> 2752
-wu_p	 <pos> 1	 <cm_addr> 170	 <weight_map> 2736
-wu		 <pos> 0	 <cm_addr> 170	 <weight_map> 2720
-wu_p	 <pos> 1	 <cm_addr> 174	 <weight_map> 2704
-wu		 <pos> 0	 <cm_addr> 174	 <weight_map> 2688
-wu_p	 <pos> 1	 <cm_addr> 178	 <weight_map> 3056
-wu		 <pos> 0	 <cm_addr> 178	 <weight_map> 3040
-wu_p	 <pos> 1	 <cm_addr> 182	 <weight_map> 3024
-wu		 <pos> 0	 <cm_addr> 182	 <weight_map> 3008
-wu_p	 <pos> 1	 <cm_addr> 186	 <weight_map> 2992
-wu		 <pos> 0	 <cm_addr> 186	 <weight_map> 2976
-wu_p	 <pos> 1	 <cm_addr> 190	 <weight_map> 2960
-wu		 <pos> 0	 <cm_addr> 190	 <weight_map> 2944
-wu_p	 <pos> 1	 <cm_addr> 194	 <weight_map> 3312
-wu		 <pos> 0	 <cm_addr> 194	 <weight_map> 3296
-wu_p	 <pos> 1	 <cm_addr> 198	 <weight_map> 3280
-wu		 <pos> 0	 <cm_addr> 198	 <weight_map> 3264
-wu_p	 <pos> 1	 <cm_addr> 202	 <weight_map> 3248
-wu		 <pos> 0	 <cm_addr> 202	 <weight_map> 3232
-wu_p	 <pos> 1	 <cm_addr> 206	 <weight_map> 3216
-wu		 <pos> 0	 <cm_addr> 206	 <weight_map> 3200
-wu_p	 <pos> 1	 <cm_addr> 210	 <weight_map> 3568
-wu		 <pos> 0	 <cm_addr> 210	 <weight_map> 3552
-wu_p	 <pos> 1	 <cm_addr> 214	 <weight_map> 3536
-wu		 <pos> 0	 <cm_addr> 214	 <weight_map> 3520
-wu_p	 <pos> 1	 <cm_addr> 218	 <weight_map> 3504
-wu		 <pos> 0	 <cm_addr> 218	 <weight_map> 3488
-wu_p	 <pos> 1	 <cm_addr> 222	 <weight_map> 3472
-wu		 <pos> 0	 <cm_addr> 222	 <weight_map> 3456
-wu_p	 <pos> 1	 <cm_addr> 226	 <weight_map> 3824
-wu		 <pos> 0	 <cm_addr> 226	 <weight_map> 3808
-wu_p	 <pos> 1	 <cm_addr> 230	 <weight_map> 3792
-wu		 <pos> 0	 <cm_addr> 230	 <weight_map> 3776
-wu_p	 <pos> 1	 <cm_addr> 234	 <weight_map> 3760
-wu		 <pos> 0	 <cm_addr> 234	 <weight_map> 3744
-wu_p	 <pos> 1	 <cm_addr> 238	 <weight_map> 3728
-wu		 <pos> 0	 <cm_addr> 238	 <weight_map> 3712
-wu_p	 <pos> 1	 <cm_addr> 242	 <weight_map> 4080
-wu		 <pos> 0	 <cm_addr> 242	 <weight_map> 4064
-wu_p	 <pos> 1	 <cm_addr> 246	 <weight_map> 4048
-wu		 <pos> 0	 <cm_addr> 246	 <weight_map> 4032
-wu_p	 <pos> 1	 <cm_addr> 250	 <weight_map> 4016
-wu		 <pos> 0	 <cm_addr> 250	 <weight_map> 4000
-wu_p	 <pos> 1	 <cm_addr> 254	 <weight_map> 3984
-wu		 <pos> 0	 <cm_addr> 254	 <weight_map> 3968
-wu_p	 <pos> 1	 <cm_addr> 3	 <weight_map> 4336
-wu		 <pos> 0	 <cm_addr> 3	 <weight_map> 4320
-wu_p	 <pos> 1	 <cm_addr> 7	 <weight_map> 4304
-wu		 <pos> 0	 <cm_addr> 7	 <weight_map> 4288
-wu_p	 <pos> 1	 <cm_addr> 11	 <weight_map> 4272
-wu		 <pos> 0	 <cm_addr> 11	 <weight_map> 4256
-wu_p	 <pos> 1	 <cm_addr> 15	 <weight_map> 4240
-wu		 <pos> 0	 <cm_addr> 15	 <weight_map> 4224
-wu_p	 <pos> 1	 <cm_addr> 19	 <weight_map> 4592
-wu		 <pos> 0	 <cm_addr> 19	 <weight_map> 4576
-wu_p	 <pos> 1	 <cm_addr> 23	 <weight_map> 4560
-wu		 <pos> 0	 <cm_addr> 23	 <weight_map> 4544
-wu_p	 <pos> 1	 <cm_addr> 27	 <weight_map> 4528
-wu		 <pos> 0	 <cm_addr> 27	 <weight_map> 4512
-wu_p	 <pos> 1	 <cm_addr> 31	 <weight_map> 4496
-wu		 <pos> 0	 <cm_addr> 31	 <weight_map> 4480
-wu_p	 <pos> 1	 <cm_addr> 35	 <weight_map> 4848
-wu		 <pos> 0	 <cm_addr> 35	 <weight_map> 4832
-wu_p	 <pos> 1	 <cm_addr> 39	 <weight_map> 4816
-wu		 <pos> 0	 <cm_addr> 39	 <weight_map> 4800
-wu_p	 <pos> 1	 <cm_addr> 43	 <weight_map> 4784
-wu		 <pos> 0	 <cm_addr> 43	 <weight_map> 4768
-wu_p	 <pos> 1	 <cm_addr> 47	 <weight_map> 4752
-wu		 <pos> 0	 <cm_addr> 47	 <weight_map> 4736
-wu_p	 <pos> 1	 <cm_addr> 51	 <weight_map> 5104
-wu		 <pos> 0	 <cm_addr> 51	 <weight_map> 5088
-wu_p	 <pos> 1	 <cm_addr> 55	 <weight_map> 5072
-wu		 <pos> 0	 <cm_addr> 55	 <weight_map> 5056
-wu_p	 <pos> 1	 <cm_addr> 59	 <weight_map> 5040
-wu		 <pos> 0	 <cm_addr> 59	 <weight_map> 5024
-wu_p	 <pos> 1	 <cm_addr> 63	 <weight_map> 5008
-wu		 <pos> 0	 <cm_addr> 63	 <weight_map> 4992
-wu_p	 <pos> 1	 <cm_addr> 67	 <weight_map> 5360
-wu		 <pos> 0	 <cm_addr> 67	 <weight_map> 5344
-wu_p	 <pos> 1	 <cm_addr> 71	 <weight_map> 5328
-wu		 <pos> 0	 <cm_addr> 71	 <weight_map> 5312
-wu_p	 <pos> 1	 <cm_addr> 75	 <weight_map> 5296
-wu		 <pos> 0	 <cm_addr> 75	 <weight_map> 5280
-wu_p	 <pos> 1	 <cm_addr> 79	 <weight_map> 5264
-wu		 <pos> 0	 <cm_addr> 79	 <weight_map> 5248
-wu_p	 <pos> 1	 <cm_addr> 83	 <weight_map> 5616
-wu		 <pos> 0	 <cm_addr> 83	 <weight_map> 5600
-wu_p	 <pos> 1	 <cm_addr> 87	 <weight_map> 5584
-wu		 <pos> 0	 <cm_addr> 87	 <weight_map> 5568
-wu_p	 <pos> 1	 <cm_addr> 91	 <weight_map> 5552
-wu		 <pos> 0	 <cm_addr> 91	 <weight_map> 5536
-wu_p	 <pos> 1	 <cm_addr> 95	 <weight_map> 5520
-wu		 <pos> 0	 <cm_addr> 95	 <weight_map> 5504
-wu_p	 <pos> 1	 <cm_addr> 99	 <weight_map> 5872
-wu		 <pos> 0	 <cm_addr> 99	 <weight_map> 5856
-wu_p	 <pos> 1	 <cm_addr> 103	 <weight_map> 5840
-wu		 <pos> 0	 <cm_addr> 103	 <weight_map> 5824
-wu_p	 <pos> 1	 <cm_addr> 107	 <weight_map> 5808
-wu		 <pos> 0	 <cm_addr> 107	 <weight_map> 5792
-wu_p	 <pos> 1	 <cm_addr> 111	 <weight_map> 5776
-wu		 <pos> 0	 <cm_addr> 111	 <weight_map> 5760
-wu_p	 <pos> 1	 <cm_addr> 115	 <weight_map> 6128
-wu		 <pos> 0	 <cm_addr> 115	 <weight_map> 6112
-wu_p	 <pos> 1	 <cm_addr> 119	 <weight_map> 6096
-wu		 <pos> 0	 <cm_addr> 119	 <weight_map> 6080
-wu_p	 <pos> 1	 <cm_addr> 123	 <weight_map> 6064
-wu		 <pos> 0	 <cm_addr> 123	 <weight_map> 6048
-wu_p	 <pos> 1	 <cm_addr> 127	 <weight_map> 6032
-wu		 <pos> 0	 <cm_addr> 127	 <weight_map> 6016
-wu_p	 <pos> 1	 <cm_addr> 131	 <weight_map> 6384
-wu		 <pos> 0	 <cm_addr> 131	 <weight_map> 6368
-wu_p	 <pos> 1	 <cm_addr> 135	 <weight_map> 6352
-wu		 <pos> 0	 <cm_addr> 135	 <weight_map> 6336
-wu_p	 <pos> 1	 <cm_addr> 139	 <weight_map> 6320
-wu		 <pos> 0	 <cm_addr> 139	 <weight_map> 6304
-wu_p	 <pos> 1	 <cm_addr> 143	 <weight_map> 6288
-wu		 <pos> 0	 <cm_addr> 143	 <weight_map> 6272
-wu_p	 <pos> 1	 <cm_addr> 147	 <weight_map> 6640
-wu		 <pos> 0	 <cm_addr> 147	 <weight_map> 6624
-wu_p	 <pos> 1	 <cm_addr> 151	 <weight_map> 6608
-wu		 <pos> 0	 <cm_addr> 151	 <weight_map> 6592
-wu_p	 <pos> 1	 <cm_addr> 155	 <weight_map> 6576
-wu		 <pos> 0	 <cm_addr> 155	 <weight_map> 6560
-wu_p	 <pos> 1	 <cm_addr> 159	 <weight_map> 6544
-wu		 <pos> 0	 <cm_addr> 159	 <weight_map> 6528
-wu_p	 <pos> 1	 <cm_addr> 163	 <weight_map> 6896
-wu		 <pos> 0	 <cm_addr> 163	 <weight_map> 6880
-wu_p	 <pos> 1	 <cm_addr> 167	 <weight_map> 6864
-wu		 <pos> 0	 <cm_addr> 167	 <weight_map> 6848
-wu_p	 <pos> 1	 <cm_addr> 171	 <weight_map> 6832
-wu		 <pos> 0	 <cm_addr> 171	 <weight_map> 6816
-wu_p	 <pos> 1	 <cm_addr> 175	 <weight_map> 6800
-wu		 <pos> 0	 <cm_addr> 175	 <weight_map> 6784
-wu_p	 <pos> 1	 <cm_addr> 179	 <weight_map> 7152
-wu		 <pos> 0	 <cm_addr> 179	 <weight_map> 7136
-wu_p	 <pos> 1	 <cm_addr> 183	 <weight_map> 7120
-wu		 <pos> 0	 <cm_addr> 183	 <weight_map> 7104
-wu_p	 <pos> 1	 <cm_addr> 187	 <weight_map> 7088
-wu		 <pos> 0	 <cm_addr> 187	 <weight_map> 7072
-wu_p	 <pos> 1	 <cm_addr> 191	 <weight_map> 7056
-wu		 <pos> 0	 <cm_addr> 191	 <weight_map> 7040
-wu_p	 <pos> 1	 <cm_addr> 195	 <weight_map> 7408
-wu		 <pos> 0	 <cm_addr> 195	 <weight_map> 7392
-wu_p	 <pos> 1	 <cm_addr> 199	 <weight_map> 7376
-wu		 <pos> 0	 <cm_addr> 199	 <weight_map> 7360
-wu_p	 <pos> 1	 <cm_addr> 203	 <weight_map> 7344
-wu		 <pos> 0	 <cm_addr> 203	 <weight_map> 7328
-wu_p	 <pos> 1	 <cm_addr> 207	 <weight_map> 7312
-wu		 <pos> 0	 <cm_addr> 207	 <weight_map> 7296
-wu_p	 <pos> 1	 <cm_addr> 211	 <weight_map> 7664
-wu		 <pos> 0	 <cm_addr> 211	 <weight_map> 7648
-wu_p	 <pos> 1	 <cm_addr> 215	 <weight_map> 7632
-wu		 <pos> 0	 <cm_addr> 215	 <weight_map> 7616
-wu_p	 <pos> 1	 <cm_addr> 219	 <weight_map> 7600
-wu		 <pos> 0	 <cm_addr> 219	 <weight_map> 7584
-wu_p	 <pos> 1	 <cm_addr> 223	 <weight_map> 7568
-wu		 <pos> 0	 <cm_addr> 223	 <weight_map> 7552
-wu_p	 <pos> 1	 <cm_addr> 227	 <weight_map> 7920
-wu		 <pos> 0	 <cm_addr> 227	 <weight_map> 7904
-wu_p	 <pos> 1	 <cm_addr> 231	 <weight_map> 7888
-wu		 <pos> 0	 <cm_addr> 231	 <weight_map> 7872
-wu_p	 <pos> 1	 <cm_addr> 235	 <weight_map> 7856
-wu		 <pos> 0	 <cm_addr> 235	 <weight_map> 7840
-wu_p	 <pos> 1	 <cm_addr> 239	 <weight_map> 7824
-wu		 <pos> 0	 <cm_addr> 239	 <weight_map> 7808
-wu_p	 <pos> 1	 <cm_addr> 243	 <weight_map> 8176
-wu		 <pos> 0	 <cm_addr> 243	 <weight_map> 8160
-wu_p	 <pos> 1	 <cm_addr> 247	 <weight_map> 8144
-wu		 <pos> 0	 <cm_addr> 247	 <weight_map> 8128
-wu_p	 <pos> 1	 <cm_addr> 251	 <weight_map> 8112
-wu		 <pos> 0	 <cm_addr> 251	 <weight_map> 8096
-wu_p	 <pos> 1	 <cm_addr> 255	 <weight_map> 8080
-wu		 <pos> 0	 <cm_addr> 255	 <weight_map> 8064
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-cmpfis	 <is_addr> 0	 <ca> 0	 <tos>	 <os_addr_wt> 0
-cmpfis	 <is_addr> 0	 <ca> 1	 <tos>	 <os_addr_wt> 1	 <os_addr_rd> 0
-cmpfis	 <is_addr> 1	 <ca> 2	 <paos>	 <os_addr_wt> 0	 <os_addr_rd> 1
-cmpfis	 <is_addr> 1	 <ca> 3	 <paos>	 <os_addr_wt> 1
-cmpgtp	 <pos> 	7	<input_map_position>	368
-cmpgtp	 <pos> 	6	<input_map_position>	352
-cmpgtp	 <pos> 	5	<input_map_position>	336
-cmpgtp	 <pos> 	4	<input_map_position>	320
-cmpgtp	 <pos> 	3	<input_map_position>	304
-cmpgtp	 <pos> 	2	<input_map_position>	288
-cmpgtp	 <pos> 	1	<input_map_position>	272
-cmpgt	 <pos> 	0	<input_map_position>	256	 <ca> 0	 <tos>	 <os_addr_wt> 2
-cmpgt	 <pos> 	0	<input_map_position>	256	 <ca> 1	 <tos>	 <os_addr_wt> 3
-cmpgtp	 <pos> 	7	<input_map_position>	496
-cmpgtp	 <pos> 	6	<input_map_position>	480
-cmpgtp	 <pos> 	5	<input_map_position>	464
-cmpgtp	 <pos> 	4	<input_map_position>	448
-cmpgtp	 <pos> 	3	<input_map_position>	432
-cmpgtp	 <pos> 	2	<input_map_position>	416
-cmpgtp	 <pos> 	1	<input_map_position>	400	 <os_addr_rd> 2
-cmpgt	 <pos> 	0	<input_map_position>	384	 <ca> 2	 <paos>	 <os_addr_wt> 2	 <os_addr_rd> 3
-cmpgt	 <pos> 	0	<input_map_position>	384	 <ca> 3	 <paos>	 <os_addr_wt> 3
+Linp	 <pos> 7
+Linp	 <pos> 6
+Linp	 <pos> 5
+Linp	 <pos> 4
+Linp	 <pos> 3
+Linp	 <pos> 2
+Linp	 <pos> 1
+Lin		 <pos> 0	 <is_addr> 0
+Linp	 <pos> 7
+Linp	 <pos> 6
+Linp	 <pos> 5
+Linp	 <pos> 4
+Linp	 <pos> 3
+Linp	 <pos> 2
+Linp	 <pos> 1
+Lin		 <pos> 0	 <is_addr> 1
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 0
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 4
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 8
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 12
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 16
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 20
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 24
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 28
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 32
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 36
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 40
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 44
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 48
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 52
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 56
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 60
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 64
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 68
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 72
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 76
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 80
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 84
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 88
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 92
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 96
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 100
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 104
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 108
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 112
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 116
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 120
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 124
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 128
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 132
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 136
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 140
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 144
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 148
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 152
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 156
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 160
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 164
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 168
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 172
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 176
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 180
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 184
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 188
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 192
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 196
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 200
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 204
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 208
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 212
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 216
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 220
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 224
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 228
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 232
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 236
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 240
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 244
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 248
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 252
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 1
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 5
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 9
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 13
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 17
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 21
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 25
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 29
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 33
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 37
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 41
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 45
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 49
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 53
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 57
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 61
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 65
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 69
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 73
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 77
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 81
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 85
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 89
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 93
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 97
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 101
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 105
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 109
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 113
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 117
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 121
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 125
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 129
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 133
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 137
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 141
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 145
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 149
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 153
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 157
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 161
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 165
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 169
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 173
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 177
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 181
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 185
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 189
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 193
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 197
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 201
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 205
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 209
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 213
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 217
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 221
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 225
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 229
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 233
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 237
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 241
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 245
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 249
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 253
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 2
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 6
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 10
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 14
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 18
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 22
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 26
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 30
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 34
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 38
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 42
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 46
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 50
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 54
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 58
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 62
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 66
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 70
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 74
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 78
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 82
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 86
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 90
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 94
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 98
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 102
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 106
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 110
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 114
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 118
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 122
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 126
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 130
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 134
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 138
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 142
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 146
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 150
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 154
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 158
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 162
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 166
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 170
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 174
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 178
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 182
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 186
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 190
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 194
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 198
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 202
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 206
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 210
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 214
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 218
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 222
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 226
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 230
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 234
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 238
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 242
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 246
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 250
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 254
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 3
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 7
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 11
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 15
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 19
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 23
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 27
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 31
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 35
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 39
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 43
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 47
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 51
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 55
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 59
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 63
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 67
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 71
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 75
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 79
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 83
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 87
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 91
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 95
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 99
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 103
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 107
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 111
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 115
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 119
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 123
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 127
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 131
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 135
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 139
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 143
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 147
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 151
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 155
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 159
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 163
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 167
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 171
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 175
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 179
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 183
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 187
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 191
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 195
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 199
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 203
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 207
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 211
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 215
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 219
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 223
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 227
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 231
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 235
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 239
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 243
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 247
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 251
+Lwtp	 <pos> 1
+Lwt		 <pos> 0	 <cm_addr> 255
+Nop
+Nop
+Nop
+Nop
+Nop
+Nop
+Nop
+Nop
+Cmpfis	 <is_addr> 0	 <ca> 0	 <tos>	 <os_addr_wt> 0
+Cmpfis	 <is_addr> 0	 <ca> 1	 <tos>	 <os_addr_wt> 1	 <os_addr_rd> 0
+Cmpfis	 <is_addr> 1	 <ca> 2	 <paos>	 <os_addr_rd> 1
+Cmpfis	 <is_addr> 1	 <ca> 3	 <paos>
+Cmpfgtp	 <pos> 	7
+Cmpfgtp	 <pos> 	6
+Cmpfgtp	 <pos> 	5
+Cmpfgtp	 <pos> 	4
+Cmpfgtp	 <pos> 	3
+Cmpfgtp	 <pos> 	2
+Cmpfgtp	 <pos> 	1
+Cmpfgt	 <pos> 	0	 <ca> 0	 <tos>	 <os_addr_wt> 2
+Cmpfgt	 <pos> 	0	 <ca> 1	 <tos>	 <os_addr_wt> 3
+Cmpfgtp	 <pos> 	7
+Cmpfgtp	 <pos> 	6
+Cmpfgtp	 <pos> 	5
+Cmpfgtp	 <pos> 	4
+Cmpfgtp	 <pos> 	3
+Cmpfgtp	 <pos> 	2
+Cmpfgtp	 <pos> 	1	 <os_addr_rd> 2
+Cmpfgt	 <pos> 	0	 <ca> 2	 <paos>	 <os_addr_rd> 3
+Cmpfgt	 <pos> 	0	 <ca> 3	 <paos>
