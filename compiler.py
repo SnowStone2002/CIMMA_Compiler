@@ -20,6 +20,8 @@ class MicroInstructionCompiler:
         
     def init_mappings(self):
         # Initialize mappings here (e.g., input_map, weight_map)
+        gli = self.gli
+        config = self.config
         # 两个length对应作点乘，channel互相无关
         self.weight_map_channel = gli[1][0]
         self.weight_map_length = gli[1][1]
@@ -60,6 +62,7 @@ class MicroInstructionCompiler:
         self.input_map_channel  = self.input_map_channel
 
     def init_matrices(self):
+        config = self.config
         # Initialize ls_matrix and atos_matrix here
         para_times = self.para_times
         acc_times = self.acc_times
@@ -74,7 +77,7 @@ class MicroInstructionCompiler:
             # 1:tos OS = reg + psum, reg = 0
             # 2:aos OS = psum + reg + OS, reg = 0
 
-        if data_stream == 'isap' or data_stream == 'wsap': # ap 优先acc
+        if self.data_stream == 'isap' or self.data_stream == 'wsap': # ap 优先acc
             for i_pt in range(para_times):
                 for i_at in range(acc_times):
                     ls_matrix[i_pt,i_at] = ls_fg
@@ -90,7 +93,7 @@ class MicroInstructionCompiler:
                         else:
                             atos_matrix[i_pt,i_at] = aos
 
-        elif data_stream == 'ispp' or data_stream == 'wspp':   # pp 有限para
+        elif self.data_stream == 'ispp' or self.data_stream == 'wspp':   # pp 有限para
             for i_at in range(acc_times):
                 for i_pt in range(para_times):
                     ls_matrix[i_pt,i_at] = ls_fg
@@ -119,18 +122,19 @@ class MicroInstructionCompiler:
     def load_is_block(self, num_rows, input_map_position):
         # Logic for loading IS block
         acc0 = self.acc0
+        config = self.config
         with open('mi.log','a') as f:
             for i_rows in range(num_rows):
                 input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
                 for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                     if j_reg != 0:
-                        if VERIFY:
+                        if self.VERIFY:
                             self.stk.push(inst="Linp\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+
                                     "\t <input_map> "+str(input_map_position)+"\n")
                         else:
                             self.stk.push(inst="Linp\t <pos> "+str(j_reg)+"\n")
                     else:
-                        if VERIFY:
+                        if self.VERIFY:
                             self.stk.push(inst="Lin\t\t <pos> "+str(j_reg)+"\t <is_addr> "+str(i_rows)+
                                     "\t <input_map> "+str(input_map_position)+"\n")
                         else:
@@ -143,12 +147,13 @@ class MicroInstructionCompiler:
     def wu_ls_bank(self, num_ls, num_channel, i_block):
         # Logic for weight update in LS bank
         acc0 = self.acc0
+        config = self.config
         with open('mi.log','a') as f:
             for i_ls in range(num_ls):
-                if data_stream == 'isap' or data_stream == 'wsap':
+                if self.data_stream == 'isap' or self.data_stream == 'wsap':
                     i_pt = i_block // self.weight_block_col
                     i_at = i_block % self.weight_block_col
-                elif data_stream == 'ispp' or data_stream == 'wspp':
+                elif self.data_stream == 'ispp' or self.data_stream == 'wspp':
                     i_pt = i_block % self.weight_block_row
                     i_at = i_block // self.weight_block_row
                 for j_channel in range(num_channel):
@@ -160,13 +165,13 @@ class MicroInstructionCompiler:
                         row_reg = (acc0.CIMsWriteWidth//acc0.BusWidth*config.WEIGHT_ROW - 1 - k_reg) // (acc0.CIMsWriteWidth//acc0.BusWidth)
                         pause_reg = k_reg % (acc0.CIMsWriteWidth//acc0.BusWidth)
                         if pause_reg == 0:
-                            if VERIFY:
+                            if self.VERIFY:
                                 self.stk.push(inst="Lwt\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
                                         "\t <weight_map> "+str(weight_map_position)+"\n")
                             else:
                                 self.stk.push(inst="Lwt\t\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+"\n")
                         else:
-                            if VERIFY:
+                            if self.VERIFY:
                                 self.stk.push(inst="Lwtp\t <pos> "+str(k_reg%(acc0.CIMsWriteWidth//acc0.BusWidth))+"\t <cm_addr> "+str(j_channel*config.SCR*config.WEIGHT_ROW+row_reg*config.SCR+i_ls)+
                                         "\t <weight_map> "+str(weight_map_position)+"\n")
                             else:
@@ -176,25 +181,26 @@ class MicroInstructionCompiler:
     def compute(self, i_input_channel, computing_block):
         # Compute logic for input channel and computing block
         acc0 = self.acc0
+        config = self.config
         i_ls = computing_block % config.SCR
-        if data_stream == 'isap' or data_stream == 'wsap':
+        if self.data_stream == 'isap' or self.data_stream == 'wsap':
             i_pt = computing_block // self.weight_block_col
             i_at = computing_block % self.weight_block_col
-        elif data_stream == 'ispp' or data_stream == 'wspp':
+        elif self.data_stream == 'ispp' or self.data_stream == 'wspp':
             i_pt = computing_block % self.weight_block_row
             i_at = computing_block // self.weight_block_row
         
         atos_flag   =   self.atos_dict[int(self.atos_matrix[i_pt,i_at].item())]
         os_addr     =   i_input_channel * self.para_times + i_pt
 
-        if data_stream == 'isap' or data_stream == 'ispp':
+        if self.data_stream == 'isap' or self.data_stream == 'ispp':
             is_addr = i_input_channel % self.input_channels_per_ISload * self.rows_per_input_channel + i_at
-        elif data_stream == 'wsap' or data_stream == 'wspp':
+        elif self.data_stream == 'wsap' or self.data_stream == 'wspp':
             is_addr = i_input_channel * self.rows_per_input_channel + i_at
 
         with open('mi.log','a') as f:
             
-            if ((data_stream == 'wsap' or data_stream == 'wspp') and (i_input_channel >= self.input_channels_per_ISload)):
+            if ((self.data_stream == 'wsap' or self.data_stream == 'wspp') and (i_input_channel >= self.input_channels_per_ISload)):
                 input_map_position = i_input_channel * self.input_map_length + i_at * config.AL + int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
                 for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
                     # print("input_map_position=",input_map_position,"gt_in_map_record=",self.gt_in_map_record)
@@ -202,7 +208,7 @@ class MicroInstructionCompiler:
                         input_map_position -= int(config.BUS_WIDTH / config.DATA_WIDTH)
                         continue
                     if (j_reg != 0):  # Cmpfgtp
-                        if VERIFY:
+                        if self.VERIFY:
                             self.stk.push(inst="Cmpfgtp\t " + "<pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\n')
                         else:
                             self.stk.push(inst="Cmpfgtp\t " + "<pos> \t" + str(j_reg)+ '\n')
@@ -212,25 +218,26 @@ class MicroInstructionCompiler:
                             if os_addr > self.os_virtual_depth: # aos, os overflow
                                 if i_at == self.acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                                     self.os_virtual_depth += 1
-                                if VERIFY:
+                                if self.VERIFY:
                                     self.stk.push(inst="Lpenalty\t" + "<os_addr_rd>\t" + str(os_addr) + '\n')
                                     self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + 
                                             '\n')
                                 else:
-                                    self.stk.push(inst="Lpenalty\t\n")
+                                    for i in range (acc0.OutputSRAMWidth// (config.RESULT_WIDTH // config.DATA_WIDTH) // config.BUS_WIDTH):
+                                        self.stk.push(inst="Lpenalty\t\n")
                                     self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <paos>' + 
                                             '\n')
                             else: # aos, os not overflow
                                 if i_at == self.acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                                     self.os_virtual_depth += 1
-                                    if VERIFY:
+                                    if self.VERIFY:
                                         self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + 
                                                 '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
                                     else:
                                         self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <paos>' + 
                                                 '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
                                 else: # gen aos rd request
-                                    if VERIFY:
+                                    if self.VERIFY:
                                         self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' + str(os_addr) + 
                                                 '\n', rd_req = 1, rd_addr = os_addr) 
                                     else:
@@ -241,7 +248,7 @@ class MicroInstructionCompiler:
                             if os_addr > self.os_virtual_depth: # tos, os overflow
                                 if i_at == self.acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                                     self.os_virtual_depth += 1
-                                if VERIFY:
+                                if self.VERIFY:
                                     self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\t <os_addr_wt> ' + str(os_addr) + 
                                             '\n')
                                 else:
@@ -250,14 +257,14 @@ class MicroInstructionCompiler:
                             else: # tos, os not overflow
                                 if i_at == self.acc_times-1: #gen rd request
                                     self.os_virtual_depth += 1
-                                    if VERIFY:
+                                    if self.VERIFY:
                                         self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + 
                                                 '\n')
                                     else:
                                         self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + 
                                                 '\n')
                                 else: # tos
-                                    if VERIFY:
+                                    if self.VERIFY:
                                         self.stk.push(inst="Cmpfgt" + "\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + '>\t <os_addr_wt> ' +str(os_addr) + 
                                                 '\n')
                                     else:
@@ -265,7 +272,7 @@ class MicroInstructionCompiler:
                                                 '\n')
                         
                         else: # aor
-                            if VERIFY:
+                            if self.VERIFY:
                                 self.stk.push(inst="Cmpfgt" + '\t <ca> ' + str(i_ls) + '\t <' + str(atos_flag) + 
                                         ">\t <pos> \t" + str(j_reg) + "\t<input_map_position>\t" + str(input_map_position) + '\n')
                             else:
@@ -281,16 +288,17 @@ class MicroInstructionCompiler:
                     if os_addr > self.os_virtual_depth: # aos, os overflow
                         if i_at == self.acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                             self.os_virtual_depth += 1
-                        if VERIFY:
+                        if self.VERIFY:
                             self.stk.push(inst="Lpenalty\t" + "<os_addr_rd>\t" + str(os_addr) + '\n')
                             self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
                         else:
-                            self.stk.push(inst="Lpenalty\t\n")
+                            for i in range (acc0.OutputSRAMWidth// (config.RESULT_WIDTH // config.DATA_WIDTH) // config.BUS_WIDTH):
+                                self.stk.push(inst="Lpenalty\t\n")
                             self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n')
                     else: # aos, os not overflow
                         if i_at == self.acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                             self.os_virtual_depth += 1
-                            if VERIFY:
+                            if self.VERIFY:
                                 self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
                             else:
                                 self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <paos>' + '\n', rd_req = 1, rd_addr = os_addr) # virtual -> practical?
@@ -301,14 +309,14 @@ class MicroInstructionCompiler:
                     if os_addr > self.os_virtual_depth: # tos, os overflow
                         if i_at == self.acc_times-1: # complete one output, gen rd request, aos: paos(go through)
                             self.os_virtual_depth += 1
-                        if VERIFY:
+                        if self.VERIFY:
                             self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
                         else:
                             self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos>' + '\n')
                     else: # tos, os not overflow
                         if i_at == self.acc_times-1: #gen rd request
                             self.os_virtual_depth += 1
-                            if VERIFY:
+                            if self.VERIFY:
                                 self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\t <os_addr_wt> ' + str(os_addr) + '\n')
                             else:
                                 self.stk.push(inst="Cmpfis\t <is_addr> " + str(is_addr) + '\t <ca> ' + str(i_ls) + '\t <ptos> ' + '\n')
@@ -321,6 +329,7 @@ class MicroInstructionCompiler:
     def is_process(self):
         # Processing logic for IS
         acc0 = self.acc0
+        config = self.config
         input_map_position = 0 
         for i_IS_load in range(self.IS_load_times_per_inst):
             input_map_position = self.load_is_block(num_rows = self.IS_load_rows[i_IS_load], 
@@ -348,6 +357,7 @@ class MicroInstructionCompiler:
 
     def ws_process(self):
         # Processing logic for WS
+        config = self.config
         i_block = 0
         self.load_is_block(num_rows = self.rows_per_input_channel * self.input_channels_per_ISload, input_map_position = 0)
         for i_weight_update in range(self.weight_update_times_per_inst):
@@ -379,7 +389,7 @@ class MicroInstructionCompiler:
     # Add any additional methods or utility functions as needed
     def print(self):
         print("System config:")
-        for attr, value in config.__dict__.items():
+        for attr, value in self.config.__dict__.items():
             print(f"{attr} = {value}")
 
         print("\nHardware config:")
