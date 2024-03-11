@@ -1,5 +1,3 @@
-
-
 def verify(inst, new_addr):
     if inst.find("tos") == -1 and inst.find("aos") == -1: # no tos/aos
         return True
@@ -39,14 +37,14 @@ class inst_stack:
                         print("@@@@@@@@@@@@@@@@@@@@@!Warning! Unsolved Read Request!!@@@@@@@@@@@@@@@@@@@@@")
 
         with open("mi.log","a") as f:
-            if self.preq_quene[0] == 1:
-                f.write("nop\t <os_addr_rd> "+str(self.paddr_quene[0])+'\n')
-
-            if self.req_quene[0] == 0:
-                f.write(str(self.inst_fifo[0]))
-            elif self.req_quene[0] == 1:
-                f.write(str(self.inst_fifo[0][0:len(self.inst_fifo[0])-1]) + "\t <os_addr_rd> "+str(self.addr_quene[0])+'\n')
-        
+            if self.inst_fifo[0] != "\n":
+                if self.preq_quene[0] == 1:
+                    f.write("nop\t <os_addr_rd> "+str(self.paddr_quene[0])+'\n')
+                if self.req_quene[0] == 0:
+                    f.write(str(self.inst_fifo[0]))
+                elif self.req_quene[0] == 1:
+                    f.write(str(self.inst_fifo[0][0:len(self.inst_fifo[0])-1]) + "\t <os_addr_rd> "+str(self.addr_quene[0])+'\n')
+            
         # print(self.inst_fifo[0])
 
         for i in range(self.len):

@@ -9,6 +9,7 @@ class Config:
 
         # 固定值
         self.DATA_WIDTH = 8
+        self.RESULT_WIDTH = 32
 
         self.WEIGHT_ROW = 4
         self.WEIGHT_COL = 2
