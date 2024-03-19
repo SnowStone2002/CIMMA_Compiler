@@ -16,7 +16,7 @@ class MicroInstructionCompiler:
         self.os_virtual_depth = self.acc0.OutputSRAMDepth
         self.gt_in_map_record = 0
         self.fifo_len = 100
-        self.stk = inst_stack(self.fifo_len)  # Example size, adjust as needed
+        self.stk = inst_stack(filename="./cflow/"+data_stream+".log", len=self.fifo_len)  # Example size, adjust as needed
         
     def init_mappings(self):
         # Initialize mappings here (e.g., input_map, weight_map)
@@ -111,8 +111,8 @@ class MicroInstructionCompiler:
 
     def log_init(self):
         # Log initialization logic here
-        if os.path.exists('mi.log'):
-            os.remove(r'mi.log')
+        if os.path.exists("./cflow/"+self.data_stream+".log"):
+            os.remove(r"./cflow/"+self.data_stream+".log")
         self.stk.push("starting compiler:\n")
 
     def idle(self):
@@ -123,7 +123,7 @@ class MicroInstructionCompiler:
         # Logic for loading IS block
         acc0 = self.acc0
         config = self.config
-        with open('mi.log','a') as f:
+        with open("./cflow/"+self.data_stream+".log",'a') as f:
             for i_rows in range(num_rows):
                 input_map_position += int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
                 for j_reg in reversed(range(acc0.InputSRAMWidth//acc0.BusWidth)):
@@ -148,7 +148,7 @@ class MicroInstructionCompiler:
         # Logic for weight update in LS bank
         acc0 = self.acc0
         config = self.config
-        with open('mi.log','a') as f:
+        with open("./cflow/"+self.data_stream+".log",'a') as f:
             for i_ls in range(num_ls):
                 if self.data_stream == 'isap' or self.data_stream == 'wsap':
                     i_pt = i_block // self.weight_block_col
@@ -198,7 +198,7 @@ class MicroInstructionCompiler:
         elif self.data_stream == 'wsap' or self.data_stream == 'wspp':
             is_addr = i_input_channel * self.rows_per_input_channel + i_at
 
-        with open('mi.log','a') as f:
+        with open("./cflow/"+self.data_stream+".log",'a') as f:
             
             if ((self.data_stream == 'wsap' or self.data_stream == 'wspp') and (i_input_channel >= self.input_channels_per_ISload)):
                 input_map_position = i_input_channel * self.input_map_length + i_at * config.AL + int(config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth//acc0.BusWidth - 1)
@@ -377,6 +377,7 @@ class MicroInstructionCompiler:
 
     def compile(self):
         # Main method to compile instructions
+        print("**"+self.data_stream+" compiling**")
         self.log_init()
         if self.data_stream in ['isap', 'ispp']:
             self.is_process()
@@ -385,6 +386,7 @@ class MicroInstructionCompiler:
         # Additional logic to finalize compilation and manage stack
         for i in range(self.fifo_len):
             self.stk.push()
+        
 
     # Add any additional methods or utility functions as needed
     def print(self):
@@ -428,3 +430,4 @@ if __name__ == "__main__":
     compiler.print()
 
     # Additional code to output or work with the compiled instructions
+

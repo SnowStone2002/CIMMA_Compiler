@@ -16,15 +16,16 @@ def verify(inst, new_addr):
             return False
 
 class inst_stack:
-    def __init__(self, len = 8):
+    def __init__(self, len = 8, filename = 'mi.log'):
         self.len = len
         self.inst_fifo = ['\n' for i in range(len)]
         self.req_quene = [0 for i in range(len)]
         self.addr_quene = [0 for i in range(len)]
         self.preq_quene = [0 for i in range(len)]
         self.paddr_quene = [0 for i in range(len)]
+        self.filename = filename
 
-    def push(self, inst = '\n', rd_req = 0, rd_addr = 0):
+    def push(self, inst = '\n',  rd_req = 0, rd_addr = 0):
         if rd_req == 1: # new rd request
             for i in reversed(range(self.len)):
                 if self.req_quene[i] == 0 and verify(self.inst_fifo[i], rd_addr) == True:
@@ -36,7 +37,7 @@ class inst_stack:
                     if i == 0: #Read Request Unsolved
                         print("@@@@@@@@@@@@@@@@@@@@@!Warning! Unsolved Read Request!!@@@@@@@@@@@@@@@@@@@@@")
 
-        with open("mi.log","a") as f:
+        with open(self.filename,"a") as f:
             if self.inst_fifo[0] != "\n":
                 if self.preq_quene[0] == 1:
                     f.write("nop\t <os_addr_rd> "+str(self.paddr_quene[0])+'\n')

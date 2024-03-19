@@ -21,7 +21,5 @@ class TensorStack:
         return len(self.stack)
 
     def max_size_reached(self):
-        """
-        返回栈在其生命周期内拥有过的最多元素数量。
-        """
+        # 返回栈在其生命周期内拥有过的最多元素数量。
         return self.max_size

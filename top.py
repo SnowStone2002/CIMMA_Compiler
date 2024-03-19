@@ -1,19 +1,17 @@
-from hw_config import hwc
-from hw_config import Config
+import hw_config as cfg
 import math as m
 import torch
 from inst_stack import inst_stack
 import os
 from compiler import MicroInstructionCompiler
 
-config = Config(al=128, pc=16, scr=4, bus_width=128, is_depth=2, os_depth=1024)
-acc0 = hwc(config)
-gli = ['mvm', (32, 256, 2)]
-data_stream = 'wspp'
-VERIFY = False
+hw_cfg = cfg.Config(al=128, pc=16, scr=16, bus_width=128, is_depth=1024, os_depth=1024)
+acc0 = cfg.hwc(config= hw_cfg)
 
-compiler = MicroInstructionCompiler(config, gli, data_stream, VERIFY)
-compiler.compile()
-compiler.print()
+workload = ['mvm', (512, 2048, 1024)]
+dataflow = 'wspp'
+cf_compiler = MicroInstructionCompiler(hw_cfg, workload, dataflow, VERIFY=False)
+cf_compiler.compile()
+cf_compiler.print()
 
 # Additional code to output or work with the compiled instructions
