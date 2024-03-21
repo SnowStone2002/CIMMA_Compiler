@@ -3,63 +3,19 @@
 #include <math.h>
 #include <string.h>
 #include "hw_config.h"
-
-typedef struct {
-    int Lin;
-    int Linp;
-    int Lwt;
-    int Lwtp;
-    int Cmpfis_aor;
-    int Cmpfis_tos;
-    int Cmpfis_aos;
-    int Cmpfis_ptos;
-    int Cmpfis_paos;
-    int Cmpfgt_aor;
-    int Cmpfgt_tos;
-    int Cmpfgt_aos;
-    int Cmpfgt_ptos;
-    int Cmpfgt_paos;
-    int Cmpfgtp;
-    int Lpenalty;
-    int Nop;
-    int Nop_w_rd;
-    int IS_reward;
-
-} InstructionCount;
-
-void printInstructionCount(const InstructionCount* ic) {
-    printf("Lin: \t\t%d\n", ic->Lin);
-    printf("Linp: \t\t%d\n", ic->Linp);
-    printf("Lwt: \t\t%d\n", ic->Lwt);
-    printf("Lwtp: \t\t%d\n", ic->Lwtp);
-    printf("Cmpfis_aor: \t%d\n", ic->Cmpfis_aor);
-    printf("Cmpfis_tos: \t%d\n", ic->Cmpfis_tos);
-    printf("Cmpfis_aos: \t%d\n", ic->Cmpfis_aos);
-    printf("Cmpfis_ptos: \t%d\n", ic->Cmpfis_ptos);
-    printf("Cmpfis_paos: \t%d\n", ic->Cmpfis_paos);
-    printf("Cmpfgt_aor: \t%d\n", ic->Cmpfgt_aor);
-    printf("Cmpfgt_tos: \t%d\n", ic->Cmpfgt_tos);
-    printf("Cmpfgt_aos: \t%d\n", ic->Cmpfgt_aos);
-    printf("Cmpfgt_ptos: \t%d\n", ic->Cmpfgt_ptos);
-    printf("Cmpfgt_paos: \t%d\n", ic->Cmpfgt_paos);
-    printf("Cmpfgtp: \t%d\n", ic->Cmpfgtp);
-    printf("Lpenalty: \t%d\n", ic->Lpenalty);
-    printf("Nop: \t\t%d\n", ic->Nop);
-    printf("Nop_w_rd: \t%d\n", ic->Nop_w_rd);
-    printf("IS_reward: \t%d\n", ic->IS_reward);
-}
+#include "instruction_count.h"
 
 int bus_width, al, pc, scr, is_depth, os_depth, freq;
 char* operation;
-int weight_map_channel, weight_map_length;
-int input_map_length, input_map_channel;
+int dim1, dim2, dim3;
 char* data_stream;
 
 hwc acc0;
-
 Config config;
-
 InstructionCount instructionCount;
+
+int weight_map_channel, weight_map_length;
+int input_map_length, input_map_channel;
 
 int weight_block_col, weight_block_row, weight_block_num, weight_update_times_per_inst;
 int input_data_per_row, rows_per_input_channel, input_channels_per_ISload, IS_load_times_per_inst;
@@ -96,7 +52,6 @@ int load_is_block(int num_rows, int input_map_position) {
     return input_map_position;
 }
 
-
 int wu_ls_bank(int num_ls, int num_channel, int i_block) {
     for (int i_ls = 0; i_ls < num_ls; ++i_ls) {
         int i_pt, i_at;
@@ -130,7 +85,6 @@ int wu_ls_bank(int num_ls, int num_channel, int i_block) {
     return i_block;
 }
 
-
 void compute(int i_input_channel, int computing_block) {
     int i_ls = computing_block % config.SCR;
     int i_pt, i_at, is_addr, os_addr, input_map_position, j_reg;
@@ -157,8 +111,6 @@ void compute(int i_input_channel, int computing_block) {
 
     if (is_addr == is_addr_record) instructionCount.IS_reward++;
     is_addr_record = is_addr;
-
-
 
     if ((strcmp(data_stream, "wsap") == 0 || strcmp(data_stream, "wspp") == 0) && (i_input_channel >= input_channels_per_ISload)) {
         input_map_position = i_input_channel * input_map_length + i_at * config.AL + (config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth / acc0.BusWidth - 1);
@@ -314,39 +266,12 @@ void ws_process(void) {
     }
 }
 
-int main(int argc, char *argv[]){
-    if (argc != 13) {
-        printf("error!");
-        return 1;
-    }
+void mvm_process(void){
+        weight_map_channel = dim1;
+    weight_map_length = dim2;
 
-    // printf("Number of command line arguments: %d\n", argc);
-
-    bus_width = atoi(argv[1]);
-    al = atoi(argv[2]);
-    pc = atoi(argv[3]);
-    scr = atoi(argv[4]);
-    is_depth = atoi(argv[5]);
-    os_depth = atoi(argv[6]);
-    freq = atoi(argv[7]);
-
-    operation = argv[8];
-
-    weight_map_channel = atoi(argv[9]);
-    weight_map_length = atoi(argv[10]);
-
-    input_map_length = atoi(argv[10]);
-    input_map_channel = atoi(argv[11]);
-
-    data_stream = argv[12];
-
-    InitConfig(&config, bus_width, al, pc, scr, is_depth, os_depth, freq);
-
-    // PrintConfig(&config);
-
-    Inithwc(&acc0, config);
-
-    // Printhwc(&acc0);
+    input_map_length = dim2;
+    input_map_channel = dim3;
 
     input_data_per_row = floor(acc0.InputSRAMWidth / config.DATA_WIDTH);
     rows_per_input_channel = (int)ceil((float)input_map_length / input_data_per_row);
@@ -424,7 +349,7 @@ int main(int argc, char *argv[]){
             }
         }
     } else if (strcmp(data_stream, "ispp") == 0 || strcmp(data_stream, "wspp") == 0) {
-        // pp 有限para
+        // pp 优先para
         for (int i_at = 0; i_at < acc_times; ++i_at) {
             for (int i_pt = 0; i_pt < para_times; ++i_pt) {
                 ls_matrix[i_pt][i_at] = ls_fg;
@@ -493,6 +418,54 @@ int main(int argc, char *argv[]){
     else
         ws_process();
 
+}
+
+void ph2_process(void){
+    
+}
+
+void lhd_process(void){
+
+}
+
+void mha_process(void){
+    
+}
+
+int main(int argc, char *argv[]){
+    if (argc != 13) {
+        printf("error!");
+        return 1;
+    }
+
+    // printf("Number of command line arguments: %d\n", argc);
+
+    bus_width = atoi(argv[1]);
+    al = atoi(argv[2]);
+    pc = atoi(argv[3]);
+    scr = atoi(argv[4]);
+    is_depth = atoi(argv[5]);
+    os_depth = atoi(argv[6]);
+    freq = atoi(argv[7]);
+
+    operation = argv[8];
+
+    dim1 = atoi(argv[9]);
+    dim2 = atoi(argv[10]);
+    dim3 = atoi(argv[11]); 
+
+    data_stream = argv[12];
+
+    InitConfig(&config, bus_width, al, pc, scr, is_depth, os_depth, freq);
+    // PrintConfig(&config);
+
+    Inithwc(&acc0, config);
+    // Printhwc(&acc0);
+
+    if (strcmp(operation, "mvm") == 0)
+        mvm_process();
+
+    // #region output
     //***************************************** terminal output ****************************************
     printInstructionCount(&instructionCount);
 
@@ -515,15 +488,15 @@ int main(int argc, char *argv[]){
 
     // 如果需要，写入表头
     if (needHeader) {
-        fprintf(file, "bus_width,al,pc,scr,is_depth,os_depth,freq,operation,weight_map_channel,weight_map_length,input_map_length,input_map_channel,data_stream,");
+        fprintf(file, "bus_width,al,pc,scr,is_depth,os_depth,freq,operation,dim1,dim2,dim3,data_stream,");
         fprintf(file, "Lin,Linp,Lwt,Lwtp,Cmpfis_aor,Cmpfis_tos,Cmpfis_aos,Cmpfis_ptos,Cmpfis_paos,");
         fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,IS_reward\n");
     }
 
     // 写入命令行参数到文件
-    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%d,%d,%s,",
+    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%d,%s,",
             bus_width, al, pc, scr, is_depth, os_depth, freq, operation,
-            atoi(argv[9]), atoi(argv[10]), atoi(argv[10]), atoi(argv[11]), data_stream);
+            atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), data_stream);
 
     // 写入InstructionCount到文件
     fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
@@ -537,7 +510,8 @@ int main(int argc, char *argv[]){
     // 关闭文件
     fclose(file);
 
-    // //*******************************************清理//*******************************************
+
+    // //*******************************************清理*******************************************
     for(int i = 0; i < para_times; ++i) {
         free(ls_matrix[i]);
         free(atos_matrix[i]);
