@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h> // 添加这行来包含 atoi 函数的声明
 
 int Verify(const char *inst, int new_addr) {
     if (strstr(inst, "tos") == NULL && strstr(inst, "aos") == NULL) {
@@ -20,7 +21,7 @@ int Verify(const char *inst, int new_addr) {
     }
 }
 
-void InstInstStack(InstStack *stack, int len, const char *filename) {
+void InitInstStack(InstStack *stack, int len, const char *filename) {
     stack->len = len;
     memset(stack->inst_fifo, '\n', sizeof(stack->inst_fifo));
     memset(stack->req_queue, 0, sizeof(stack->req_queue));
@@ -35,7 +36,7 @@ void PushInstStack(InstStack *stack, const char *inst, int rd_req, int rd_addr) 
     FILE *file;
     if (rd_req == 1) { // 新的读请求
         for (int i = STACK_LEN - 1; i >= 0; i--) {
-            if (stack->req_queue[i] == 0 && verify(stack->inst_fifo[i], rd_addr)) {
+            if (stack->req_queue[i] == 0 && Verify(stack->inst_fifo[i], rd_addr)) {
                 stack->req_queue[i] = 1;
                 stack->addr_queue[i] = rd_addr;
                 rd_req = 0; // 读请求已解决

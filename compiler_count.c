@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include "hw_config.h"
+#include "inst_stack.h"
 #include "instruction_count.h"
 
 int bus_width, al, pc, scr, is_depth, os_depth, freq;
@@ -427,7 +428,7 @@ void ph2_process(void){
     strcpy(data_stream, "ispp");
     for(int i=0; i<dim3; i++){
         mvm_process(dim1,dim2/config.PIPELINE_STAGES,dim1);
-        mvm_process(dim1,dim2/config.PIPELINE_STAGES,dim1);
+        mvm_process(dim2/config.PIPELINE_STAGES,dim1,dim1);
     }
 }
 
@@ -506,9 +507,19 @@ void lhd_process(void){
         for (int i = 0; i < acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW; i++) {
             idle();
         }
-        for(int j_count=0; j_count<dim1/config.PIPELINE_STAGES;j_count++){
-            //compute(int i_input_channel, int computing_block);
+        for (int j = 0; j < dim1 / Sqk; j++){
+            for (int k = 0; k < Q_serial_times; k++){
+                for(int m_count=0; m_count<Sqk; m_count++){
+                    compute(j * Sqk + k, m_count);
+                }
+            }
+            for (int k = 0; k < Q_serial_times; k++){
+                for(int m_count=0; m_count<Spv; m_count++){
+                    //compute(?, m_count);
+                }
+            }
         }
+
     }
 }
 
@@ -583,7 +594,8 @@ int main(int argc, char *argv[]){
     if (needHeader) {
         fprintf(file, "bus_width,al,pc,scr,is_depth,os_depth,freq,operation,dim1,dim2,dim3,data_stream,");
         fprintf(file, "Lin,Linp,Lwt,Lwtp,Cmpfis_aor,Cmpfis_tos,Cmpfis_aos,Cmpfis_ptos,Cmpfis_paos,");
-        fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,IS_reward,L2_reward\n");
+        fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,");
+        fprintf(file, "IS_reward,L2_reward,Fussion\n");
     }
 
     // 写入命令行参数到文件
@@ -592,13 +604,14 @@ int main(int argc, char *argv[]){
             atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), argv[12]);
 
     // 写入InstructionCount到文件
-    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
+    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
             instructionCount.Lin, instructionCount.Linp, instructionCount.Lwt, instructionCount.Lwtp,
             instructionCount.Cmpfis_aor, instructionCount.Cmpfis_tos, instructionCount.Cmpfis_aos,
             instructionCount.Cmpfis_ptos, instructionCount.Cmpfis_paos,
             instructionCount.Cmpfgt_aor, instructionCount.Cmpfgt_tos, instructionCount.Cmpfgt_aos,
             instructionCount.Cmpfgt_ptos, instructionCount.Cmpfgt_paos,
-            instructionCount.Cmpfgtp, instructionCount.Lpenalty, instructionCount.Nop, instructionCount.Nop_w_rd, instructionCount.IS_reward,instructionCount.L2_reward);
+            instructionCount.Cmpfgtp, instructionCount.Lpenalty, instructionCount.Nop, instructionCount.Nop_w_rd, 
+            instructionCount.IS_reward,instructionCount.L2_reward,instructionCount.Fussion);
 
     // 关闭文件
     fclose(file);
@@ -619,7 +632,6 @@ int main(int argc, char *argv[]){
 
 /*
 来起名
-
 gli:
     "mha", seq_len, hid_size, head_num
 

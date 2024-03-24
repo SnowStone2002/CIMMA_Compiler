@@ -23,4 +23,5 @@ void printInstructionCount(const InstructionCount* ic) {
     printf("Nop_w_rd: \t%d\n", ic->Nop_w_rd);
     printf("IS_reward: \t%d\n", ic->IS_reward);
     printf("L2_reward: \t%d\n", ic->L2_reward);
+    printf("Fussion: \t%d\n", ic->Fussion);
 }
