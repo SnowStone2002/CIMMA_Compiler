@@ -1,7 +1,7 @@
 #ifndef INST_STACK_H
 #define INST_STACK_H
 
-#define STACK_LEN 8
+#define STACK_LEN 10
 #define FILENAME_SIZE 20
 
 // 定义指令堆栈结构

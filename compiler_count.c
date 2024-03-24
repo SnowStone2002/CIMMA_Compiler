@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -8,7 +9,7 @@
 #include "instruction_count.h"
 
 #define WRITE_INST 1
-#define VERIFY 1
+#define VERIFY 0
 
 int bus_width, al, pc, scr, is_depth, os_depth, freq;
 char* operation;
@@ -40,10 +41,29 @@ char item[100];
 
 InstStack inst_stack;
 
+void log_init() {
+    // Log initialization logic here
+    char filepath[256];
+    sprintf(filepath, "inst.txt");
+
+    if (access(filepath, F_OK) != -1) {
+        // file exists
+        if (remove(filepath) == 0) {
+            printf("Deleted successfully\n");
+        } else {
+            printf("Unable to delete the file\n");
+        }
+    } else {
+        // file doesn't exist
+        printf("File doesn't exist\n");
+    }
+    PushInstStack(&inst_stack, "starting compiler:\n", 0, 0);
+}
+
 void idle(){
     instructionCount.Nop++; 
     if (WRITE_INST == 1){
-        PushInstStack(&inst_stack, "nop", 0, 0);
+        PushInstStack(&inst_stack, "nop\n", 0, 0);
     }
 
 }
@@ -193,12 +213,47 @@ void compute(int i_input_channel, int computing_block) {
                         }
                         instructionCount.Cmpfgt_paos++;
                         instructionCount.Lpenalty+=acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH;
+                        if (WRITE_INST){
+                            if (VERIFY) {
+                                sprintf(item, "Lpenalty\t <os_addr_rd>\t %d\n", os_addr);
+                                PushInstStack(&inst_stack, item, 0, 0);
+                                sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
+                                PushInstStack(&inst_stack, item, 0, 0);
+                            } else {
+                                for (int i = 0; i < acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH; i++) {
+                                    sprintf(item, "Lpenalty\t\n");
+                                    PushInstStack(&inst_stack, item, 0, 0);
+                                }
+                                sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <paos>\n", j_reg, i_ls);
+                                PushInstStack(&inst_stack, item, 0, 0);
+                            }
+                        }
                     } else { // aos, os not overflow
                         if (i_at == acc_times - 1) {
                             os_virtual_depth += 1;
                             instructionCount.Cmpfgt_paos++;
+                            if (WRITE_INST){
+                                if (VERIFY) {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
+                                    PushInstStack(&inst_stack, item, 1, os_addr); // virtual -> practical?
+                                } else {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <paos>\n", j_reg, i_ls);
+                                    PushInstStack(&inst_stack, item, 1, os_addr); // virtual -> practical?
+                                }
+                            }
                         }
-                        else instructionCount.Cmpfgt_aos++;
+                        else {
+                            instructionCount.Cmpfgt_aos++;
+                            if (WRITE_INST){
+                                if (VERIFY) {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, atos_flag, os_addr);
+                                    PushInstStack(&inst_stack, item, 1, os_addr); 
+                                } else {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, i_ls, atos_flag, os_addr);
+                                    PushInstStack(&inst_stack, item, 1, os_addr); 
+                                }
+                            }
+                        }
                         instructionCount.Nop_w_rd++;
                     }
                     // Additional conditions and corresponding fprintf statements should be added here as per the Python logic
@@ -209,20 +264,56 @@ void compute(int i_input_channel, int computing_block) {
                         if (i_at == acc_times-1)    // complete one output, gen rd request, aos: paos(go through)
                             os_virtual_depth += 1;
                         instructionCount.Cmpfgt_ptos++;
+                        if (WRITE_INST){
+                            if (VERIFY) {
+                                sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
+                                PushInstStack(&inst_stack, item, 0, 0);
+                            } else {
+                                sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <ptos>\n", j_reg, i_ls);
+                                PushInstStack(&inst_stack, item, 0, 0);
+                            }
+                        }
                     }
                     else{    // tos, os not overflow
                         if (i_at == acc_times-1){ //gen rd request
                             os_virtual_depth += 1;
                             instructionCount.Cmpfgt_ptos++;
+                            if (WRITE_INST){
+                                if (VERIFY) {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
+                                    PushInstStack(&inst_stack, item, 0, 0);
+                                } else {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <ptos>\n", j_reg, i_ls);
+                                    PushInstStack(&inst_stack, item, 0, 0);
+                                }
+                            }
                         }
                         else{
                             instructionCount.Cmpfgt_tos++;
+                            if (WRITE_INST){
+                                if (VERIFY) {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, atos_flag, os_addr);
+                                    PushInstStack(&inst_stack, item, 0, 0);
+                                } else {
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, i_ls, atos_flag, os_addr);
+                                    PushInstStack(&inst_stack, item, 0, 0);
+                                }
+                            }
                         }
                     }
                 }
 
                 if (atos_flag == 0){
                     instructionCount.Cmpfgt_aor++;
+                    if (WRITE_INST){
+                        if (VERIFY) {
+                            sprintf(item, "Cmpfgt\t <ca> %d\t <%d>\t <pos> \t%d\t<input_map_position>\t%d\n", i_ls, atos_flag, j_reg, input_map_position);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        } else {
+                            sprintf(item, "Cmpfgt\t <ca> %d\t <%d>\t <pos> \t%d\n", i_ls, atos_flag, j_reg);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        }
+                    }
                 }
             }
         }
@@ -240,12 +331,42 @@ void compute(int i_input_channel, int computing_block) {
                 }
                 instructionCount.Cmpfis_paos++;
                 instructionCount.Lpenalty+=acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH;
+                if (WRITE_INST){
+                    if (VERIFY) {
+                        sprintf(item, "Lpenalty\t <os_addr_rd>\t %d\n", os_addr);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                        sprintf(item, "Cmpfis\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", i_ls, os_addr);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    } else {
+                        for (int i = 0; i < acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH; i++) {
+                            sprintf(item, "Lpenalty\t\n");
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        }
+                        sprintf(item, "Cmpfis\t <ca> %d\t <paos>\n", i_ls);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }
+                }
             } else {                             // aos, os not overflow
                 if (i_at == acc_times - 1) {
                     os_virtual_depth += 1;
                     instructionCount.Cmpfis_paos++;
+                    if (WRITE_INST){
+                        if (VERIFY) {
+                            sprintf(item, "Cmpfis\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", i_ls, os_addr);
+                            PushInstStack(&inst_stack, item, 1, os_addr);
+                        } else {
+                            sprintf(item, "Cmpfis\t <ca> %d\t <paos>\n", i_ls);
+                            PushInstStack(&inst_stack, item, 1, os_addr);
+                        }
+                    }
                 }
-                else instructionCount.Cmpfis_aos++;
+                else {
+                    instructionCount.Cmpfis_aos++;
+                    if (WRITE_INST){
+                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", is_addr, i_ls, atos_flag, os_addr);
+                        PushInstStack(&inst_stack, item, 1, os_addr);
+                    }
+                }
                 instructionCount.Nop_w_rd++;
             }
         }
@@ -255,20 +376,46 @@ void compute(int i_input_channel, int computing_block) {
                 if (i_at == acc_times-1)    // complete one output, gen rd request, aos: paos(go through)
                     os_virtual_depth += 1;
                 instructionCount.Cmpfis_ptos++;
+                if (WRITE_INST){
+                    if (VERIFY) {
+                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", is_addr, i_ls, os_addr);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    } else {
+                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <ptos>\n", is_addr, i_ls);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }
+                }
             }
             else{    // tos, os not overflow
                 if (i_at == acc_times-1){ //gen rd request
                     os_virtual_depth += 1;
                     instructionCount.Cmpfis_ptos++;
+                    if (WRITE_INST){
+                        if (VERIFY) {
+                            sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", is_addr, i_ls, os_addr);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        } else {
+                            sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <ptos>\n", is_addr, i_ls);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        }
+                    }
                 }
                 else{
                     instructionCount.Cmpfis_tos++;
+                    if (WRITE_INST){
+                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", is_addr, i_ls, atos_flag, os_addr);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }   
                 }
             }
         }
 
         if (atos_flag == 0){
             instructionCount.Cmpfis_aor++;
+            if (WRITE_INST){
+                sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <%d>\n", is_addr, i_ls, atos_flag);
+                PushInstStack(&inst_stack, item, 0, 0);
+            }
         }
     }
 }
@@ -371,7 +518,7 @@ void mvm_process(int dim1, int dim2, int dim3){ //实际上的输入参数是inp
     weight_map_length = acc_times * config.AL;
 
     input_map_length  = acc_times * config.AL;
-    input_map_channel  = input_map_channel;
+    input_map_channel = input_map_channel;
 
     // 分配ls_matrix并初始化为0
     ls_matrix = (int**)malloc(para_times * sizeof(int*));
@@ -540,7 +687,7 @@ void lhd_process(void){
 
     int i_block = 0;
     for(int i = 0; i < K_para_times; i++){
-        for (int j = 0; i < K_acc_times; j++){
+        for (int j = 0; j < K_acc_times; j++){
             if (j == K_acc_times - 1)
                 atos_matrix[i_block][0] = 1;
             else 
@@ -550,7 +697,7 @@ void lhd_process(void){
     }
 
     for(int i = 0; i < V_para_times; i++){
-        for (int j = 0; i < V_acc_times; j++){
+        for (int j = 0; j < V_acc_times; j++){
             if (j == V_acc_times - 1)
                 atos_matrix[i_block][0] = 1;
             else 
@@ -620,6 +767,8 @@ int main(int argc, char *argv[]){
     Inithwc(&acc0, config);
     // Printhwc(&acc0);
 
+    log_init();
+
     InitInstStack(&inst_stack, 10, "inst.txt");
 
     if (strcmp(operation, "mvm") == 0)
@@ -647,7 +796,7 @@ int main(int argc, char *argv[]){
     // 以追加模式打开文件，如果不存在则创建
     file = fopen("count.csv", "a");
     if (file == NULL) {
-        perror("Failed to open file");
+        perror("Failed to open csv file\n");
         return EXIT_FAILURE;
     }
 

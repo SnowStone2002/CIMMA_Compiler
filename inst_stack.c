@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include <stdlib.h> // 添加这行来包含 atoi 函数的声明
+#include <stdlib.h> // Add this line to include the declaration for the atoi function
 
 int Verify(const char *inst, int new_addr) {
     if (strstr(inst, "tos") == NULL && strstr(inst, "aos") == NULL) {
@@ -29,7 +29,7 @@ void InitInstStack(InstStack *stack, int len, const char *filename) {
     memset(stack->preq_queue, 0, sizeof(stack->preq_queue));
     memset(stack->paddr_queue, 0, sizeof(stack->paddr_queue));
     strncpy(stack->filename, filename, FILENAME_SIZE - 1);
-    stack->filename[FILENAME_SIZE - 1] = '\0'; // Ensure null-termination
+    stack->filename[FILENAME_SIZE-1] = '\0'; // Ensure null-termination
 }
 
 void PushInstStack(InstStack *stack, const char *inst, int rd_req, int rd_addr) {
@@ -52,7 +52,7 @@ void PushInstStack(InstStack *stack, const char *inst, int rd_req, int rd_addr) 
     // 打开文件追加指令
     file = fopen(stack->filename, "a");
     if (file == NULL) {
-        printf("Failed to open file %s\n", stack->filename);
+        printf("Failed to open file\n");
         return;
     }
     if (stack->inst_fifo[0][0] != '\n') {
@@ -70,13 +70,14 @@ void PushInstStack(InstStack *stack, const char *inst, int rd_req, int rd_addr) 
 
     // 更新队列
     for (int i = 0; i < stack->len - 1; i++) {
-        strcpy(stack->inst_fifo[i], stack->inst_fifo[i+1]);
+        memmove(stack->inst_fifo[i], stack->inst_fifo[i+1], sizeof(stack->inst_fifo[i]));
         stack->req_queue[i] = stack->req_queue[i+1];
         stack->addr_queue[i] = stack->addr_queue[i+1];
         stack->preq_queue[i] = stack->preq_queue[i+1];
         stack->paddr_queue[i] = stack->paddr_queue[i+1];
     }
-    strcpy(stack->inst_fifo[stack->len - 1], inst);
+    strncpy(stack->inst_fifo[stack->len - 1], inst, sizeof(stack->inst_fifo[stack->len - 1]) - 1);
+    stack->inst_fifo[stack->len - 1][sizeof(stack->inst_fifo[stack->len - 1]) - 1] = '\0'; // Ensure null-termination
     stack->req_queue[stack->len - 1] = 0;
     stack->addr_queue[stack->len - 1] = rd_addr;
     stack->preq_queue[stack->len - 1] = rd_req;
