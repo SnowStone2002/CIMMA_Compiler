@@ -23,6 +23,7 @@ typedef struct {
     int Nop;
     int Nop_w_rd;
     int IS_reward;
+    int L2_reward;
 } InstructionCount;
 
 void printInstructionCount(const InstructionCount* ic);

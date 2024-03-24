@@ -109,12 +109,12 @@ void compute(int i_input_channel, int computing_block) {
         is_addr = i_input_channel * rows_per_input_channel + i_at;
     }
 
-    if (is_addr == is_addr_record) instructionCount.IS_reward++;
-    is_addr_record = is_addr;
-
     if ((strcmp(data_stream, "wsap") == 0 || strcmp(data_stream, "wspp") == 0) && (i_input_channel >= input_channels_per_ISload)) {
         input_map_position = i_input_channel * input_map_length + i_at * config.AL + (config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth / acc0.BusWidth - 1);
         
+        if (is_addr == is_addr_record) instructionCount.IS_reward++;
+            is_addr_record = is_addr;
+
         for (j_reg = acc0.InputSRAMWidth / acc0.BusWidth - 1; j_reg >= 0; j_reg--) {
             
             if ((gt_in_map_record / (acc0.InputSRAMWidth / config.DATA_WIDTH)) == (input_map_position / (acc0.InputSRAMWidth / config.DATA_WIDTH)) && j_reg != 0) {
@@ -170,6 +170,9 @@ void compute(int i_input_channel, int computing_block) {
     }
 
     else{
+        if (is_addr == is_addr_record) instructionCount.IS_reward++;
+            is_addr_record = is_addr;
+
         if (atos_flag == 2) { //aos
             if (os_addr > os_virtual_depth) {   // aos, os overflow
                 if (i_at == acc_times-1) {
@@ -266,8 +269,8 @@ void ws_process(void) {
     }
 }
 
-void mvm_process(void){
-        weight_map_channel = dim1;
+void mvm_process(int dim1, int dim2, int dim3){ //实际上的输入参数是input和weight map的长宽
+    weight_map_channel = dim1;
     weight_map_length = dim2;
 
     input_map_length = dim2;
@@ -421,15 +424,100 @@ void mvm_process(void){
 }
 
 void ph2_process(void){
-    
+    strcpy(data_stream, "ispp");
+    for(int i=0; i<dim3; i++){
+        mvm_process(dim1,dim2/config.PIPELINE_STAGES,dim1);
+        mvm_process(dim1,dim2/config.PIPELINE_STAGES,dim1);
+    }
 }
 
 void lhd_process(void){
+    int K_map_channel = dim1;
+    int K_map_length = dim2 / dim3;
+    int K_para_times = ceil((float)K_map_channel / config.PC);
+    int K_acc_times = ceil((float)K_map_length / config.AL);
+    int K_map_block = K_para_times * K_acc_times;
+    int Sqk = K_map_block;
 
+    int V_map_channel = dim2 / dim3;
+    int V_map_length = dim1;
+    int V_para_times = ceil((float)V_map_channel / config.PC);
+    int V_acc_times = ceil((float)V_map_length / config.AL);
+    int V_map_block = V_para_times * V_acc_times;
+    int Spv = V_map_block;
+
+    int using_scr = K_map_block + V_map_block;
+
+    if (using_scr > config.SCR){
+        printf("ERROR\n");
+        return;
+    }
+
+    int Q_serial_times = (Sqk + config.PIPELINE_STAGES) / Sqk + 1;
+
+    // we are using wspp here
+    para_times = using_scr;
+    acc_times = 1;
+
+    // 分配ls_matrix
+    int ls_fg = 0;
+    ls_matrix = (int**)malloc(para_times * sizeof(int*));
+    for(int i = 0; i < para_times; ++i) {
+        ls_matrix[i] = (int*)malloc(acc_times * sizeof(int));
+        for(int j = 0; j < acc_times; ++j) {
+            ls_matrix[i][j] = ls_fg;
+        }
+    }
+
+    // 分配atos_matrix
+    atos_matrix = (int**)malloc(para_times * sizeof(int*));
+    for(int i = 0; i < para_times; ++i) {
+        atos_matrix[i] = (int*)malloc(acc_times * sizeof(int));
+        for(int j = 0; j < acc_times; ++j) {
+            atos_matrix[i][j] = 0;
+        }
+    }
+
+    int i_block = 0;
+    for(int i = 0; i < K_para_times; i++){
+        for (int j = 0; i < K_acc_times; j++){
+            if (j == K_acc_times - 1)
+                atos_matrix[i_block][0] = 1;
+            else 
+                atos_matrix[i_block][0] = 0;
+            i_block+=1;
+        }
+    }
+
+    for(int i = 0; i < V_para_times; i++){
+        for (int j = 0; i < V_acc_times; j++){
+            if (j == V_acc_times - 1)
+                atos_matrix[i_block][0] = 1;
+            else 
+                atos_matrix[i_block][0] = 0;
+            i_block+=1;
+        }
+    }
+
+    for(int i_head=0; i_head<dim3; i_head++){
+        // 我们不用更新IS，which is great
+        // 首先更新K和V矩阵到CIM中
+        wu_ls_bank(para_times, config.PC, 0);
+        for (int i = 0; i < acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW; i++) {
+            idle();
+        }
+        for(int j_count=0; j_count<dim1/config.PIPELINE_STAGES;j_count++){
+            //compute(int i_input_channel, int computing_block);
+        }
+    }
 }
 
 void mha_process(void){
-    
+    if (strcmp(data_stream, "ph2") == 0){
+        ph2_process();
+    }
+    else if (strcmp(data_stream, "lhd") == 0)
+        lhd_process();
 }
 
 int main(int argc, char *argv[]){
@@ -463,11 +551,16 @@ int main(int argc, char *argv[]){
     // Printhwc(&acc0);
 
     if (strcmp(operation, "mvm") == 0)
-        mvm_process();
+        mvm_process(dim1,dim2,dim3);
+    else if (strcmp(operation, "mha") == 0)
+            mha_process();
+        
 
     // #region output
     //***************************************** terminal output ****************************************
     printInstructionCount(&instructionCount);
+
+    printf("%s", data_stream);
 
     //******************************************* csv output *******************************************
     // 检查文件是否存在
@@ -490,22 +583,22 @@ int main(int argc, char *argv[]){
     if (needHeader) {
         fprintf(file, "bus_width,al,pc,scr,is_depth,os_depth,freq,operation,dim1,dim2,dim3,data_stream,");
         fprintf(file, "Lin,Linp,Lwt,Lwtp,Cmpfis_aor,Cmpfis_tos,Cmpfis_aos,Cmpfis_ptos,Cmpfis_paos,");
-        fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,IS_reward\n");
+        fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,IS_reward,L2_reward\n");
     }
 
     // 写入命令行参数到文件
     fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%d,%s,",
             bus_width, al, pc, scr, is_depth, os_depth, freq, operation,
-            atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), data_stream);
+            atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), argv[12]);
 
     // 写入InstructionCount到文件
-    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
+    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
             instructionCount.Lin, instructionCount.Linp, instructionCount.Lwt, instructionCount.Lwtp,
             instructionCount.Cmpfis_aor, instructionCount.Cmpfis_tos, instructionCount.Cmpfis_aos,
             instructionCount.Cmpfis_ptos, instructionCount.Cmpfis_paos,
             instructionCount.Cmpfgt_aor, instructionCount.Cmpfgt_tos, instructionCount.Cmpfgt_aos,
             instructionCount.Cmpfgt_ptos, instructionCount.Cmpfgt_paos,
-            instructionCount.Cmpfgtp, instructionCount.Lpenalty, instructionCount.Nop, instructionCount.Nop_w_rd, instructionCount.IS_reward);
+            instructionCount.Cmpfgtp, instructionCount.Lpenalty, instructionCount.Nop, instructionCount.Nop_w_rd, instructionCount.IS_reward,instructionCount.L2_reward);
 
     // 关闭文件
     fclose(file);

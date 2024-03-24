@@ -10,6 +10,8 @@ void InitConfig(Config *config, int bus_width, int al, int pc, int scr, int is_d
     config->BUS_WIDTH = bus_width;
 
     // 固定值
+    config->PIPELINE_STAGES = 8;
+
     config->DATA_WIDTH = 8;
     config->RESULT_WIDTH = 32;
 
@@ -40,6 +42,7 @@ void Inithwc(hwc *hw, Config config) {
     hw->SCR = config.SCR;
     hw->BusWidth = config.BUS_WIDTH;
     hw->freq = config.freq;
+    hw->PIPELINE_STAGES = config.PIPELINE_STAGES;
     hw->CIMsWriteWidth = config.CIMsWriteWidth;
     hw->CIMsComputeWidth = config.CIMsComputeWidth;
     hw->CIMsrows = config.CIMs_ROW;
@@ -70,6 +73,7 @@ void Check(const hwc *hw) {
 void PrintConfig(const Config *config) {
     printf("Config:\n");
     printf("AL: %d,\tPC: %d,\tSCR: %d,\tIS_DEPTH: %d,\tOS_DEPTH: %d,\tBUS_WIDTH: %d\n", config->AL, config->PC, config->SCR, config->IS_DEPTH, config->OS_DEPTH, config->BUS_WIDTH);
+    printf("PIPELINE_STAGES: %d,\n", config->PIPELINE_STAGES);
     printf("DATA_WIDTH: %d,\tRESULT_WIDTH: %d\n", config->DATA_WIDTH, config->RESULT_WIDTH);
     printf("WEIGHT_ROW: %d,\tWEIGHT_COL: %d\n", config->WEIGHT_ROW, config->WEIGHT_COL);
     printf("SIN_AL: %d,\tSIN_PC: %d\n", config->SIN_AL, config->SIN_PC);
@@ -83,6 +87,7 @@ void PrintConfig(const Config *config) {
 void Printhwc(const hwc *hw) {
     printf("hwc:\n");
     printf("AL: %d, PC: %d, SCR: %d, BusWidth: %d, freq: %d\n", hw->AL, hw->PC, hw->SCR, hw->BusWidth, hw->freq);
+    printf("PIPELINE_STAGES: %d,\n", hw->PIPELINE_STAGES);
     printf("CIMsWriteWidth: %d, CIMsComputeWidth: %d, CIMsrows: %d\n", hw->CIMsWriteWidth, hw->CIMsComputeWidth, hw->CIMsrows);
     printf("MACRO_ROW: %d, MACRO_COL: %d, CIMsParaChannel: %d, LocalSwitchrows: %d\n", hw->MACRO_ROW, hw->MACRO_COL, hw->CIMsParaChannel, hw->LocalSwitchrows);
     printf("InputSRAMWidth: %d, InputSRAMDepth: %d, OutputSRAMWidth: %d, OutputSRAMDepth: %d\n", hw->InputSRAMWidth, hw->InputSRAMDepth, hw->OutputSRAMWidth, hw->OutputSRAMDepth);

@@ -7,6 +7,7 @@ typedef struct {
     int DATA_WIDTH, RESULT_WIDTH;
     int WEIGHT_ROW, WEIGHT_COL;
     int SIN_AL, SIN_PC;
+    int PIPELINE_STAGES;
     int MACRO_ROW, MACRO_COL;
     int CIM_ROW, CIM_COL;
     int CIMs_ROW, CIMs_COL;
@@ -16,6 +17,7 @@ typedef struct {
 // 定义hwc结构体
 typedef struct {
     int AL, PC, SCR, BusWidth, freq;
+    int PIPELINE_STAGES;
     int CIMsWriteWidth, CIMsComputeWidth, CIMsrows;
     int MACRO_ROW, MACRO_COL, CIMsParaChannel, LocalSwitchrows;
     int InputSRAMWidth, InputSRAMDepth, OutputSRAMWidth, OutputSRAMDepth;
