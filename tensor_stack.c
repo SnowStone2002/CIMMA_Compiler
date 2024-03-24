@@ -22,7 +22,7 @@ void PushTensorStack(TensorStack* ts, int new_element) {
 }
 
 int PopTensorStack(TensorStack* ts) {
-    if (is_emptyTensorStack(ts)) {
+    if (Is_emptyTensorStack(ts)) {
         return -1; // 如果栈为空，则返回-1，代表错误
     }
     int popped_element = ts->stack[ts->size - 1];

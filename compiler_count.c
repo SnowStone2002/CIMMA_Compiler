@@ -4,7 +4,11 @@
 #include <string.h>
 #include "hw_config.h"
 #include "inst_stack.h"
+#include "tensor_stack.h"
 #include "instruction_count.h"
+
+#define WRITE_INST 1
+#define VERIFY 1
 
 int bus_width, al, pc, scr, is_depth, os_depth, freq;
 char* operation;
@@ -32,8 +36,16 @@ int* weight_update_ls;
 int** ls_matrix;
 int** atos_matrix;
 
+char item[100];
+
+InstStack inst_stack;
+
 void idle(){
     instructionCount.Nop++; 
+    if (WRITE_INST == 1){
+        PushInstStack(&inst_stack, "nop", 0, 0);
+    }
+
 }
 
 int load_is_block(int num_rows, int input_map_position) {
@@ -42,8 +54,26 @@ int load_is_block(int num_rows, int input_map_position) {
         for (int j_reg = acc0.InputSRAMWidth / acc0.BusWidth - 1; j_reg >= 0; --j_reg) {
             if (j_reg != 0) {
                 instructionCount.Linp++;
+                if (WRITE_INST){
+                    if (VERIFY) {
+                        sprintf(item, "Linp\t <pos> %d\t <is_addr> %d\t <input_map> %d\n", j_reg, i_rows, input_map_position);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    } else {
+                        sprintf(item, "Linp\t <pos> %d\n", j_reg);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }
+                }
             } else {
                 instructionCount.Lin++;
+                if (WRITE_INST){
+                    if (VERIFY) {
+                        sprintf(item, "Lin\t\t <pos> %d\t <is_addr> %d\t <input_map> %d\n", j_reg, i_rows, input_map_position);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    } else {
+                        sprintf(item, "Lin\t\t <pos> %d\t <is_addr> %d\n", j_reg, i_rows);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }
+                }
             }
             input_map_position -= (config.BUS_WIDTH / config.DATA_WIDTH);
             // 注意: 每个channel的最后一行可能需要特殊处理
@@ -76,8 +106,26 @@ int wu_ls_bank(int num_ls, int num_channel, int i_block) {
 
                 if (pause_reg == 0) {
                     instructionCount.Lwt++;
+                    if (WRITE_INST) {
+                        if (VERIFY) {
+                            sprintf(item, "Lwt\t\t <pos> %d\t <cm_addr> %d\t <weight_map> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls, weight_map_position);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        } else {
+                            sprintf(item, "Lwt\t\t <pos> %d\t <cm_addr> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        }
+                    }
                 } else {
                     instructionCount.Lwtp++;
+                    if (WRITE_INST) {
+                        if (VERIFY) {
+                            sprintf(item, "Lwtp\t <pos> %d\t <cm_addr> %d\t <weight_map> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls, weight_map_position);
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        } else {
+                            sprintf(item, "Lwtp\t <pos> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth));
+                            PushInstStack(&inst_stack, item, 0, 0);
+                        }
+                    }
                 }
             }
         }
@@ -125,6 +173,17 @@ void compute(int i_input_channel, int computing_block) {
 
             if (j_reg != 0) {   // Cmpfgtp
                 instructionCount.Cmpfgtp++;
+                if (VERIFY) {
+                    if (WRITE_INST) {
+                        sprintf(item, "Cmpfgtp\t <pos> \t%d\t<input_map_position>\t%d\n", j_reg, input_map_position);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }
+                } else {
+                    if (WRITE_INST) {
+                        sprintf(item, "Cmpfgtp\t <pos> \t%d\n", j_reg);
+                        PushInstStack(&inst_stack, item, 0, 0);
+                    }
+                }
                 input_map_position -= config.BUS_WIDTH / config.DATA_WIDTH;
             } else {            // Cmpfgt
                 if (atos_flag == 2) {
@@ -560,6 +619,8 @@ int main(int argc, char *argv[]){
 
     Inithwc(&acc0, config);
     // Printhwc(&acc0);
+
+    InitInstStack(&inst_stack, 10, "inst.txt");
 
     if (strcmp(operation, "mvm") == 0)
         mvm_process(dim1,dim2,dim3);

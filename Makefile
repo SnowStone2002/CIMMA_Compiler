@@ -5,10 +5,10 @@ CC=gcc
 CFLAGS=-fdiagnostics-color=always -g
 
 # Source files
-SOURCES=compiler_count.c hw_config.c instruction_count.c inst_stack.c
+SOURCES=compiler_count.c hw_config.c instruction_count.c inst_stack.c tensor_stack.c
 
-# # Object files
-# OBJECTS=$(SOURCES:.c=.o)
+# Object files
+OBJECTS=$(SOURCES:.c=.o)
 
 # Target executable
 TARGET=compiler_count
