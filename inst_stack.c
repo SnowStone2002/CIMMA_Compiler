@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include <stdlib.h> // Add this line to include the declaration for the atoi function
 
 int Verify(const char *inst, int new_addr) {
@@ -12,7 +13,11 @@ int Verify(const char *inst, int new_addr) {
     } else {
         char *ptr = strstr(inst, "<os_addr_wt>");
         if (ptr != NULL) {
-            int os_addr = atoi(ptr + strlen("<os_addr_wt>"));
+            ptr += strlen("<os_addr_wt>");
+            while (*ptr != '\0' && !isdigit(*ptr)) {
+                ptr++;
+            }
+            int os_addr = atoi(ptr);
             if ((os_addr + new_addr) % 2 == 1) {
                 return 1; // True
             }

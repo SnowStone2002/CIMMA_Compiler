@@ -49,13 +49,14 @@ void log_init() {
     if (access(filepath, F_OK) != -1) {
         // file exists
         if (remove(filepath) == 0) {
-            printf("Deleted successfully\n");
+            //printf("Deleted successfully\n");
         } else {
-            printf("Unable to delete the file\n");
+            //printf("Unable to delete the file\n");
         }
     } else {
         // file doesn't exist
-        printf("File doesn't exist\n");
+        // printf("File doesn't exist\n");
+        fopen(filepath, "w");
     }
     PushInstStack(&inst_stack, "starting compiler:\n", 0, 0);
 }
@@ -186,7 +187,8 @@ void compute(int i_input_channel, int computing_block) {
 
         for (j_reg = acc0.InputSRAMWidth / acc0.BusWidth - 1; j_reg >= 0; j_reg--) {
             
-            if ((gt_in_map_record / (acc0.InputSRAMWidth / config.DATA_WIDTH)) == (input_map_position / (acc0.InputSRAMWidth / config.DATA_WIDTH)) && j_reg != 0) {
+            if ((gt_in_map_record / (acc0.InputSRAMWidth / config.DATA_WIDTH)) == (input_map_position / (acc0.InputSRAMWidth / config.DATA_WIDTH)) && (i_ls != 0) && j_reg != 0) {
+                // 当前位置跟上次算的位置一样 && 不是第一个 && 不是最后一个
                 input_map_position -= config.BUS_WIDTH / config.DATA_WIDTH;
                 continue;
             }
@@ -246,10 +248,10 @@ void compute(int i_input_channel, int computing_block) {
                             instructionCount.Cmpfgt_aos++;
                             if (WRITE_INST){
                                 if (VERIFY) {
-                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, atos_flag, os_addr);
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <aos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
                                     PushInstStack(&inst_stack, item, 1, os_addr); 
                                 } else {
-                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, i_ls, atos_flag, os_addr);
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <aos>\t <os_addr_wt> %d\n", j_reg, i_ls, os_addr);
                                     PushInstStack(&inst_stack, item, 1, os_addr); 
                                 }
                             }
@@ -295,7 +297,7 @@ void compute(int i_input_channel, int computing_block) {
                                     sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, atos_flag, os_addr);
                                     PushInstStack(&inst_stack, item, 0, 0);
                                 } else {
-                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, i_ls, atos_flag, os_addr);
+                                    sprintf(item, "Cmpfgt\t <pos> \t%d\t <ca> %d\t <tos>\t <os_addr_wt> %d\n", j_reg, i_ls, os_addr);
                                     PushInstStack(&inst_stack, item, 0, 0);
                                 }
                             }
@@ -307,10 +309,10 @@ void compute(int i_input_channel, int computing_block) {
                     instructionCount.Cmpfgt_aor++;
                     if (WRITE_INST){
                         if (VERIFY) {
-                            sprintf(item, "Cmpfgt\t <ca> %d\t <%d>\t <pos> \t%d\t<input_map_position>\t%d\n", i_ls, atos_flag, j_reg, input_map_position);
+                            sprintf(item, "Cmpfgt\t <ca> %d\t <aor>\t <pos> \t%d\t<input_map_position>\t%d\n", i_ls, j_reg, input_map_position);
                             PushInstStack(&inst_stack, item, 0, 0);
                         } else {
-                            sprintf(item, "Cmpfgt\t <ca> %d\t <%d>\t <pos> \t%d\n", i_ls, atos_flag, j_reg);
+                            sprintf(item, "Cmpfgt\t <ca> %d\t <aor>\t <pos> \t%d\n", i_ls, j_reg);
                             PushInstStack(&inst_stack, item, 0, 0);
                         }
                     }
@@ -363,7 +365,7 @@ void compute(int i_input_channel, int computing_block) {
                 else {
                     instructionCount.Cmpfis_aos++;
                     if (WRITE_INST){
-                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", is_addr, i_ls, atos_flag, os_addr);
+                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <aos>\t <os_addr_wt> %d\n", is_addr, i_ls, os_addr);
                         PushInstStack(&inst_stack, item, 1, os_addr);
                     }
                 }
@@ -403,7 +405,7 @@ void compute(int i_input_channel, int computing_block) {
                 else{
                     instructionCount.Cmpfis_tos++;
                     if (WRITE_INST){
-                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", is_addr, i_ls, atos_flag, os_addr);
+                        sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <tos>\t <os_addr_wt> %d\n", is_addr, i_ls, os_addr);
                         PushInstStack(&inst_stack, item, 0, 0);
                     }   
                 }
@@ -413,7 +415,7 @@ void compute(int i_input_channel, int computing_block) {
         if (atos_flag == 0){
             instructionCount.Cmpfis_aor++;
             if (WRITE_INST){
-                sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <%d>\n", is_addr, i_ls, atos_flag);
+                sprintf(item, "Cmpfis\t <is_addr> %d\t <ca> %d\t <aor>\n", is_addr, i_ls);
                 PushInstStack(&inst_stack, item, 0, 0);
             }
         }
@@ -488,15 +490,26 @@ void mvm_process(int dim1, int dim2, int dim3){ //实际上的输入参数是inp
     input_channels_per_ISload = acc0.InputSRAMDepth / rows_per_input_channel;
     if (input_channels_per_ISload > input_map_channel)
         input_channels_per_ISload = input_map_channel;
-    IS_load_times_per_inst = (int)ceil((float)input_map_channel / input_channels_per_ISload);
+    if (input_channels_per_ISload == 0)
+        IS_load_times_per_inst = 0;
+    else{
+        IS_load_times_per_inst = (int)ceil((float)input_map_channel / input_channels_per_ISload);
+        IS_load_rows = (int*)malloc(IS_load_times_per_inst * sizeof(int));
+        for (int i = 0; i < IS_load_times_per_inst; ++i) {
+            IS_load_rows[i] = input_channels_per_ISload * rows_per_input_channel;
+        }
+        if (input_map_channel % input_channels_per_ISload != 0) {
+            IS_load_rows[IS_load_times_per_inst - 1] = (input_map_channel % input_channels_per_ISload) * rows_per_input_channel;
+        }
+    }
 
-    IS_load_rows = (int*)malloc(IS_load_times_per_inst * sizeof(int));
-    for (int i = 0; i < IS_load_times_per_inst; ++i) {
-        IS_load_rows[i] = input_channels_per_ISload * rows_per_input_channel;
-    }
-    if (input_map_channel % input_channels_per_ISload != 0) {
-        IS_load_rows[IS_load_times_per_inst - 1] = (input_map_channel % input_channels_per_ISload) * rows_per_input_channel;
-    }
+    // IS_load_rows = (int*)malloc(IS_load_times_per_inst * sizeof(int));
+    // for (int i = 0; i < IS_load_times_per_inst; ++i) {
+    //     IS_load_rows[i] = input_channels_per_ISload * rows_per_input_channel;
+    // }
+    // if (input_map_channel % input_channels_per_ISload != 0) {
+    //     IS_load_rows[IS_load_times_per_inst - 1] = (input_map_channel % input_channels_per_ISload) * rows_per_input_channel;
+    // }
 
     weight_block_row = (int)ceil((float)weight_map_channel / config.PC);
     weight_block_col = (int)ceil((float)weight_map_length / config.AL);
@@ -574,49 +587,49 @@ void mvm_process(int dim1, int dim2, int dim3){ //实际上的输入参数是inp
         }
     }
 
-    // // 打印基本计算结果
-    // printf("input_data_per_row = %d\n", input_data_per_row);
-    // printf("rows_per_input_channel = %d\n", rows_per_input_channel);
-    // printf("input_channels_per_ISload = %d\n", input_channels_per_ISload);
-    // printf("IS_load_times_per_inst = %d\n", IS_load_times_per_inst);
+    // 打印基本计算结果
+    printf("input_data_per_row = %d\n", input_data_per_row);
+    printf("rows_per_input_channel = %d\n", rows_per_input_channel);
+    printf("input_channels_per_ISload = %d\n", input_channels_per_ISload);
+    printf("IS_load_times_per_inst = %d\n", IS_load_times_per_inst);
 
-    // // 打印IS_load_rows数组
-    // printf("IS_load_rows:\n");
-    // for (int i = 0; i < IS_load_times_per_inst; ++i) {
-    //     printf("%d ", IS_load_rows[i]);
-    // }
-    // printf("\n");
+    // 打印IS_load_rows数组
+    printf("IS_load_rows:\n");
+    for (int i = 0; i < IS_load_times_per_inst; ++i) {
+        printf("%d ", IS_load_rows[i]);
+    }
+    printf("\n");
 
-    // // 打印权重更新信息
-    // printf("weight_block_row = %d\n", weight_block_row);
-    // printf("weight_block_col = %d\n", weight_block_col);
-    // printf("weight_block_num = %d\n", weight_block_num);
-    // printf("weight_update_times_per_inst = %d\n", weight_update_times_per_inst);
+    // 打印权重更新信息
+    printf("weight_block_row = %d\n", weight_block_row);
+    printf("weight_block_col = %d\n", weight_block_col);
+    printf("weight_block_num = %d\n", weight_block_num);
+    printf("weight_update_times_per_inst = %d\n", weight_update_times_per_inst);
 
-    // // 打印weight_update_ls数组
-    // printf("weight_update_ls:\n");
-    // for (int i = 0; i < weight_update_times_per_inst; ++i) {
-    //     printf("%d ", weight_update_ls[i]);
-    // }
-    // printf("\n");
+    // 打印weight_update_ls数组
+    printf("weight_update_ls:\n");
+    for (int i = 0; i < weight_update_times_per_inst; ++i) {
+        printf("%d ", weight_update_ls[i]);
+    }
+    printf("\n");
 
-    // // 打印ls_matrix
-    // printf("ls_matrix:\n");
-    // for (int i = 0; i < para_times; ++i) {
-    //     for (int j = 0; j < acc_times; ++j) {
-    //         printf("%d ", ls_matrix[i][j]);
-    //     }
-    //     printf("\n");
-    // }
+    // 打印ls_matrix
+    printf("ls_matrix:\n");
+    for (int i = 0; i < para_times; ++i) {
+        for (int j = 0; j < acc_times; ++j) {
+            printf("%d ", ls_matrix[i][j]);
+        }
+        printf("\n");
+    }
 
-    // // 打印atos_matrix
-    // printf("atos_matrix:\n");
-    // for (int i = 0; i < para_times; ++i) {
-    //     for (int j = 0; j < acc_times; ++j) {
-    //         printf("%d ", atos_matrix[i][j]);
-    //     }
-    //     printf("\n");
-    // }
+    // 打印atos_matrix
+    printf("atos_matrix:\n");
+    for (int i = 0; i < para_times; ++i) {
+        for (int j = 0; j < acc_times; ++j) {
+            printf("%d ", atos_matrix[i][j]);
+        }
+        printf("\n");
+    }
 
 
     gt_in_map_record = 0;
@@ -775,7 +788,10 @@ int main(int argc, char *argv[]){
         mvm_process(dim1,dim2,dim3);
     else if (strcmp(operation, "mha") == 0)
             mha_process();
-        
+    
+    for (int i = 0; i < inst_stack.len; i++){
+        PushInstStack(&inst_stack,"",0,0);
+    }
 
     // #region output
     //***************************************** terminal output ****************************************
