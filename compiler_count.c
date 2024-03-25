@@ -717,11 +717,11 @@ void mvm_process(int a, int b, int c){ //实际上的输入参数是input和weig
 }
 
 void ph2_process(void){
-    strcpy(data_stream, "ispp");
+    strcpy(data_stream, "wspp");
     for(int i=0; i<dim3; i++){
-        mvm_process(dim1,dim2/config.PIPELINE_STAGES,dim1);
-        mvm_process(dim2/config.PIPELINE_STAGES,dim1,dim1);
-    }
+        mvm_process(dim1,dim2/dim3,dim1);
+        mvm_process(dim2/dim3,dim1,dim1);
+    }//    e.g.    "mha", N, 768, 12
 }
 
 void lhd_process(void){
