@@ -155,7 +155,7 @@ int wu_ls_bank(int num_ls, int num_channel, int i_block) {
     return i_block;
 }
 
-void compute(int i_input_channel, int computing_block) {
+void compute(int i_input_channel, int computing_block,int fussion_flag) {
     int i_ls = computing_block % config.SCR;
     int i_pt, i_at, is_addr, os_addr, input_map_position, j_reg;
     
@@ -209,7 +209,7 @@ void compute(int i_input_channel, int computing_block) {
                 input_map_position -= config.BUS_WIDTH / config.DATA_WIDTH;
             } else {            // Cmpfgt
                 if (atos_flag == 2) {
-                    if (os_addr > os_virtual_depth) { // aos, os overflow
+                    if (os_addr >= os_virtual_depth) { // aos, os overflow
                         if (i_at == acc_times - 1) {
                             os_virtual_depth += 1;
                         }
@@ -234,6 +234,19 @@ void compute(int i_input_channel, int computing_block) {
                         if (i_at == acc_times - 1) {
                             os_virtual_depth += 1;
                             instructionCount.Cmpfgt_paos++;
+                            if (fussion_flag){
+                                instructionCount.Fussion++;
+                                if (WRITE_INST){
+                                    if (VERIFY) {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", i_input_channel, i_ls, os_addr);
+                                        PushInstStack(&inst_stack, item, 1, os_addr); // virtual -> practical?
+                                    } else {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <paos>\n", i_input_channel, i_ls);
+                                        PushInstStack(&inst_stack, item, 1, os_addr); // virtual -> practical?
+                                    }
+                                }
+                                return;
+                            }
                             if (WRITE_INST){
                                 if (VERIFY) {
                                     sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
@@ -246,6 +259,19 @@ void compute(int i_input_channel, int computing_block) {
                         }
                         else {
                             instructionCount.Cmpfgt_aos++;
+                            if (fussion_flag){
+                                instructionCount.Fussion++;
+                                if (WRITE_INST){
+                                    if (VERIFY) {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <aos>\t <os_addr_wt> %d\n", i_input_channel, i_ls, os_addr);
+                                        PushInstStack(&inst_stack, item, 1, os_addr); // virtual -> practical?
+                                    } else {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <aos>\n", i_input_channel, i_ls);
+                                        PushInstStack(&inst_stack, item, 1, os_addr); // virtual -> practical?
+                                    }
+                                }
+                                return;
+                            }
                             if (WRITE_INST){
                                 if (VERIFY) {
                                     sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <aos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
@@ -262,10 +288,23 @@ void compute(int i_input_channel, int computing_block) {
                 }
                 
                 if (atos_flag == 1){
-                    if (os_addr > os_virtual_depth){    // tos, os overflow
+                    if (os_addr >= os_virtual_depth){    // tos, os overflow
                         if (i_at == acc_times-1)    // complete one output, gen rd request, aos: paos(go through)
                             os_virtual_depth += 1;
                         instructionCount.Cmpfgt_ptos++;
+                        if (fussion_flag){
+                            instructionCount.Fussion++;
+                            if (WRITE_INST){
+                                if (VERIFY) {
+                                    sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", i_input_channel, i_ls, os_addr);
+                                    PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                                } else {
+                                    sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <ptos>\n", i_input_channel, i_ls);
+                                    PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                                }
+                            }
+                            return;
+                        }
                         if (WRITE_INST){
                             if (VERIFY) {
                                 sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
@@ -280,6 +319,19 @@ void compute(int i_input_channel, int computing_block) {
                         if (i_at == acc_times-1){ //gen rd request
                             os_virtual_depth += 1;
                             instructionCount.Cmpfgt_ptos++;
+                            if (fussion_flag){
+                                instructionCount.Fussion++;
+                                if (WRITE_INST){
+                                    if (VERIFY) {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", i_input_channel, i_ls, os_addr);
+                                        PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                                    } else {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <ptos>\n", i_input_channel, i_ls);
+                                        PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                                    }
+                                }
+                                return;
+                            }
                             if (WRITE_INST){
                                 if (VERIFY) {
                                     sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <ptos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
@@ -292,6 +344,19 @@ void compute(int i_input_channel, int computing_block) {
                         }
                         else{
                             instructionCount.Cmpfgt_tos++;
+                            if (fussion_flag){
+                                instructionCount.Fussion++;
+                                if (WRITE_INST){
+                                    if (VERIFY) {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <tos>\t <os_addr_wt> %d\n", i_input_channel, i_ls, os_addr);
+                                        PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                                    } else {
+                                        sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <tos>\n", i_input_channel, i_ls);
+                                        PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                                    }
+                                }
+                                return;
+                            }
                             if (WRITE_INST){
                                 if (VERIFY) {
                                     sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <%d>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, atos_flag, os_addr);
@@ -307,12 +372,20 @@ void compute(int i_input_channel, int computing_block) {
 
                 if (atos_flag == 0){
                     instructionCount.Cmpfgt_aor++;
+                    if (fussion_flag){
+                        instructionCount.Fussion++;
+                        if (WRITE_INST){
+                            sprintf(item, "Cmpfgt\t <fus> \t%d\t <ca> %d\t <aor>\n", i_input_channel, i_ls);
+                            PushInstStack(&inst_stack, item, 0, 0); // virtual -> practical?
+                        }
+                        return;
+                    }
                     if (WRITE_INST){
                         if (VERIFY) {
-                            sprintf(item, "Cmpfgt\t <ca> %d\t <aor>\t <pos> \t%d\t<input_map_position>\t%d\n", i_ls, j_reg, input_map_position);
+                            sprintf(item, "Cmpfgt\t <pos> \t%d\t<ca> %d\t <aor>\t <input_map_position>\t%d\n", j_reg, i_ls, input_map_position);
                             PushInstStack(&inst_stack, item, 0, 0);
                         } else {
-                            sprintf(item, "Cmpfgt\t <ca> %d\t <aor>\t <pos> \t%d\n", i_ls, j_reg);
+                            sprintf(item, "Cmpfgt\t <pos> \t%d\t<ca> %d\t <aor>\n", j_reg, i_ls);
                             PushInstStack(&inst_stack, item, 0, 0);
                         }
                     }
@@ -327,7 +400,7 @@ void compute(int i_input_channel, int computing_block) {
             is_addr_record = is_addr;
 
         if (atos_flag == 2) { //aos
-            if (os_addr > os_virtual_depth) {   // aos, os overflow
+            if (os_addr >= os_virtual_depth) {   // aos, os overflow
                 if (i_at == acc_times-1) {
                     os_virtual_depth += 1;
                 }
@@ -374,7 +447,7 @@ void compute(int i_input_channel, int computing_block) {
         }
 
         if (atos_flag == 1){
-            if (os_addr > os_virtual_depth){    // tos, os overflow
+            if (os_addr >= os_virtual_depth){    // tos, os overflow
                 if (i_at == acc_times-1)    // complete one output, gen rd request, aos: paos(go through)
                     os_virtual_depth += 1;
                 instructionCount.Cmpfis_ptos++;
@@ -445,7 +518,7 @@ void is_process(void) {
 
                 for (int j_ls = 0; j_ls < weight_update_ls[j_weight_load]; j_ls++) {
                     int j_compute_block = i_block + j_ls;
-                    compute(i_input_channel, j_compute_block);
+                    compute(i_input_channel, j_compute_block, 0);
                 }
             }
 
@@ -470,7 +543,7 @@ void ws_process(void) {
         for (int i_input_channel = 0; i_input_channel < input_map_channel; i_input_channel++) {
             for (int j_ls = 0; j_ls < weight_update_ls[i_weight_update]; j_ls++) {
                 int j_compute_block = i_block + j_ls;
-                compute(i_input_channel, j_compute_block);
+                compute(i_input_channel, j_compute_block, 0);
             }
         }
 
@@ -478,12 +551,12 @@ void ws_process(void) {
     }
 }
 
-void mvm_process(int dim1, int dim2, int dim3){ //实际上的输入参数是input和weight map的长宽
-    weight_map_channel = dim1;
-    weight_map_length = dim2;
+void mvm_process(int a, int b, int c){ //实际上的输入参数是input和weight map的长宽
+    weight_map_channel = a;
+    weight_map_length = b;
 
-    input_map_length = dim2;
-    input_map_channel = dim3;
+    input_map_length = b;
+    input_map_channel = c;
 
     input_data_per_row = floor(acc0.InputSRAMWidth / config.DATA_WIDTH);
     rows_per_input_channel = (int)ceil((float)input_map_length / input_data_per_row);
@@ -675,9 +748,30 @@ void lhd_process(void){
 
     int Q_serial_times = (Sqk + config.PIPELINE_STAGES) / Sqk + 1;
 
+    printf("K_map_channel: %d\n", K_map_channel);
+    printf("K_map_length: %d\n", K_map_length);
+    printf("K_para_times: %d\n", K_para_times);
+    printf("K_acc_times: %d\n", K_acc_times);
+    printf("K_map_block: %d\n", K_map_block);
+    printf("Sqk: %d\n", Sqk);
+
+    printf("V_map_channel: %d\n", V_map_channel);
+    printf("V_map_length: %d\n", V_map_length);
+    printf("V_para_times: %d\n", V_para_times);
+    printf("V_acc_times: %d\n", V_acc_times);
+    printf("V_map_block: %d\n", V_map_block);
+    printf("Spv: %d\n", Spv);
+
+    printf("using_scr: %d\n", using_scr);
+    printf("Q_serial_times: %d\n", Q_serial_times);
+
     // we are using wspp here
+    weight_block_row = using_scr;
     para_times = using_scr;
     acc_times = 1;
+
+    input_channels_per_ISload = 0;
+    IS_load_times_per_inst = 0;
 
     // 分配ls_matrix
     int ls_fg = 0;
@@ -727,14 +821,17 @@ void lhd_process(void){
             idle();
         }
         for (int j = 0; j < dim1 / Sqk; j++){
+            strcpy(data_stream, "wspp");
             for (int k = 0; k < Q_serial_times; k++){
                 for(int m_count=0; m_count<Sqk; m_count++){
-                    compute(j * Sqk + k, m_count);
+                    compute(j * Sqk + k, m_count, 0);
                 }
             }
+            strcpy(data_stream, "wspp");
             for (int k = 0; k < Q_serial_times; k++){
                 for(int m_count=0; m_count<Spv; m_count++){
-                    //compute(?, m_count);
+                    compute(k, m_count + Sqk, 1);
+                    //compute(int i_input_channel, int computing_block,int fussion_flag = 0, int fussion_count = 0)
                 }
             }
         }
