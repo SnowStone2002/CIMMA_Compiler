@@ -847,15 +847,19 @@ void lhd_process(void){
             idle();
         }
         for (int j = 0; j < ceil((float)dim1 / Q_serial_times); j++){
+            int current_serial_times = Q_serial_times;
+            if (j == ceil((float)dim1 / Q_serial_times) - 1) 
+                current_serial_times = min(dim1 - j * Q_serial_times, Q_serial_times);
+
             strcpy(data_stream, "wspp");
-            for (int k = 0; k < min(dim1 % Q_serial_times, Q_serial_times); k++){
+            for (int k = 0; k < current_serial_times; k++){
                 for(int m_count=0; m_count<Sqk; m_count++){
                     compute(j * Q_serial_times + k, m_count, 0);
                     //compute(int i_input_channel, int computing_block,int fussion_flag = 0)
                 }
             }
             strcpy(data_stream, "wspp");
-            for (int k = 0; k < min(dim1 % Q_serial_times, Q_serial_times); k++){
+            for (int k = 0; k < current_serial_times; k++){
                 for(int m_count=0; m_count<Spv; m_count++){
                     compute(k, m_count + Sqk, 1);
                     //compute(int fussion_count, int computing_block,int fussion_flag = 0)
