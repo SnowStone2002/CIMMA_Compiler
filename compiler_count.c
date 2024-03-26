@@ -26,7 +26,8 @@ int input_map_length, input_map_channel;
 int weight_block_col, weight_block_row, weight_block_num, weight_update_times_per_inst;
 int input_data_per_row, rows_per_input_channel, input_channels_per_ISload, IS_load_times_per_inst;
 int para_times, acc_times;
-int is_addr_record = 114514; //随便给了个不可能的初值
+int is_addr_record = 114514; //随便给了个不可能的初值input_map_position
+int input_map_position_record = 114514;
 
 int gt_in_map_record;
 int os_virtual_depth;
@@ -169,10 +170,9 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
     }
     
     int atos_flag = atos_matrix[i_pt][i_at];
-    // printf("i_pt= %d\n",i_pt);
-    // printf("i_at= %d\n",i_at);
-    // printf("atos_flag= %d\n",atos_flag);
+
     os_addr = i_input_channel * para_times + i_pt;
+    // if (fussion_flag) os_addr = i_input_channel * Spv + (i_pt - Sqk) % Spv + ;
 
     if (strcmp(data_stream, "isap") == 0 || strcmp(data_stream, "ispp") == 0) {
         is_addr = (i_input_channel % input_channels_per_ISload) * rows_per_input_channel + i_at;
@@ -183,8 +183,8 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
     if ((strcmp(data_stream, "wsap") == 0 || strcmp(data_stream, "wspp") == 0) && (i_input_channel >= input_channels_per_ISload)) {
         input_map_position = i_input_channel * input_map_length + i_at * config.AL + (config.BUS_WIDTH / config.DATA_WIDTH) * (acc0.InputSRAMWidth / acc0.BusWidth - 1);
         
-        if (is_addr == is_addr_record) instructionCount.IS_reward++;
-            is_addr_record = is_addr;
+        // if (is_addr == is_addr_record && !fussion_flag) instructionCount.L2_reward++;
+        // is_addr_record = is_addr;
 
         for (j_reg = acc0.InputSRAMWidth / acc0.BusWidth - 1; j_reg >= 0; j_reg--) {
             
@@ -207,8 +207,11 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
                         PushInstStack(&inst_stack, item, 0, 0);
                     }
                 }
+                input_map_position_record = input_map_position;///???
                 input_map_position -= config.BUS_WIDTH / config.DATA_WIDTH;
             } else {            // Cmpfgt
+                if (input_map_position == input_map_position_record && !fussion_flag) instructionCount.L2_reward++;
+                input_map_position_record = input_map_position;///???
                 if (atos_flag == 2) {
                     if (os_addr >= os_virtual_depth) { // aos, os overflow
                         if (i_at == acc_times - 1) {
@@ -747,7 +750,7 @@ void lhd_process(void){
         return;
     }
 
-    int Q_serial_times = (Sqk + config.PIPELINE_STAGES) / Sqk + 1;
+    int Q_serial_times = ceil((float)(Sqk + config.PIPELINE_STAGES) / Sqk);
 
     printf("K_map_channel: %d\n", K_map_channel);
     printf("K_map_length: %d\n", K_map_length);
@@ -781,6 +784,7 @@ void lhd_process(void){
         ls_matrix[i] = (int*)malloc(acc_times * sizeof(int));
         for(int j = 0; j < acc_times; ++j) {
             ls_matrix[i][j] = ls_fg;
+            ls_fg++;
         }
     }
 
@@ -814,6 +818,24 @@ void lhd_process(void){
         }
     }
 
+    // 打印 ls_matrix
+    printf("ls_matrix:\n");
+    for(int i = 0; i < para_times; ++i) {
+        for(int j = 0; j < acc_times; ++j) {
+            printf("%d ", ls_matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    // 打印 atos_matrix
+    printf("atos_matrix:\n");
+    for(int i = 0; i < para_times; ++i) {
+        for(int j = 0; j < acc_times; ++j) {
+            printf("%d ", atos_matrix[i][j]);
+        }
+        printf("\n");
+    }
+
     for(int i_head=0; i_head<dim3; i_head++){
         // 我们不用更新IS，which is great
         // 首先更新K和V矩阵到CIM中
@@ -821,18 +843,19 @@ void lhd_process(void){
         for (int i = 0; i < acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW; i++) {
             idle();
         }
-        for (int j = 0; j < dim1 / Sqk; j++){
+        for (int j = 0; j < ceil(dim1 / Q_serial_times); j++){
             strcpy(data_stream, "wspp");
             for (int k = 0; k < Q_serial_times; k++){
                 for(int m_count=0; m_count<Sqk; m_count++){
-                    compute(j * Sqk + k, m_count, 0);
+                    compute(j * Q_serial_times + k, m_count, 0);
+                    //compute(int i_input_channel, int computing_block,int fussion_flag = 0)
                 }
             }
             strcpy(data_stream, "wspp");
             for (int k = 0; k < Q_serial_times; k++){
                 for(int m_count=0; m_count<Spv; m_count++){
                     compute(k, m_count + Sqk, 1);
-                    //compute(int i_input_channel, int computing_block,int fussion_flag = 0, int fussion_count = 0)
+                    //compute(int fussion_count, int computing_block,int fussion_flag = 0)
                 }
             }
         }
