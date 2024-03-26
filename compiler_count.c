@@ -57,6 +57,7 @@ void log_init() {
         // file doesn't exist
         // printf("File doesn't exist\n");
         fopen(filepath, "w");
+        fclose(filepath);
     }
     PushInstStack(&inst_stack, "starting compiler:\n", 0, 0);
 }
@@ -877,9 +878,9 @@ int main(int argc, char *argv[]){
     Inithwc(&acc0, config);
     // Printhwc(&acc0);
 
-    log_init();
-
     InitInstStack(&inst_stack, 10, "inst.txt");
+
+    log_init();
 
     if (strcmp(operation, "mvm") == 0)
         mvm_process(dim1,dim2,dim3);
