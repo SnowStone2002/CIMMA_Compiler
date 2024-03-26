@@ -58,8 +58,10 @@ void log_init() {
     } else {
         // file doesn't exist
         // printf("File doesn't exist\n");
-        fopen(filepath, "w");
-        fclose(filepath);
+        FILE *file = fopen(filepath, "w");
+        if (file != NULL) {
+            fclose(file);
+        }
     }
     PushInstStack(&inst_stack, "starting compiler:\n", 0, 0);
 }

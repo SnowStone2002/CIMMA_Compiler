@@ -21,7 +21,7 @@ $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@
 
 # # Compiling source files into object files
-# %.o: %.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Cleaning up the compilation products
