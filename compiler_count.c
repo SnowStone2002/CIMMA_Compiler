@@ -558,7 +558,7 @@ void ws_process(void) {
     }
 }
 
-void mvm_process(int a, int b, int c){ //实际上的输入参数是input和weight map的长宽
+void proj_process(int a, int b, int c){ //实际上的输入参数是input和weight map的长宽
     weight_map_channel = a;
     weight_map_length = b;
 
@@ -726,9 +726,9 @@ void mvm_process(int a, int b, int c){ //实际上的输入参数是input和weig
 void ph2_process(void){
     strcpy(data_stream, "wspp");
     for(int i=0; i<dim3; i++){
-        mvm_process(dim1,dim2/dim3,dim1);
-        mvm_process(dim2/dim3,dim1,dim1);
-    }//    e.g.    "mha", N, 768, 12
+        proj_process(dim1,dim2/dim3,dim1);
+        proj_process(dim2/dim3,dim1,dim1);
+    }//    e.g.    "a2a", N, 768, 12
 }
 
 void lhd_process(void){
@@ -870,7 +870,7 @@ void lhd_process(void){
     }
 }
 
-void mha_process(void){
+void a2a_process(void){
     if (strcmp(data_stream, "ph2") == 0){
         ph2_process();
     }
@@ -912,10 +912,10 @@ int main(int argc, char *argv[]){
 
     log_init();
 
-    if (strcmp(operation, "mvm") == 0)
-        mvm_process(dim1,dim2,dim3);
-    else if (strcmp(operation, "mha") == 0)
-            mha_process();
+    if (strcmp(operation, "proj") == 0)
+        proj_process(dim1,dim2,dim3);
+    else if (strcmp(operation, "a2a") == 0)
+            a2a_process();
     
     for (int i = 0; i < inst_stack.len; i++){
         PushInstStack(&inst_stack,"",0,0);
@@ -987,11 +987,11 @@ int main(int argc, char *argv[]){
 /*
 来起名
 gli:
-    "mha", seq_len, hid_size, head_num
+    "a2a", seq_len, hid_size, head_num
 
     hid_size = head_num * embedding_length
 
-    e.g.    "mha", N, 768, 12
+    e.g.    "a2a", N, 768, 12
 
 data stream:    
     1. 2ph(two phase)
