@@ -8,6 +8,7 @@
 #include "tensor_stack.h"
 #include "instruction_count.h"
 
+#define min(a,b) ((a) < (b) ? (a) : (b))
 #define WRITE_INST 1
 #define VERIFY 0
 
@@ -843,16 +844,16 @@ void lhd_process(void){
         for (int i = 0; i < acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW; i++) {
             idle();
         }
-        for (int j = 0; j < ceil(dim1 / Q_serial_times); j++){
+        for (int j = 0; j < ceil((float)dim1 / Q_serial_times); j++){
             strcpy(data_stream, "wspp");
-            for (int k = 0; k < Q_serial_times; k++){
+            for (int k = 0; k < min(dim1 % Q_serial_times, Q_serial_times); k++){
                 for(int m_count=0; m_count<Sqk; m_count++){
                     compute(j * Q_serial_times + k, m_count, 0);
                     //compute(int i_input_channel, int computing_block,int fussion_flag = 0)
                 }
             }
             strcpy(data_stream, "wspp");
-            for (int k = 0; k < Q_serial_times; k++){
+            for (int k = 0; k < min(dim1 % Q_serial_times, Q_serial_times); k++){
                 for(int m_count=0; m_count<Spv; m_count++){
                     compute(k, m_count + Sqk, 1);
                     //compute(int fussion_count, int computing_block,int fussion_flag = 0)
