@@ -11,4 +11,4 @@ def prime_factors(n):
         factors.append(n)
     return factors
 
-print(prime_factors(10584))
+print(prime_factors(1997))

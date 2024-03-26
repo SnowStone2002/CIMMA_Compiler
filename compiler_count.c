@@ -9,7 +9,7 @@
 #include "instruction_count.h"
 
 #define min(a,b) ((a) < (b) ? (a) : (b))
-#define WRITE_INST 1
+#define WRITE_INST 0
 #define VERIFY 0
 
 int bus_width, al, pc, scr, is_depth, os_depth, freq;
@@ -221,7 +221,7 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
                             os_virtual_depth += 1;
                         }
                         instructionCount.Cmpfgt_paos++;
-                        instructionCount.Lpenalty+=acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH;
+                        instructionCount.Lpenalty+=ceil((float)acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH);
                         if (WRITE_INST){
                             if (VERIFY) {
                                 sprintf(item, "Lpenalty\t <os_addr_rd>\t %d\n", os_addr);
@@ -229,7 +229,7 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
                                 sprintf(item, "Cmpfgt\t <pos> \t%d\t<input_map_position>\t%d\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", j_reg, input_map_position, i_ls, os_addr);
                                 PushInstStack(&inst_stack, item, 0, 0);
                             } else {
-                                for (int i = 0; i < acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH; i++) {
+                                for (int i = 0; i < ceil((float)acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH); i++) {
                                     sprintf(item, "Lpenalty\t\n");
                                     PushInstStack(&inst_stack, item, 0, 0);
                                 }
@@ -412,7 +412,7 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
                     os_virtual_depth += 1;
                 }
                 instructionCount.Cmpfis_paos++;
-                instructionCount.Lpenalty+=acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH;
+                instructionCount.Lpenalty+=ceil((float)acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH);
                 if (WRITE_INST){
                     if (VERIFY) {
                         sprintf(item, "Lpenalty\t <os_addr_rd>\t %d\n", os_addr);
@@ -420,7 +420,7 @@ void compute(int i_input_channel, int computing_block,int fussion_flag) {
                         sprintf(item, "Cmpfis\t <ca> %d\t <paos>\t <os_addr_wt> %d\n", i_ls, os_addr);
                         PushInstStack(&inst_stack, item, 0, 0);
                     } else {
-                        for (int i = 0; i < acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH; i++) {
+                        for (int i = 0; i < ceil((float)acc0.OutputSRAMWidth / (config.RESULT_WIDTH / config.DATA_WIDTH) / config.BUS_WIDTH); i++) {
                             sprintf(item, "Lpenalty\t\n");
                             PushInstStack(&inst_stack, item, 0, 0);
                         }
