@@ -1,0 +1,6 @@
+/cflow/
+*.csv
+*.o
+*.txt
+.vscode/
+._pycache_/
