@@ -43,6 +43,124 @@ char item[100];
 
 InstStack inst_stack;
 
+void log_init(void);
+void idle(void);
+int load_is_block(int num_rows, int input_map_position);
+int wu_ls_bank(int num_ls, int num_channel, int i_block);
+void compute(int i_input_channel, int computing_block, int fussion_flag);
+void is_process(void);
+void ws_process(void);
+void proj_process(int a, int b, int c);
+void ph2_process(void);
+void lhd_process(void);
+void a2a_process(void);
+
+int main(int argc, char *argv[]){
+    if (argc != 13) {
+        printf("error!");
+        return 1;
+    }
+
+    // printf("Number of command line arguments: %d\n", argc);
+
+    bus_width = atoi(argv[1]);
+    al = atoi(argv[2]);
+    pc = atoi(argv[3]);
+    scr = atoi(argv[4]);
+    is_depth = atoi(argv[5]);
+    os_depth = atoi(argv[6]);
+    freq = atoi(argv[7]);
+
+    operation = argv[8];
+
+    dim1 = atoi(argv[9]);
+    dim2 = atoi(argv[10]);
+    dim3 = atoi(argv[11]); 
+
+    data_stream = argv[12];
+
+    InitConfig(&config, bus_width, al, pc, scr, is_depth, os_depth, freq);
+    // PrintConfig(&config);
+
+    Inithwc(&acc0, config);
+    // Printhwc(&acc0);
+
+    InitInstStack(&inst_stack, 10, "inst.txt");
+
+    log_init();
+
+    if (strcmp(operation, "proj") == 0)
+        proj_process(dim1,dim2,dim3);
+    else if (strcmp(operation, "a2a") == 0)
+            a2a_process();
+    
+    for (int i = 0; i < inst_stack.len; i++){
+        PushInstStack(&inst_stack,"",0,0);
+    }
+
+    // #region output
+    //***************************************** terminal output ****************************************
+    printInstructionCount(&instructionCount);
+
+    // printf("%s", data_stream);
+
+    //******************************************* csv output *******************************************
+    // 检查文件是否存在
+    FILE *file = fopen("count.csv", "r");
+    int needHeader = 0;
+    if (file == NULL) {
+        needHeader = 1; // 文件不存在，需要写入表头
+    } else {
+        fclose(file); // 文件已存在，关闭文件
+    }
+
+    // 以追加模式打开文件，如果不存在则创建
+    file = fopen("count.csv", "a");
+    if (file == NULL) {
+        perror("Failed to open csv file\n");
+        return EXIT_FAILURE;
+    }
+
+    // 如果需要，写入表头
+    if (needHeader) {
+        fprintf(file, "bus_width,al,pc,scr,is_depth,os_depth,freq,operation,dim1,dim2,dim3,data_stream,");
+        fprintf(file, "Lin,Linp,Lwt,Lwtp,Cmpfis_aor,Cmpfis_tos,Cmpfis_aos,Cmpfis_ptos,Cmpfis_paos,");
+        fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,");
+        fprintf(file, "IS_reward,L2_reward,Fussion\n");
+    }
+
+    // 写入命令行参数到文件
+    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%d,%s,",
+            bus_width, al, pc, scr, is_depth, os_depth, freq, operation,
+            atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), argv[12]);
+
+    // 写入InstructionCount到文件
+    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
+            instructionCount.Lin, instructionCount.Linp, instructionCount.Lwt, instructionCount.Lwtp,
+            instructionCount.Cmpfis_aor, instructionCount.Cmpfis_tos, instructionCount.Cmpfis_aos,
+            instructionCount.Cmpfis_ptos, instructionCount.Cmpfis_paos,
+            instructionCount.Cmpfgt_aor, instructionCount.Cmpfgt_tos, instructionCount.Cmpfgt_aos,
+            instructionCount.Cmpfgt_ptos, instructionCount.Cmpfgt_paos,
+            instructionCount.Cmpfgtp, instructionCount.Lpenalty, instructionCount.Nop, instructionCount.Nop_w_rd, 
+            instructionCount.IS_reward,instructionCount.L2_reward,instructionCount.Fussion);
+
+    // 关闭文件
+    fclose(file);
+
+
+    // //*******************************************清理*******************************************
+    for(int i = 0; i < para_times; ++i) {
+        free(ls_matrix[i]);
+        free(atos_matrix[i]);
+    }
+    free(ls_matrix);
+    free(atos_matrix);
+    free(weight_update_ls);
+    free(IS_load_rows);
+
+    return 0;
+}
+
 void log_init() {
     // Log initialization logic here
     char filepath[256];
@@ -506,6 +624,24 @@ void is_process(void) {
     int input_map_position = 0;
     int i_block = 0;
 
+    if (IS_load_times_per_inst == 0){
+        if (strcmp(data_stream, "isap") == 0)   strcpy(data_stream, "wsap");
+        if (strcmp(data_stream, "ispp") == 0)   strcpy(data_stream, "wspp");
+
+        for(int i = 0; i < para_times; ++i) {
+            free(ls_matrix[i]);
+            free(atos_matrix[i]);
+        }
+        free(ls_matrix);
+        free(atos_matrix);
+        free(weight_update_ls);
+        free(IS_load_rows);
+
+        proj_process(dim1,dim2,dim3);
+
+        return;
+    }
+
     for (int i_IS_load = 0; i_IS_load < IS_load_times_per_inst; i_IS_load++) {
         input_map_position = load_is_block(IS_load_rows[i_IS_load], input_map_position);
 
@@ -667,49 +803,49 @@ void proj_process(int a, int b, int c){ //实际上的输入参数是input和wei
         }
     }
 
-    // 打印基本计算结果
-    printf("input_data_per_row = %d\n", input_data_per_row);
-    printf("rows_per_input_channel = %d\n", rows_per_input_channel);
-    printf("input_channels_per_ISload = %d\n", input_channels_per_ISload);
-    printf("IS_load_times_per_inst = %d\n", IS_load_times_per_inst);
+    // // 打印基本计算结果
+    // printf("input_data_per_row = %d\n", input_data_per_row);
+    // printf("rows_per_input_channel = %d\n", rows_per_input_channel);
+    // printf("input_channels_per_ISload = %d\n", input_channels_per_ISload);
+    // printf("IS_load_times_per_inst = %d\n", IS_load_times_per_inst);
 
-    // 打印IS_load_rows数组
-    printf("IS_load_rows:\n");
-    for (int i = 0; i < IS_load_times_per_inst; ++i) {
-        printf("%d ", IS_load_rows[i]);
-    }
-    printf("\n");
+    // // 打印IS_load_rows数组
+    // printf("IS_load_rows:\n");
+    // for (int i = 0; i < IS_load_times_per_inst; ++i) {
+    //     printf("%d ", IS_load_rows[i]);
+    // }
+    // printf("\n");
 
-    // 打印权重更新信息
-    printf("weight_block_row = %d\n", weight_block_row);
-    printf("weight_block_col = %d\n", weight_block_col);
-    printf("weight_block_num = %d\n", weight_block_num);
-    printf("weight_update_times_per_inst = %d\n", weight_update_times_per_inst);
+    // // 打印权重更新信息
+    // printf("weight_block_row = %d\n", weight_block_row);
+    // printf("weight_block_col = %d\n", weight_block_col);
+    // printf("weight_block_num = %d\n", weight_block_num);
+    // printf("weight_update_times_per_inst = %d\n", weight_update_times_per_inst);
 
-    // 打印weight_update_ls数组
-    printf("weight_update_ls:\n");
-    for (int i = 0; i < weight_update_times_per_inst; ++i) {
-        printf("%d ", weight_update_ls[i]);
-    }
-    printf("\n");
+    // // 打印weight_update_ls数组
+    // printf("weight_update_ls:\n");
+    // for (int i = 0; i < weight_update_times_per_inst; ++i) {
+    //     printf("%d ", weight_update_ls[i]);
+    // }
+    // printf("\n");
 
-    // 打印ls_matrix
-    printf("ls_matrix:\n");
-    for (int i = 0; i < para_times; ++i) {
-        for (int j = 0; j < acc_times; ++j) {
-            printf("%d ", ls_matrix[i][j]);
-        }
-        printf("\n");
-    }
+    // // 打印ls_matrix
+    // printf("ls_matrix:\n");
+    // for (int i = 0; i < para_times; ++i) {
+    //     for (int j = 0; j < acc_times; ++j) {
+    //         printf("%d ", ls_matrix[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
-    // 打印atos_matrix
-    printf("atos_matrix:\n");
-    for (int i = 0; i < para_times; ++i) {
-        for (int j = 0; j < acc_times; ++j) {
-            printf("%d ", atos_matrix[i][j]);
-        }
-        printf("\n");
-    }
+    // // 打印atos_matrix
+    // printf("atos_matrix:\n");
+    // for (int i = 0; i < para_times; ++i) {
+    //     for (int j = 0; j < acc_times; ++j) {
+    //         printf("%d ", atos_matrix[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
 
     gt_in_map_record = 0;
@@ -755,22 +891,22 @@ void lhd_process(void){
 
     int Q_serial_times = ceil((float)(Sqk + config.PIPELINE_STAGES) / Sqk);
 
-    printf("K_map_channel: %d\n", K_map_channel);
-    printf("K_map_length: %d\n", K_map_length);
-    printf("K_para_times: %d\n", K_para_times);
-    printf("K_acc_times: %d\n", K_acc_times);
-    printf("K_map_block: %d\n", K_map_block);
-    printf("Sqk: %d\n", Sqk);
+    // printf("K_map_channel: %d\n", K_map_channel);
+    // printf("K_map_length: %d\n", K_map_length);
+    // printf("K_para_times: %d\n", K_para_times);
+    // printf("K_acc_times: %d\n", K_acc_times);
+    // printf("K_map_block: %d\n", K_map_block);
+    // printf("Sqk: %d\n", Sqk);
 
-    printf("V_map_channel: %d\n", V_map_channel);
-    printf("V_map_length: %d\n", V_map_length);
-    printf("V_para_times: %d\n", V_para_times);
-    printf("V_acc_times: %d\n", V_acc_times);
-    printf("V_map_block: %d\n", V_map_block);
-    printf("Spv: %d\n", Spv);
+    // printf("V_map_channel: %d\n", V_map_channel);
+    // printf("V_map_length: %d\n", V_map_length);
+    // printf("V_para_times: %d\n", V_para_times);
+    // printf("V_acc_times: %d\n", V_acc_times);
+    // printf("V_map_block: %d\n", V_map_block);
+    // printf("Spv: %d\n", Spv);
 
-    printf("using_scr: %d\n", using_scr);
-    printf("Q_serial_times: %d\n", Q_serial_times);
+    // printf("using_scr: %d\n", using_scr);
+    // printf("Q_serial_times: %d\n", Q_serial_times);
 
     // we are using wspp here
     weight_block_row = using_scr;
@@ -821,23 +957,23 @@ void lhd_process(void){
         }
     }
 
-    // 打印 ls_matrix
-    printf("ls_matrix:\n");
-    for(int i = 0; i < para_times; ++i) {
-        for(int j = 0; j < acc_times; ++j) {
-            printf("%d ", ls_matrix[i][j]);
-        }
-        printf("\n");
-    }
+    // // 打印 ls_matrix
+    // printf("ls_matrix:\n");
+    // for(int i = 0; i < para_times; ++i) {
+    //     for(int j = 0; j < acc_times; ++j) {
+    //         printf("%d ", ls_matrix[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
-    // 打印 atos_matrix
-    printf("atos_matrix:\n");
-    for(int i = 0; i < para_times; ++i) {
-        for(int j = 0; j < acc_times; ++j) {
-            printf("%d ", atos_matrix[i][j]);
-        }
-        printf("\n");
-    }
+    // // 打印 atos_matrix
+    // printf("atos_matrix:\n");
+    // for(int i = 0; i < para_times; ++i) {
+    //     for(int j = 0; j < acc_times; ++j) {
+    //         printf("%d ", atos_matrix[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
     for(int i_head=0; i_head<dim3; i_head++){
         // 我们不用更新IS，which is great
@@ -878,111 +1014,6 @@ void a2a_process(void){
         lhd_process();
 }
 
-int main(int argc, char *argv[]){
-    if (argc != 13) {
-        printf("error!");
-        return 1;
-    }
-
-    // printf("Number of command line arguments: %d\n", argc);
-
-    bus_width = atoi(argv[1]);
-    al = atoi(argv[2]);
-    pc = atoi(argv[3]);
-    scr = atoi(argv[4]);
-    is_depth = atoi(argv[5]);
-    os_depth = atoi(argv[6]);
-    freq = atoi(argv[7]);
-
-    operation = argv[8];
-
-    dim1 = atoi(argv[9]);
-    dim2 = atoi(argv[10]);
-    dim3 = atoi(argv[11]); 
-
-    data_stream = argv[12];
-
-    InitConfig(&config, bus_width, al, pc, scr, is_depth, os_depth, freq);
-    // PrintConfig(&config);
-
-    Inithwc(&acc0, config);
-    // Printhwc(&acc0);
-
-    InitInstStack(&inst_stack, 10, "inst.txt");
-
-    log_init();
-
-    if (strcmp(operation, "proj") == 0)
-        proj_process(dim1,dim2,dim3);
-    else if (strcmp(operation, "a2a") == 0)
-            a2a_process();
-    
-    for (int i = 0; i < inst_stack.len; i++){
-        PushInstStack(&inst_stack,"",0,0);
-    }
-
-    // #region output
-    //***************************************** terminal output ****************************************
-    printInstructionCount(&instructionCount);
-
-    printf("%s", data_stream);
-
-    //******************************************* csv output *******************************************
-    // 检查文件是否存在
-    FILE *file = fopen("count.csv", "r");
-    int needHeader = 0;
-    if (file == NULL) {
-        needHeader = 1; // 文件不存在，需要写入表头
-    } else {
-        fclose(file); // 文件已存在，关闭文件
-    }
-
-    // 以追加模式打开文件，如果不存在则创建
-    file = fopen("count.csv", "a");
-    if (file == NULL) {
-        perror("Failed to open csv file\n");
-        return EXIT_FAILURE;
-    }
-
-    // 如果需要，写入表头
-    if (needHeader) {
-        fprintf(file, "bus_width,al,pc,scr,is_depth,os_depth,freq,operation,dim1,dim2,dim3,data_stream,");
-        fprintf(file, "Lin,Linp,Lwt,Lwtp,Cmpfis_aor,Cmpfis_tos,Cmpfis_aos,Cmpfis_ptos,Cmpfis_paos,");
-        fprintf(file, "Cmpfgt_aor,Cmpfgt_tos,Cmpfgt_aos,Cmpfgt_ptos,Cmpfgt_paos,Cmpfgtp,Lpenalty,Nop,Nop_w_rd,");
-        fprintf(file, "IS_reward,L2_reward,Fussion\n");
-    }
-
-    // 写入命令行参数到文件
-    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%d,%s,",
-            bus_width, al, pc, scr, is_depth, os_depth, freq, operation,
-            atoi(argv[9]), atoi(argv[10]), atoi(argv[11]), argv[12]);
-
-    // 写入InstructionCount到文件
-    fprintf(file, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
-            instructionCount.Lin, instructionCount.Linp, instructionCount.Lwt, instructionCount.Lwtp,
-            instructionCount.Cmpfis_aor, instructionCount.Cmpfis_tos, instructionCount.Cmpfis_aos,
-            instructionCount.Cmpfis_ptos, instructionCount.Cmpfis_paos,
-            instructionCount.Cmpfgt_aor, instructionCount.Cmpfgt_tos, instructionCount.Cmpfgt_aos,
-            instructionCount.Cmpfgt_ptos, instructionCount.Cmpfgt_paos,
-            instructionCount.Cmpfgtp, instructionCount.Lpenalty, instructionCount.Nop, instructionCount.Nop_w_rd, 
-            instructionCount.IS_reward,instructionCount.L2_reward,instructionCount.Fussion);
-
-    // 关闭文件
-    fclose(file);
-
-
-    // //*******************************************清理*******************************************
-    for(int i = 0; i < para_times; ++i) {
-        free(ls_matrix[i]);
-        free(atos_matrix[i]);
-    }
-    free(ls_matrix);
-    free(atos_matrix);
-    free(weight_update_ls);
-    free(IS_load_rows);
-
-    return 0;
-}
 
 /*
 来起名
