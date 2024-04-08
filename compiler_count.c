@@ -9,7 +9,7 @@
 #include "instruction_count.h"
 
 #define min(a,b) ((a) < (b) ? (a) : (b))
-#define WRITE_INST 1
+#define WRITE_INST 0
 #define VERIFY 0
 
 int bus_width, al, pc, scr, is_depth, os_depth, freq;
@@ -47,7 +47,11 @@ InstStack inst_stack;
 
 void log_init(void);
 void idle(void);
+int load_is_narrow_bus(int num_rows, int input_map_position);
+int load_is_wide_bus(int num_rows, int input_map_position);
 int load_is_block(int num_rows, int input_map_position);
+int wu_ls_narrow_bus(int num_ls, int num_channel, int i_block);
+int wu_ls_wide_bus(int num_ls, int num_channel, int i_block);
 int wu_ls_bank(int num_ls, int num_channel, int i_block);
 void compute(int i_input_channel, int computing_block, int fussion_flag);
 void is_process(void);
@@ -82,10 +86,10 @@ int main(int argc, char *argv[]){
     data_stream = argv[12];
 
     InitConfig(&config, bus_width, al, pc, scr, is_depth, os_depth, freq);
-    PrintConfig(&config);
+    // PrintConfig(&config);
 
     Inithwc(&acc0, config);
-    Printhwc(&acc0);
+    // Printhwc(&acc0);
 
     InitInstStack(&inst_stack, 10, "inst.txt");
 
@@ -328,22 +332,21 @@ int wu_ls_wide_bus(int num_ls, int num_channel, int i_block) {
             for (int k_reg = config.WEIGHT_ROW - 1; k_reg >= 0; k_reg--) {
                 // weight_map_position = i_weight_channel * weight_map_length + j_data_in_channel + k_reg * acc0.BusWidth / config.DATA_WIDTH;
                 // 完全裂开了，验证不了一点
-                int row_reg = (acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW - 1 - k_reg) / (acc0.CIMsWriteWidth / acc0.BusWidth);
-
+                // int row_reg = (acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW - 1 - k_reg) / (acc0.CIMsWriteWidth / acc0.BusWidth);
                 instructionCount.Lwt++;
                 if (k_reg >= config.WEIGHT_ROW / bus_wu_width_ratio) {
                     instructionCount.L2_reward++;
                 }
 
-                if (WRITE_INST) {
-                    if (VERIFY) {
-                        sprintf(item, "Lwt\t\t <pos> %d\t <cm_addr> %d\t <weight_map> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls, weight_map_position);
-                        PushInstStack(&inst_stack, item, 0, 0);
-                    } else {
-                        sprintf(item, "Lwt\t\t <pos> %d\t <cm_addr> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls);
-                        PushInstStack(&inst_stack, item, 0, 0);
-                    }
-                }
+                // if (WRITE_INST) {
+                //     if (VERIFY) {
+                //         sprintf(item, "Lwt\t\t <pos> %d\t <cm_addr> %d\t <weight_map> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls, weight_map_position);
+                //         PushInstStack(&inst_stack, item, 0, 0);
+                //     } else {
+                //         sprintf(item, "Lwt\t\t <pos> %d\t <cm_addr> %d\n", k_reg % (acc0.CIMsWriteWidth / acc0.BusWidth), j_channel * config.SCR * config.WEIGHT_ROW + row_reg * config.SCR + i_ls);
+                //         PushInstStack(&inst_stack, item, 0, 0);
+                //     }
+                // }
             }
         }
         i_block += 1;
@@ -1255,6 +1258,7 @@ void lhd_process(void){
     for(int i_head=0; i_head<dim3; i_head++){
         // 我们不用更新IS，which is great
         // 首先更新K和V矩阵到CIM中
+        strcpy(data_stream, "wspp");//新增的
         wu_ls_bank(para_times, config.PC, 0);
         for (int i = 0; i < acc0.CIMsWriteWidth / acc0.BusWidth * config.WEIGHT_ROW; i++) {
             idle();
